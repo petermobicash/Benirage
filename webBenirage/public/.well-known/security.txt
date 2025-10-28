@@ -1,0 +1,11 @@
+Contact: mailto:security@benirage.org
+Expires: 2025-12-31T23:59:59.000Z
+Encryption: https://benirage.org/pgp-key.txt
+Preferred-Languages: en, fr, rw
+Canonical: https://benirage.org/.well-known/security.txt
+Policy: https://benirage.org/security-policy
+Acknowledgments: https://benirage.org/security-acknowledgments
+
+# Security Policy
+# If you discover a security vulnerability, please report it to security@benirage.org
+# We appreciate responsible disclosure and will respond within 48 hours

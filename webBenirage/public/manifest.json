@@ -1,0 +1,155 @@
+{
+  "name": "BENIRAGE - Spiritual & Cultural Movement",
+  "short_name": "BENIRAGE",
+  "description": "Transformative spiritual and cultural movement for inner growth and wisdom. Grounded • Guided • Rooted",
+  "start_url": "/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "background_color": "#05294b",
+  "theme_color": "#cfb53b",
+  "orientation": "portrait-primary",
+  "lang": "en",
+  "dir": "ltr",
+  "scope": "/",
+  "prefer_related_applications": false,
+  "categories": ["lifestyle", "education", "social", "health", "wellness"],
+  "screenshots": [
+    {
+      "src": "/screenshots/mobile-home.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "BENIRAGE Home Screen"
+    },
+    {
+      "src": "/screenshots/mobile-spiritual.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Spiritual Section"
+    }
+  ],
+  "icons": [
+    {
+      "src": "/icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Spiritual Grounding",
+      "short_name": "Spiritual",
+      "description": "Explore spiritual teachings and practices",
+      "url": "/spiritual",
+      "icons": [
+        {
+          "src": "/icons/shortcut-spiritual.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Philosophy & Wisdom",
+      "short_name": "Philosophy",
+      "description": "Discover human philosophy and wisdom traditions",
+      "url": "/philosophy",
+      "icons": [
+        {
+          "src": "/icons/shortcut-philosophy.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Community",
+      "short_name": "Community",
+      "description": "Join our community and events",
+      "url": "/get-involved",
+      "icons": [
+        {
+          "src": "/icons/shortcut-community.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "related_applications": [],
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  },
+  "file_handlers": [
+    {
+      "action": "/",
+      "accept": {
+        "text/plain": [".txt"],
+        "application/pdf": [".pdf"]
+      }
+    }
+  ],
+  "protocol_handlers": [
+    {
+      "protocol": "mailto",
+      "url": "/contact?email=%s"
+    }
+  ],
+  "share_target": {
+    "action": "/share",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  }
+}

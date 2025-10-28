@@ -1,0 +1,3554 @@
+import { createClient } from '@supabase/supabase-js';
+
+// Get Supabase credentials from environment variables
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+// Check if Supabase is configured
+if (!supabaseUrl || !supabaseAnonKey) {
+  console.error('❌ CRITICAL: Supabase not configured!');
+  console.error('📋 TO FIX: Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your .env file');
+  console.error('🔗 Get credentials from: https://supabase.com/dashboard → Settings → API');
+  console.error('Current values:', { supabaseUrl: supabaseUrl ? 'SET' : 'NOT SET', supabaseAnonKey: supabaseAnonKey ? 'SET' : 'NOT SET' });
+}
+
+export const supabase = createClient(supabaseUrl || '', supabaseAnonKey || '', {
+  auth: {
+    persistSession: true,
+    autoRefreshToken: true,
+    detectSessionInUrl: true
+  },
+  db: {
+    schema: 'public'
+  },
+  global: {
+    headers: {
+      'X-Client-Info': 'benirage-website',
+      'apikey': supabaseAnonKey || ''
+    }
+  },
+  // For local development, ensure proper configuration
+  ...(supabaseUrl?.includes('127.0.0.1') && {
+    // Additional config for local development if needed
+    rest: {
+      timeout: 10000
+    }
+  })
+});
+
+// Database types for TypeScript
+export interface Database {
+  public: {
+    Tables: {
+      activity_logs: {
+        Row: {
+          id: string;
+          user_id: string | null;
+          user_name: string | null;
+          user_email: string | null;
+          action: string;
+          resource_type: string;
+          resource_id: string | null;
+          details: any;
+          ip_address: string | null;
+          user_agent: string | null;
+          session_id: string | null;
+          timestamp: string;
+          metadata: any;
+        };
+        Insert: {
+          user_id?: string | null;
+          user_name?: string | null;
+          user_email?: string | null;
+          action: string;
+          resource_type: string;
+          resource_id?: string | null;
+          details?: any;
+          ip_address?: string | null;
+          user_agent?: string | null;
+          session_id?: string | null;
+          metadata?: any;
+        };
+        Update: {
+          user_id?: string | null;
+          user_name?: string | null;
+          user_email?: string | null;
+          action?: string;
+          resource_type?: string;
+          resource_id?: string | null;
+          details?: any;
+          ip_address?: string | null;
+          user_agent?: string | null;
+          session_id?: string | null;
+          metadata?: any;
+        };
+      };
+      automation_rules: {
+        Row: {
+          id: string;
+          name: string;
+          description: string | null;
+          trigger_type: string;
+          trigger_conditions: any;
+          actions: any;
+          is_active: boolean;
+          created_by: string | null;
+          created_at: string;
+          updated_at: string;
+          last_executed: string | null;
+          execution_count: number;
+        };
+        Insert: {
+          name: string;
+          description?: string | null;
+          trigger_type: string;
+          trigger_conditions?: any;
+          actions?: any;
+          is_active?: boolean;
+          created_by?: string | null;
+          execution_count?: number;
+        };
+        Update: {
+          name?: string;
+          description?: string | null;
+          trigger_type?: string;
+          trigger_conditions?: any;
+          actions?: any;
+          is_active?: boolean;
+          created_by?: string | null;
+          last_executed?: string | null;
+          execution_count?: number;
+        };
+      };
+      cache_refresh_flags: {
+        Row: {
+          cache_name: string;
+          flagged_at: string;
+        };
+        Insert: {
+          cache_name: string;
+        };
+        Update: {
+          cache_name?: string;
+        };
+      };
+      categories: {
+        Row: {
+          id: string;
+          name: string;
+          slug: string;
+          description: string | null;
+          color: string;
+          icon: string;
+          parent_id: string | null;
+          order_index: number;
+          created_at: string;
+        };
+        Insert: {
+          name: string;
+          slug: string;
+          description?: string | null;
+          color: string;
+          icon: string;
+          parent_id?: string | null;
+          order_index?: number;
+        };
+        Update: {
+          name?: string;
+          slug?: string;
+          description?: string | null;
+          color?: string;
+          icon?: string;
+          parent_id?: string | null;
+          order_index?: number;
+        };
+      };
+      chat_messages: {
+        Row: {
+          id: string;
+          room_id: string | null;
+          sender_id: string | null;
+          sender_name: string;
+          sender_avatar: string | null;
+          message_text: string;
+          message_type: 'text' | 'image' | 'file' | 'system' | 'notification';
+          reply_to_id: string | null;
+          mentions: any;
+          attachments: any;
+          reactions: any;
+          is_edited: boolean;
+          is_deleted: boolean;
+          is_pinned: boolean;
+          metadata: any;
+          created_at: string;
+          updated_at: string;
+          edited_at: string | null;
+          deleted_at: string | null;
+        };
+        Insert: {
+          room_id?: string | null;
+          sender_id?: string | null;
+          sender_name: string;
+          sender_avatar?: string | null;
+          message_text: string;
+          message_type?: 'text' | 'image' | 'file' | 'system' | 'notification';
+          reply_to_id?: string | null;
+          mentions?: any;
+          attachments?: any;
+          reactions?: any;
+          is_edited?: boolean;
+          is_deleted?: boolean;
+          is_pinned?: boolean;
+          metadata?: any;
+        };
+        Update: {
+          room_id?: string | null;
+          sender_id?: string | null;
+          sender_name?: string;
+          sender_avatar?: string | null;
+          message_text?: string;
+          message_type?: 'text' | 'image' | 'file' | 'system' | 'notification';
+          reply_to_id?: string | null;
+          mentions?: any;
+          attachments?: any;
+          reactions?: any;
+          is_edited?: boolean;
+          is_deleted?: boolean;
+          is_pinned?: boolean;
+          metadata?: any;
+          edited_at?: string | null;
+          deleted_at?: string | null;
+        };
+      };
+      chat_participants: {
+        Row: {
+          id: string;
+          room_id: string | null;
+          user_id: string | null;
+          user_name: string;
+          user_avatar: string | null;
+          role: 'owner' | 'admin' | 'moderator' | 'member' | 'guest';
+          joined_at: string;
+          last_seen: string;
+          is_online: boolean;
+          is_muted: boolean;
+          is_banned: boolean;
+          permissions: any;
+          metadata: any;
+        };
+        Insert: {
+          room_id?: string | null;
+          user_id?: string | null;
+          user_name: string;
+          user_avatar?: string | null;
+          role?: 'owner' | 'admin' | 'moderator' | 'member' | 'guest';
+          joined_at?: string;
+          last_seen?: string;
+          is_online?: boolean;
+          is_muted?: boolean;
+          is_banned?: boolean;
+          permissions?: any;
+          metadata?: any;
+        };
+        Update: {
+          room_id?: string | null;
+          user_id?: string | null;
+          user_name?: string;
+          user_avatar?: string | null;
+          role?: 'owner' | 'admin' | 'moderator' | 'member' | 'guest';
+          joined_at?: string;
+          last_seen?: string;
+          is_online?: boolean;
+          is_muted?: boolean;
+          is_banned?: boolean;
+          permissions?: any;
+          metadata?: any;
+        };
+      };
+      chat_rooms: {
+        Row: {
+          id: string;
+          name: string;
+          description: string | null;
+          room_type: 'general' | 'support' | 'content' | 'admin' | 'private' | 'group';
+          is_public: boolean;
+          is_active: boolean;
+          max_participants: number;
+          created_by: string | null;
+          created_at: string;
+          updated_at: string;
+          last_activity: string;
+          settings: any;
+          metadata: any;
+        };
+        Insert: {
+          name: string;
+          description?: string | null;
+          room_type?: 'general' | 'support' | 'content' | 'admin' | 'private' | 'group';
+          is_public?: boolean;
+          is_active?: boolean;
+          max_participants?: number;
+          created_by?: string | null;
+          settings?: any;
+          metadata?: any;
+        };
+        Update: {
+          name?: string;
+          description?: string | null;
+          room_type?: 'general' | 'support' | 'content' | 'admin' | 'private' | 'group';
+          is_public?: boolean;
+          is_active?: boolean;
+          max_participants?: number;
+          created_by?: string | null;
+          last_activity?: string;
+          settings?: any;
+          metadata?: any;
+        };
+      };
+      comment_reactions: {
+        Row: {
+          id: string;
+          comment_id: string | null;
+          user_id: string | null;
+          reaction_type: 'like' | 'love' | 'helpful' | 'insightful' | 'disagree';
+          created_at: string;
+        };
+        Insert: {
+          comment_id?: string | null;
+          user_id?: string | null;
+          reaction_type?: 'like' | 'love' | 'helpful' | 'insightful' | 'disagree';
+        };
+        Update: {
+          comment_id?: string | null;
+          user_id?: string | null;
+          reaction_type?: 'like' | 'love' | 'helpful' | 'insightful' | 'disagree';
+        };
+      };
+      contact_submissions: {
+        Row: {
+          id: string;
+          first_name: string;
+          last_name: string;
+          email: string;
+          phone: string | null;
+          organization: string | null;
+          subject: string;
+          message: string;
+          preferred_contact: string;
+          urgency: string;
+          submission_date: string;
+          status: string;
+          ip_address: string | null;
+          user_agent: string | null;
+          responded_at: string | null;
+          responded_by: string | null;
+          response_notes: string | null;
+          responded_by_id: string | null;
+        };
+        Insert: {
+          first_name: string;
+          last_name: string;
+          email: string;
+          phone?: string | null;
+          organization?: string | null;
+          subject: string;
+          message: string;
+          preferred_contact?: string;
+          urgency?: string;
+          status?: string;
+          ip_address?: string | null;
+          user_agent?: string | null;
+          responded_by?: string | null;
+          response_notes?: string | null;
+          responded_by_id?: string | null;
+        };
+        Update: {
+          first_name?: string;
+          last_name?: string;
+          email?: string;
+          phone?: string | null;
+          organization?: string | null;
+          subject?: string;
+          message?: string;
+          preferred_contact?: string;
+          urgency?: string;
+          status?: string;
+          ip_address?: string | null;
+          user_agent?: string | null;
+          responded_at?: string | null;
+          responded_by?: string | null;
+          response_notes?: string | null;
+          responded_by_id?: string | null;
+        };
+      };
+      content: {
+        Row: {
+          id: string;
+          title: string;
+          slug: string;
+          content: string;
+          excerpt: string | null;
+          type: string;
+          status: string;
+          author: string;
+          initiated_by: string | null;
+          initiated_at: string | null;
+          reviewed_by: string | null;
+          reviewed_at: string | null;
+          published_by: string | null;
+          rejected_by: string | null;
+          rejected_at: string | null;
+          rejection_reason: string | null;
+          review_notes: string | null;
+          created_at: string;
+          updated_at: string;
+          published_at: string | null;
+          scheduled_for: string | null;
+          featured_image: string | null;
+          gallery: any;
+          categories: any;
+          tags: any;
+          seo_meta_title: string | null;
+          seo_meta_description: string | null;
+          seo_keywords: any;
+          seo_og_image: string | null;
+          allow_comments: boolean;
+          featured: boolean;
+          sticky: boolean;
+          word_count: number;
+          reading_time: number;
+          last_edited_by: string | null;
+          edit_lock_expires: string | null;
+          version_number: number;
+          parent_content_id: string | null;
+          content_template_id: string | null;
+          author_id: string | null;
+          last_edited_by_id: string | null;
+          initiated_by_id: string | null;
+          reviewed_by_id: string | null;
+          published_by_id: string | null;
+          rejected_by_id: string | null;
+        };
+        Insert: {
+          title: string;
+          slug: string;
+          content: string;
+          excerpt?: string | null;
+          type: string;
+          status?: string;
+          author: string;
+          initiated_by?: string | null;
+          initiated_at?: string | null;
+          reviewed_by?: string | null;
+          reviewed_at?: string | null;
+          published_by?: string | null;
+          rejected_by?: string | null;
+          rejected_at?: string | null;
+          rejection_reason?: string | null;
+          review_notes?: string | null;
+          published_at?: string | null;
+          scheduled_for?: string | null;
+          featured_image?: string | null;
+          gallery?: any;
+          categories?: any;
+          tags?: any;
+          seo_meta_title?: string | null;
+          seo_meta_description?: string | null;
+          seo_keywords?: any;
+          seo_og_image?: string | null;
+          allow_comments?: boolean;
+          featured?: boolean;
+          sticky?: boolean;
+          word_count?: number;
+          reading_time?: number;
+          last_edited_by?: string | null;
+          edit_lock_expires?: string | null;
+          version_number?: number;
+          parent_content_id?: string | null;
+          content_template_id?: string | null;
+          author_id?: string | null;
+          last_edited_by_id?: string | null;
+          initiated_by_id?: string | null;
+          reviewed_by_id?: string | null;
+          published_by_id?: string | null;
+          rejected_by_id?: string | null;
+        };
+        Update: {
+          title?: string;
+          slug?: string;
+          content?: string;
+          excerpt?: string | null;
+          type?: string;
+          status?: string;
+          author?: string;
+          initiated_by?: string | null;
+          initiated_at?: string | null;
+          reviewed_by?: string | null;
+          reviewed_at?: string | null;
+          published_by?: string | null;
+          rejected_by?: string | null;
+          rejected_at?: string | null;
+          rejection_reason?: string | null;
+          review_notes?: string | null;
+          published_at?: string | null;
+          scheduled_for?: string | null;
+          featured_image?: string | null;
+          gallery?: any;
+          categories?: any;
+          tags?: any;
+          seo_meta_title?: string | null;
+          seo_meta_description?: string | null;
+          seo_keywords?: any;
+          seo_og_image?: string | null;
+          allow_comments?: boolean;
+          featured?: boolean;
+          sticky?: boolean;
+          word_count?: number;
+          reading_time?: number;
+          last_edited_by?: string | null;
+          edit_lock_expires?: string | null;
+          version_number?: number;
+          parent_content_id?: string | null;
+          content_template_id?: string | null;
+          author_id?: string | null;
+          last_edited_by_id?: string | null;
+          initiated_by_id?: string | null;
+          reviewed_by_id?: string | null;
+          published_by_id?: string | null;
+          rejected_by_id?: string | null;
+        };
+      };
+      content_analytics: {
+        Row: {
+          id: string;
+          content_id: string | null;
+          metric_type: string;
+          metric_value: number;
+          user_id: string | null;
+          session_id: string | null;
+          ip_address: string | null;
+          user_agent: string | null;
+          referrer: string | null;
+          country: string | null;
+          device_type: string | null;
+          recorded_at: string;
+          user_id_uuid: string | null;
+        };
+        Insert: {
+          content_id?: string | null;
+          metric_type: string;
+          metric_value?: number;
+          user_id?: string | null;
+          session_id?: string | null;
+          ip_address?: string | null;
+          user_agent?: string | null;
+          referrer?: string | null;
+          country?: string | null;
+          device_type?: string | null;
+          user_id_uuid?: string | null;
+        };
+        Update: {
+          content_id?: string | null;
+          metric_type?: string;
+          metric_value?: number;
+          user_id?: string | null;
+          session_id?: string | null;
+          ip_address?: string | null;
+          user_agent?: string | null;
+          referrer?: string | null;
+          country?: string | null;
+          device_type?: string | null;
+          user_id_uuid?: string | null;
+        };
+      };
+      content_collaborators: {
+        Row: {
+          id: string;
+          content_id: string | null;
+          user_id: string;
+          user_name: string;
+          role: string;
+          permissions: any;
+          invited_by: string;
+          invited_at: string;
+          accepted_at: string | null;
+          last_active: string | null;
+          is_active: boolean;
+          collaborator_user_id: string | null;
+        };
+        Insert: {
+          content_id?: string | null;
+          user_id: string;
+          user_name: string;
+          role?: string;
+          permissions?: any;
+          invited_by: string;
+          invited_at?: string;
+          accepted_at?: string | null;
+          last_active?: string | null;
+          is_active?: boolean;
+          collaborator_user_id?: string | null;
+        };
+        Update: {
+          content_id?: string | null;
+          user_id?: string;
+          user_name?: string;
+          role?: string;
+          permissions?: any;
+          invited_by?: string;
+          invited_at?: string;
+          accepted_at?: string | null;
+          last_active?: string | null;
+          is_active?: boolean;
+          collaborator_user_id?: string | null;
+        };
+      };
+      content_comments: {
+        Row: {
+          id: string;
+          content_id: string | null;
+          parent_comment_id: string | null;
+          author_name: string;
+          author_id: string;
+          comment_text: string;
+          comment_type: string;
+          is_resolved: boolean;
+          resolved_by: string | null;
+          resolved_at: string | null;
+          created_at: string;
+          updated_at: string;
+          mentions: any;
+          author_user_id: string | null;
+          status: 'published' | 'pending' | 'approved' | 'rejected' | 'hidden';
+          is_pinned: boolean;
+          is_highlighted: boolean;
+          likes_count: number;
+          replies_count: number;
+          attachments: any;
+          ip_address: string | null;
+          user_agent: string | null;
+          edited_at: string | null;
+          moderated_by_id: string | null;
+          moderated_at: string | null;
+          moderation_reason: string | null;
+          author_avatar: string | null;
+          author_email: string;
+        };
+        Insert: {
+          content_id?: string | null;
+          parent_comment_id?: string | null;
+          author_name: string;
+          author_id: string;
+          comment_text: string;
+          comment_type?: string;
+          is_resolved?: boolean;
+          resolved_by?: string | null;
+          resolved_at?: string | null;
+          mentions?: any;
+          author_user_id?: string | null;
+          status?: 'published' | 'pending' | 'approved' | 'rejected' | 'hidden';
+          is_pinned?: boolean;
+          is_highlighted?: boolean;
+          likes_count?: number;
+          replies_count?: number;
+          attachments?: any;
+          ip_address?: string | null;
+          user_agent?: string | null;
+          moderated_by_id?: string | null;
+          moderated_at?: string | null;
+          moderation_reason?: string | null;
+          author_avatar?: string | null;
+          author_email?: string;
+        };
+        Update: {
+          content_id?: string | null;
+          parent_comment_id?: string | null;
+          author_name?: string;
+          author_id?: string;
+          comment_text?: string;
+          comment_type?: string;
+          is_resolved?: boolean;
+          resolved_by?: string | null;
+          resolved_at?: string | null;
+          mentions?: any;
+          author_user_id?: string | null;
+          status?: 'published' | 'pending' | 'approved' | 'rejected' | 'hidden';
+          is_pinned?: boolean;
+          is_highlighted?: boolean;
+          likes_count?: number;
+          replies_count?: number;
+          attachments?: any;
+          ip_address?: string | null;
+          user_agent?: string | null;
+          edited_at?: string | null;
+          moderated_by_id?: string | null;
+          moderated_at?: string | null;
+          moderation_reason?: string | null;
+          author_avatar?: string | null;
+          author_email: string;
+        };
+      };
+      content_locks: {
+        Row: {
+          id: string;
+          content_id: string | null;
+          locked_by: string;
+          locked_at: string;
+          expires_at: string;
+          lock_type: string;
+          session_id: string | null;
+          locked_by_id: string | null;
+        };
+        Insert: {
+          content_id?: string | null;
+          locked_by: string;
+          locked_at?: string;
+          expires_at?: string;
+          lock_type?: string;
+          session_id?: string | null;
+          locked_by_id?: string | null;
+        };
+        Update: {
+          content_id?: string | null;
+          locked_by?: string;
+          locked_at?: string;
+          expires_at?: string;
+          lock_type?: string;
+          session_id?: string | null;
+          locked_by_id?: string | null;
+        };
+      };
+      content_relationships: {
+        Row: {
+          id: string;
+          parent_content_id: string | null;
+          child_content_id: string | null;
+          relationship_type: string;
+          order_index: number;
+          created_at: string;
+          created_by: string;
+        };
+        Insert: {
+          parent_content_id?: string | null;
+          child_content_id?: string | null;
+          relationship_type: string;
+          order_index?: number;
+          created_by: string;
+        };
+        Update: {
+          parent_content_id?: string | null;
+          child_content_id?: string | null;
+          relationship_type?: string;
+          order_index?: number;
+          created_by?: string;
+        };
+      };
+      content_revisions: {
+        Row: {
+          id: string;
+          content_id: string | null;
+          revision_number: number;
+          title: string;
+          content: string;
+          excerpt: string | null;
+          changes_summary: string | null;
+          created_by: string;
+          created_at: string;
+          is_current: boolean;
+          diff_data: any | null;
+          word_count: number;
+          character_count: number;
+          created_by_id: string | null;
+        };
+        Insert: {
+          content_id?: string | null;
+          revision_number: number;
+          title: string;
+          content: string;
+          excerpt?: string | null;
+          changes_summary?: string | null;
+          created_by: string;
+          is_current?: boolean;
+          diff_data?: any | null;
+          word_count?: number;
+          character_count?: number;
+          created_by_id?: string | null;
+        };
+        Update: {
+          content_id?: string | null;
+          revision_number?: number;
+          title?: string;
+          content?: string;
+          excerpt?: string | null;
+          changes_summary?: string | null;
+          created_by?: string;
+          is_current?: boolean;
+          diff_data?: any | null;
+          word_count?: number;
+          character_count?: number;
+          created_by_id?: string | null;
+        };
+      };
+      content_schedule: {
+        Row: {
+          id: string;
+          content_id: string | null;
+          scheduled_action: string;
+          scheduled_for: string;
+          scheduled_by: string;
+          scheduled_at: string;
+          executed_at: string | null;
+          execution_status: string;
+          error_message: string | null;
+          metadata: any;
+          scheduled_by_id: string | null;
+        };
+        Insert: {
+          content_id?: string | null;
+          scheduled_action: string;
+          scheduled_for: string;
+          scheduled_by: string;
+          scheduled_at?: string;
+          executed_at?: string | null;
+          execution_status?: string;
+          error_message?: string | null;
+          metadata?: any;
+          scheduled_by_id?: string | null;
+        };
+        Update: {
+          content_id?: string | null;
+          scheduled_action?: string;
+          scheduled_for?: string;
+          scheduled_by?: string;
+          scheduled_at?: string;
+          executed_at?: string | null;
+          execution_status?: string;
+          error_message?: string | null;
+          metadata?: any;
+          scheduled_by_id?: string | null;
+        };
+      };
+      content_templates: {
+        Row: {
+          id: string;
+          name: string;
+          description: string | null;
+          content_type: string;
+          template_content: string;
+          template_fields: any;
+          category: string | null;
+          tags: any;
+          is_public: boolean;
+          created_by: string;
+          created_at: string;
+          updated_at: string;
+          usage_count: number;
+          key: string | null;
+          created_by_id: string | null;
+        };
+        Insert: {
+          name: string;
+          description?: string | null;
+          content_type: string;
+          template_content: string;
+          template_fields?: any;
+          category?: string | null;
+          tags?: any;
+          is_public?: boolean;
+          created_by: string;
+          usage_count?: number;
+          key?: string | null;
+          created_by_id?: string | null;
+        };
+        Update: {
+          name?: string;
+          description?: string | null;
+          content_type?: string;
+          template_content?: string;
+          template_fields?: any;
+          category?: string | null;
+          tags?: any;
+          is_public?: boolean;
+          created_by?: string;
+          usage_count?: number;
+          key?: string | null;
+          created_by_id?: string | null;
+        };
+      };
+      donations: {
+        Row: {
+          id: string;
+          donor_name: string | null;
+          donor_email: string | null;
+          phone: string | null;
+          address: string | null;
+          amount: number;
+          currency: string;
+          frequency: string;
+          payment_method: string;
+          designation: string;
+          custom_designation: string | null;
+          newsletter_signup: boolean;
+          anonymous_donation: boolean;
+          notes: string | null;
+          dedication_name: string | null;
+          dedication_message: string | null;
+          payment_status: string;
+          transaction_id: string | null;
+          donation_date: string;
+        };
+        Insert: {
+          donor_name?: string | null;
+          donor_email?: string | null;
+          phone?: string | null;
+          address?: string | null;
+          amount: number;
+          currency?: string;
+          frequency?: string;
+          payment_method: string;
+          designation?: string;
+          custom_designation?: string | null;
+          newsletter_signup?: boolean;
+          anonymous_donation?: boolean;
+          notes?: string | null;
+          dedication_name?: string | null;
+          dedication_message?: string | null;
+          payment_status?: string;
+          transaction_id?: string | null;
+        };
+        Update: {
+          donor_name?: string | null;
+          donor_email?: string | null;
+          phone?: string | null;
+          address?: string | null;
+          amount?: number;
+          currency?: string;
+          frequency?: string;
+          payment_method?: string;
+          designation?: string;
+          custom_designation?: string | null;
+          newsletter_signup?: boolean;
+          anonymous_donation?: boolean;
+          notes?: string | null;
+          dedication_name?: string | null;
+          dedication_message?: string | null;
+          payment_status?: string;
+          transaction_id?: string | null;
+        };
+      };
+      form_fields: {
+        Row: {
+          id: string;
+          page_id: string;
+          field_type: string;
+          label: string;
+          placeholder: string | null;
+          required: boolean;
+          options: any;
+          validation_rules: any;
+          order_index: number;
+          is_active: boolean;
+          status: string;
+          created_at: string;
+          updated_at: string;
+          updated_by: string;
+          updated_by_id: string | null;
+        };
+        Insert: {
+          page_id: string;
+          field_type: string;
+          label: string;
+          placeholder?: string | null;
+          required?: boolean;
+          options?: any;
+          validation_rules?: any;
+          order_index?: number;
+          is_active?: boolean;
+          status?: string;
+          updated_by: string;
+          updated_by_id?: string | null;
+        };
+        Update: {
+          page_id?: string;
+          field_type?: string;
+          label?: string;
+          placeholder?: string | null;
+          required?: boolean;
+          options?: any;
+          validation_rules?: any;
+          order_index?: number;
+          is_active?: boolean;
+          status?: string;
+          updated_by?: string;
+          updated_by_id?: string | null;
+        };
+      };
+      form_submissions: {
+        Row: {
+          id: string;
+          page_id: string;
+          form_data: any;
+          submitted_at: string;
+          status: string;
+          reviewed_by: string | null;
+          reviewed_at: string | null;
+          notes: string | null;
+          reviewed_by_id: string | null;
+        };
+        Insert: {
+          page_id: string;
+          form_data: any;
+          status?: string;
+          reviewed_by?: string | null;
+          reviewed_at?: string | null;
+          notes?: string | null;
+          reviewed_by_id?: string | null;
+        };
+        Update: {
+          page_id?: string;
+          form_data?: any;
+          status?: string;
+          reviewed_by?: string | null;
+          reviewed_at?: string | null;
+          notes?: string | null;
+          reviewed_by_id?: string | null;
+        };
+      };
+      media: {
+        Row: {
+          id: string;
+          filename: string;
+          original_name: string;
+          url: string;
+          type: string;
+          size: number;
+          width: number | null;
+          height: number | null;
+          alt: string;
+          caption: string;
+          uploaded_at: string;
+          uploaded_by: string;
+          tags: any;
+          metadata: any;
+          usage_count: number;
+          last_used_at: string | null;
+          storage_path: string | null;
+          thumbnail_url: string | null;
+          uploaded_by_id: string | null;
+        };
+        Insert: {
+          filename: string;
+          original_name: string;
+          url: string;
+          type: string;
+          size: number;
+          width?: number | null;
+          height?: number | null;
+          alt?: string;
+          caption?: string;
+          uploaded_by: string;
+          tags?: any;
+          metadata?: any;
+          usage_count?: number;
+          last_used_at?: string | null;
+          storage_path?: string | null;
+          thumbnail_url?: string | null;
+          uploaded_by_id?: string | null;
+        };
+        Update: {
+          filename?: string;
+          original_name?: string;
+          url?: string;
+          type?: string;
+          size?: number;
+          width?: number | null;
+          height?: number | null;
+          alt?: string;
+          caption?: string;
+          uploaded_by?: string;
+          tags?: any;
+          metadata?: any;
+          usage_count?: number;
+          last_used_at?: string | null;
+          storage_path?: string | null;
+          thumbnail_url?: string | null;
+          uploaded_by_id?: string | null;
+        };
+      };
+      membership_applications: {
+        Row: {
+          id: string;
+          first_name: string;
+          last_name: string;
+          email: string;
+          phone: string;
+          father_name: string | null;
+          mother_name: string | null;
+          photo_url: string | null;
+          photo_filename: string | null;
+          gender: string | null;
+          date_of_birth: string | null;
+          nationality: string | null;
+          marital_status: string | null;
+          country: string | null;
+          district: string | null;
+          sector: string | null;
+          cell: string | null;
+          village: string | null;
+          postal_code: string | null;
+          occupation: string | null;
+          education: string | null;
+          organization: string | null;
+          work_experience: string | null;
+          languages: any;
+          english_level: string | null;
+          french_level: string | null;
+          kinyarwanda_level: string | null;
+          other_languages: string | null;
+          interests: any;
+          other_interests: string | null;
+          why_join: string | null;
+          skills: any;
+          other_skills: string | null;
+          financial_support: any;
+          time_commitment: string | null;
+          membership_category: string | null;
+          reference1_name: string | null;
+          reference1_contact: string | null;
+          reference1_relationship: string | null;
+          reference2_name: string | null;
+          reference2_contact: string | null;
+          reference2_relationship: string | null;
+          data_consent: boolean;
+          terms_accepted: boolean;
+          code_of_conduct_accepted: boolean;
+          communication_consent: boolean;
+          submission_date: string;
+          status: string;
+        };
+        Insert: {
+          first_name: string;
+          last_name: string;
+          email: string;
+          phone: string;
+          father_name?: string | null;
+          mother_name?: string | null;
+          gender?: string | null;
+          date_of_birth?: string | null;
+          nationality?: string | null;
+          marital_status?: string | null;
+          country?: string | null;
+          district?: string | null;
+          sector?: string | null;
+          cell?: string | null;
+          village?: string | null;
+          postal_code?: string | null;
+          occupation?: string | null;
+          education?: string | null;
+          organization?: string | null;
+          work_experience?: string | null;
+          languages?: any;
+          english_level?: string | null;
+          french_level?: string | null;
+          kinyarwanda_level?: string | null;
+          other_languages?: string | null;
+          interests?: any;
+          other_interests?: string | null;
+          why_join?: string | null;
+          skills?: any;
+          other_skills?: string | null;
+          financial_support?: any;
+          time_commitment?: string | null;
+          membership_category?: string | null;
+          reference1_name?: string | null;
+          reference1_contact?: string | null;
+          reference1_relationship?: string | null;
+          reference2_name?: string | null;
+          reference2_contact?: string | null;
+          reference2_relationship?: string | null;
+          data_consent?: boolean;
+          terms_accepted?: boolean;
+          code_of_conduct_accepted?: boolean;
+          communication_consent?: boolean;
+          status?: string;
+        };
+        Update: {
+          first_name?: string;
+          last_name?: string;
+          email?: string;
+          phone?: string;
+          gender?: string | null;
+          date_of_birth?: string | null;
+          nationality?: string | null;
+          marital_status?: string | null;
+          country?: string | null;
+          district?: string | null;
+          sector?: string | null;
+          cell?: string | null;
+          village?: string | null;
+          postal_code?: string | null;
+          occupation?: string | null;
+          education?: string | null;
+          organization?: string | null;
+          work_experience?: string | null;
+          languages?: any;
+          english_level?: string | null;
+          french_level?: string | null;
+          kinyarwanda_level?: string | null;
+          other_languages?: string | null;
+          interests?: any;
+          other_interests?: string | null;
+          why_join?: string | null;
+          skills?: any;
+          other_skills?: string | null;
+          financial_support?: any;
+          time_commitment?: string | null;
+          membership_category?: string | null;
+          reference1_name?: string | null;
+          reference1_contact?: string | null;
+          reference1_relationship?: string | null;
+          reference2_name?: string | null;
+          reference2_contact?: string | null;
+          reference2_relationship?: string | null;
+          data_consent?: boolean;
+          terms_accepted?: boolean;
+          code_of_conduct_accepted?: boolean;
+          communication_consent?: boolean;
+          status?: string;
+        };
+      };
+      moderation_logs: {
+        Row: {
+          id: string;
+          moderator_id: string | null;
+          moderator_name: string;
+          action: 'approve' | 'reject' | 'hide' | 'delete' | 'warn' | 'ban' | 'unban';
+          resource_type: string;
+          resource_id: string;
+          reason: string | null;
+          details: any;
+          created_at: string;
+          metadata: any;
+        };
+        Insert: {
+          moderator_id?: string | null;
+          moderator_name: string;
+          action: 'approve' | 'reject' | 'hide' | 'delete' | 'warn' | 'ban' | 'unban';
+          resource_type: string;
+          resource_id: string;
+          reason?: string | null;
+          details?: any;
+          metadata?: any;
+        };
+        Update: {
+          moderator_id?: string | null;
+          moderator_name?: string;
+          action?: 'approve' | 'reject' | 'hide' | 'delete' | 'warn' | 'ban' | 'unban';
+          resource_type?: string;
+          resource_id?: string;
+          reason?: string | null;
+          details?: any;
+          metadata?: any;
+        };
+      };
+      notification_queue: {
+        Row: {
+          id: number;
+          topic: string;
+          ref_table: string;
+          ref_id: string | null;
+          payload: any;
+          status: string;
+          attempts: number;
+          last_error: string | null;
+          scheduled_at: string;
+          processed_at: string | null;
+          created_at: string;
+          is_archived: number | null;
+          recipient_id: number | null;
+          is_read: number | null;
+          priority: string | null;
+        };
+        Insert: {
+          topic: string;
+          ref_table: string;
+          ref_id?: string | null;
+          payload?: any;
+          status?: string;
+          attempts?: number;
+          last_error?: string | null;
+          scheduled_at?: string;
+          processed_at?: string | null;
+          is_archived?: number | null;
+          recipient_id?: number | null;
+          is_read?: number | null;
+          priority?: string | null;
+        };
+        Update: {
+          topic?: string;
+          ref_table?: string;
+          ref_id?: string | null;
+          payload?: any;
+          status?: string;
+          attempts?: number;
+          last_error?: string | null;
+          scheduled_at?: string;
+          processed_at?: string | null;
+          is_archived?: number | null;
+          recipient_id?: number | null;
+          is_read?: number | null;
+          priority?: string | null;
+        };
+      };
+      page_content: {
+        Row: {
+          id: string;
+          page_id: string;
+          section_id: string;
+          title: string;
+          content: string;
+          image_url: string | null;
+          order_index: number;
+          is_active: boolean;
+          updated_at: string;
+          updated_by: string;
+          updated_by_id: string | null;
+        };
+        Insert: {
+          page_id: string;
+          section_id: string;
+          title: string;
+          content: string;
+          image_url?: string | null;
+          order_index?: number;
+          is_active?: boolean;
+          updated_by: string;
+          updated_by_id?: string | null;
+        };
+        Update: {
+          page_id?: string;
+          section_id?: string;
+          title?: string;
+          content?: string;
+          image_url?: string | null;
+          order_index?: number;
+          is_active?: boolean;
+          updated_by?: string;
+          updated_by_id?: string | null;
+        };
+      };
+      partnership_applications: {
+        Row: {
+          id: string;
+          organization_name: string;
+          organization_type: string | null;
+          organization_size: string | null;
+          founded_year: number | null;
+          registration_number: string | null;
+          website: string | null;
+          contact_person: string;
+          title: string | null;
+          email: string;
+          phone: string;
+          alternate_contact: string | null;
+          alternate_email: string | null;
+          headquarters: string | null;
+          operating_countries: any;
+          location: string | null;
+          description: string | null;
+          mission: string | null;
+          current_programs: string | null;
+          target_beneficiaries: string | null;
+          annual_budget: string | null;
+          partnership_type: any;
+          other_partnership_type: string | null;
+          resources: any;
+          other_resources: string | null;
+          goals: string | null;
+          timeline: string | null;
+          expected_outcomes: string | null;
+          success_metrics: string | null;
+          previous_partnerships: string | null;
+          organizational_capacity: string | null;
+          financial_contribution: string | null;
+          legal_requirements: string | null;
+          expectations: string | null;
+          commitments: string | null;
+          data_consent: boolean;
+          terms_accepted: boolean;
+          due_diligence_consent: boolean;
+          submission_date: string;
+          status: string;
+        };
+        Insert: {
+          organization_name: string;
+          contact_person: string;
+          email: string;
+          phone: string;
+          organization_type?: string | null;
+          organization_size?: string | null;
+          founded_year?: number | null;
+          registration_number?: string | null;
+          website?: string | null;
+          title?: string | null;
+          alternate_contact?: string | null;
+          alternate_email?: string | null;
+          headquarters?: string | null;
+          operating_countries?: any;
+          location?: string | null;
+          description?: string | null;
+          mission?: string | null;
+          current_programs?: string | null;
+          target_beneficiaries?: string | null;
+          annual_budget?: string | null;
+          partnership_type?: any;
+          other_partnership_type?: string | null;
+          resources?: any;
+          other_resources?: string | null;
+          goals?: string | null;
+          timeline?: string | null;
+          expected_outcomes?: string | null;
+          success_metrics?: string | null;
+          previous_partnerships?: string | null;
+          organizational_capacity?: string | null;
+          financial_contribution?: string | null;
+          legal_requirements?: string | null;
+          expectations?: string | null;
+          commitments?: string | null;
+          data_consent?: boolean;
+          terms_accepted?: boolean;
+          due_diligence_consent?: boolean;
+          status?: 'pending' | 'approved' | 'rejected' | 'waitlist';
+        };
+        Update: {
+          organization_name?: string;
+          organization_type?: string | null;
+          organization_size?: string | null;
+          founded_year?: number | null;
+          registration_number?: string | null;
+          website?: string | null;
+          contact_person?: string;
+          title?: string | null;
+          email?: string;
+          phone?: string;
+          alternate_contact?: string | null;
+          alternate_email?: string | null;
+          headquarters?: string | null;
+          operating_countries?: any;
+          location?: string | null;
+          description?: string | null;
+          mission?: string | null;
+          current_programs?: string | null;
+          target_beneficiaries?: string | null;
+          annual_budget?: string | null;
+          partnership_type?: any;
+          other_partnership_type?: string | null;
+          resources?: any;
+          other_resources?: string | null;
+          goals?: string | null;
+          timeline?: string | null;
+          expected_outcomes?: string | null;
+          success_metrics?: string | null;
+          previous_partnerships?: string | null;
+          organizational_capacity?: string | null;
+          financial_contribution?: string | null;
+          legal_requirements?: string | null;
+          expectations?: string | null;
+          commitments?: string | null;
+          data_consent?: boolean;
+          terms_accepted?: boolean;
+          due_diligence_consent?: boolean;
+          status?: 'pending' | 'approved' | 'rejected' | 'waitlist';
+        };
+      };
+      permission_categories: {
+        Row: {
+          id: string;
+          name: string;
+          description: string | null;
+          icon: string;
+          color: string;
+          order_index: number;
+        };
+        Insert: {
+          id: string;
+          name: string;
+          description?: string | null;
+          icon?: string;
+          color?: string;
+          order_index?: number;
+        };
+        Update: {
+          id?: string;
+          name?: string;
+          description?: string | null;
+          icon?: string;
+          color?: string;
+          order_index?: number;
+        };
+      };
+      permissions: {
+        Row: {
+          id: string;
+          name: string;
+          description: string | null;
+          category_id: string;
+          action: string;
+          resource: string;
+          is_system_permission: boolean;
+          order_index: number;
+        };
+        Insert: {
+          id: string;
+          name: string;
+          description?: string | null;
+          category_id: string;
+          action: string;
+          resource: string;
+          is_system_permission?: boolean;
+          order_index?: number;
+        };
+        Update: {
+          id?: string;
+          name?: string;
+          description?: string | null;
+          category_id?: string;
+          action?: string;
+          resource?: string;
+          is_system_permission?: boolean;
+          order_index?: number;
+        };
+      };
+      profiles: {
+        Row: {
+          id: number;
+          user_id: string;
+          full_name: string | null;
+          role: string;
+          avatar_url: string | null;
+          groups: any;
+          custom_permissions: any;
+          last_login: string | null;
+          created_at: string;
+          is_active: boolean;
+          is_super_admin: boolean;
+          name: string | null;
+          cached_email: string | null;
+          department: string | null;
+          position: string | null;
+          employee_id: string | null;
+          phone: string | null;
+          address: string | null;
+          emergency_contact: string | null;
+          emergency_phone: string | null;
+          bio: string | null;
+          date_of_birth: string | null;
+          gender: string | null;
+          nationality: string | null;
+          languages: any;
+          preferences: any;
+          notification_settings: any;
+          privacy_settings: any;
+          theme_preferences: any;
+          email_verified: boolean;
+          phone_verified: boolean;
+          two_factor_enabled: boolean;
+          security_questions: any;
+          login_count: number;
+          last_ip_address: string | null;
+          last_user_agent: string | null;
+          session_data: any;
+          last_activity_at: string;
+          profile_completed: boolean;
+          profile_completion_percentage: number;
+          onboarding_completed: boolean;
+          terms_accepted_at: string | null;
+          privacy_policy_accepted_at: string | null;
+          password_changed_at: string | null;
+          access_level: number;
+          approval_level: number;
+          form_access_permissions: any;
+          content_access_permissions: any;
+          admin_access_permissions: any;
+          workflow_permissions: any;
+          assigned_forms: any;
+          metadata: any;
+          custom_fields: any;
+          notes: string | null;
+          updated_at: string;
+          website: string | null;
+          social_links: any;
+          hire_date: string | null;
+          manager_id: number | null;
+          location: string | null;
+          timezone: string;
+          language_preference: string;
+          notification_preferences: any;
+          assigned_categories: any;
+          assigned_regions: any;
+        };
+        Insert: {
+          user_id: string;
+          role?: string;
+          groups?: any;
+          custom_permissions?: any;
+          is_active?: boolean;
+          is_super_admin?: boolean;
+          full_name?: string | null;
+          avatar_url?: string | null;
+          last_login?: string | null;
+          name?: string | null;
+          cached_email?: string | null;
+          department?: string | null;
+          position?: string | null;
+          employee_id?: string | null;
+          phone?: string | null;
+          address?: string | null;
+          emergency_contact?: string | null;
+          emergency_phone?: string | null;
+          bio?: string | null;
+          date_of_birth?: string | null;
+          gender?: string | null;
+          nationality?: string | null;
+          languages?: any;
+          preferences?: any;
+          notification_settings?: any;
+          privacy_settings?: any;
+          theme_preferences?: any;
+          email_verified?: boolean;
+          phone_verified?: boolean;
+          two_factor_enabled?: boolean;
+          security_questions?: any;
+          login_count?: number;
+          last_ip_address?: string | null;
+          last_user_agent?: string | null;
+          session_data?: any;
+          last_activity_at?: string;
+          profile_completed?: boolean;
+          profile_completion_percentage?: number;
+          onboarding_completed?: boolean;
+          terms_accepted_at?: string | null;
+          privacy_policy_accepted_at?: string | null;
+          password_changed_at?: string | null;
+          access_level?: number;
+          approval_level?: number;
+          form_access_permissions?: any;
+          content_access_permissions?: any;
+          admin_access_permissions?: any;
+          workflow_permissions?: any;
+          assigned_forms?: any;
+          metadata?: any;
+          custom_fields?: any;
+          notes?: string | null;
+          website?: string | null;
+          social_links?: any;
+          hire_date?: string | null;
+          manager_id?: number | null;
+          location?: string | null;
+          timezone?: string;
+          language_preference?: string;
+          notification_preferences?: any;
+          assigned_categories?: any;
+          assigned_regions?: any;
+        };
+        Update: {
+          user_id?: string;
+          role?: string;
+          groups?: any;
+          custom_permissions?: any;
+          is_active?: boolean;
+          is_super_admin?: boolean;
+          full_name?: string | null;
+          avatar_url?: string | null;
+          last_login?: string | null;
+          name?: string | null;
+          cached_email?: string | null;
+          department?: string | null;
+          position?: string | null;
+          employee_id?: string | null;
+          phone?: string | null;
+          address?: string | null;
+          emergency_contact?: string | null;
+          emergency_phone?: string | null;
+          bio?: string | null;
+          date_of_birth?: string | null;
+          gender?: string | null;
+          nationality?: string | null;
+          languages?: any;
+          preferences?: any;
+          notification_settings?: any;
+          privacy_settings?: any;
+          theme_preferences?: any;
+          email_verified?: boolean;
+          phone_verified?: boolean;
+          two_factor_enabled?: boolean;
+          security_questions?: any;
+          login_count?: number;
+          last_ip_address?: string | null;
+          last_user_agent?: string | null;
+          session_data?: any;
+          last_activity_at?: string;
+          profile_completed?: boolean;
+          profile_completion_percentage?: number;
+          onboarding_completed?: boolean;
+          terms_accepted_at?: string | null;
+          privacy_policy_accepted_at?: string | null;
+          password_changed_at?: string | null;
+          access_level?: number;
+          approval_level?: number;
+          form_access_permissions?: any;
+          content_access_permissions?: any;
+          admin_access_permissions?: any;
+          workflow_permissions?: any;
+          assigned_forms?: any;
+          metadata?: any;
+          custom_fields?: any;
+          notes?: string | null;
+          website?: string | null;
+          social_links?: any;
+          hire_date?: string | null;
+          manager_id?: number | null;
+          location?: string | null;
+          timezone?: string;
+          language_preference?: string;
+          notification_preferences?: any;
+          assigned_categories?: any;
+          assigned_regions?: any;
+        };
+      };
+      roles: {
+        Row: {
+          id: string;
+          name: string;
+          description: string | null;
+          permissions: any;
+          parent_role_id: string | null;
+          color: string;
+          order_index: number;
+          is_active: boolean;
+          is_system_role: boolean;
+          created_at: string;
+          updated_at: string;
+          created_by: string;
+        };
+        Insert: {
+          id: string;
+          name: string;
+          description?: string | null;
+          permissions?: any;
+          parent_role_id?: string | null;
+          color?: string;
+          order_index?: number;
+          is_active?: boolean;
+          is_system_role?: boolean;
+          created_by: string;
+        };
+        Update: {
+          id?: string;
+          name?: string;
+          description?: string | null;
+          permissions?: any;
+          parent_role_id?: string | null;
+          color?: string;
+          order_index?: number;
+          is_active?: boolean;
+          is_system_role?: boolean;
+          created_by?: string;
+        };
+      };
+      search_analytics: {
+        Row: {
+          id: string;
+          query: string;
+          results_count: number;
+          user_id: string | null;
+          session_id: string | null;
+          clicked_result_id: string | null;
+          search_time: string;
+          response_time_ms: number | null;
+          filters_used: any;
+          metadata: any;
+        };
+        Insert: {
+          query: string;
+          results_count?: number;
+          user_id?: string | null;
+          session_id?: string | null;
+          clicked_result_id?: string | null;
+          response_time_ms?: number | null;
+          filters_used?: any;
+          metadata?: any;
+        };
+        Update: {
+          query?: string;
+          results_count?: number;
+          user_id?: string | null;
+          session_id?: string | null;
+          clicked_result_id?: string | null;
+          response_time_ms?: number | null;
+          filters_used?: any;
+          metadata?: any;
+        };
+      };
+      settings: {
+        Row: {
+          key: string;
+          value: string;
+          updated_at: string;
+          updated_by: string | null;
+        };
+        Insert: {
+          key: string;
+          value: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          key?: string;
+          value?: string;
+          updated_by?: string | null;
+        };
+      };
+      suggestions: {
+        Row: {
+          id: string;
+          content_id: string | null;
+          user_id: string | null;
+          suggestion_type: 'improvement' | 'correction' | 'enhancement' | 'translation' | 'seo';
+          original_text: string | null;
+          suggested_text: string;
+          reason: string | null;
+          confidence_score: number;
+          status: 'pending' | 'accepted' | 'rejected' | 'implemented';
+          reviewed_by: string | null;
+          reviewed_at: string | null;
+          created_at: string;
+          metadata: any;
+        };
+        Insert: {
+          content_id?: string | null;
+          user_id?: string | null;
+          suggestion_type?: 'improvement' | 'correction' | 'enhancement' | 'translation' | 'seo';
+          original_text?: string | null;
+          suggested_text: string;
+          reason?: string | null;
+          confidence_score?: number;
+          status?: 'pending' | 'accepted' | 'rejected' | 'implemented';
+          reviewed_by?: string | null;
+          reviewed_at?: string | null;
+          metadata?: any;
+        };
+        Update: {
+          content_id?: string | null;
+          user_id?: string | null;
+          suggestion_type?: 'improvement' | 'correction' | 'enhancement' | 'translation' | 'seo';
+          original_text?: string | null;
+          suggested_text?: string;
+          reason?: string | null;
+          confidence_score?: number;
+          status?: 'pending' | 'accepted' | 'rejected' | 'implemented';
+          reviewed_by?: string | null;
+          reviewed_at?: string | null;
+          metadata?: any;
+        };
+      };
+      tags: {
+        Row: {
+          id: string;
+          name: string;
+          slug: string;
+          color: string;
+          count: number;
+          created_at: string;
+        };
+        Insert: {
+          name: string;
+          slug: string;
+          color: string;
+          count?: number;
+        };
+        Update: {
+          name?: string;
+          slug?: string;
+          color?: string;
+          count?: number;
+        };
+      };
+      user_groups: {
+        Row: {
+          id: string;
+          name: string;
+          description: string | null;
+          color: string;
+          roles: any;
+          permissions: any;
+          parent_group_id: string | null;
+          order_index: number;
+          is_active: boolean;
+          created_at: string;
+          updated_at: string;
+          created_by: string;
+        };
+        Insert: {
+          name: string;
+          description?: string | null;
+          color?: string;
+          roles?: any;
+          permissions?: any;
+          parent_group_id?: string | null;
+          order_index?: number;
+          is_active?: boolean;
+          created_by: string;
+        };
+        Update: {
+          name?: string;
+          description?: string | null;
+          color?: string;
+          roles?: any;
+          permissions?: any;
+          parent_group_id?: string | null;
+          order_index?: number;
+          is_active?: boolean;
+          created_by?: string;
+        };
+      };
+      user_notifications: {
+        Row: {
+          id: string;
+          recipient_id: string | null;
+          sender_id: string | null;
+          type: 'comment' | 'reply' | 'mention' | 'like' | 'chat' | 'system' | 'admin';
+          title: string;
+          message: string;
+          data: any;
+          is_read: boolean;
+          is_archived: boolean;
+          priority: 'low' | 'normal' | 'high' | 'urgent';
+          created_at: string;
+          read_at: string | null;
+          expires_at: string | null;
+        };
+        Insert: {
+          recipient_id?: string | null;
+          sender_id?: string | null;
+          type: 'comment' | 'reply' | 'mention' | 'like' | 'chat' | 'system' | 'admin';
+          title: string;
+          message: string;
+          data?: any;
+          is_read?: boolean;
+          is_archived?: boolean;
+          priority?: 'low' | 'normal' | 'high' | 'urgent';
+          read_at?: string | null;
+          expires_at?: string | null;
+        };
+        Update: {
+          recipient_id?: string | null;
+          sender_id?: string | null;
+          type?: 'comment' | 'reply' | 'mention' | 'like' | 'chat' | 'system' | 'admin';
+          title?: string;
+          message?: string;
+          data?: any;
+          is_read?: boolean;
+          is_archived?: boolean;
+          priority?: 'low' | 'normal' | 'high' | 'urgent';
+          read_at?: string | null;
+          expires_at?: string | null;
+        };
+      };
+      volunteer_applications: {
+        Row: {
+          id: string;
+          first_name: string;
+          last_name: string;
+          email: string;
+          phone: string;
+          location: string | null;
+          date_of_birth: string | null;
+          gender: string | null;
+          program_interests: any;
+          other_interests: string | null;
+          nationality: string | null;
+          id_number: string | null;
+          passport_number: string | null;
+          work_permit: string | null;
+          address: string | null;
+          emergency_contact: string | null;
+          emergency_phone: string | null;
+          education: string | null;
+          occupation: string | null;
+          experience: string | null;
+          languages: any;
+          other_languages: string | null;
+          health_conditions: string | null;
+          medications: string | null;
+          reference_info: string | null;
+          availability: any;
+          start_date: string | null;
+          duration: string | null;
+          hours_per_week: string | null;
+          skills: any;
+          other_skills: string | null;
+          background_check: boolean;
+          agreement: boolean;
+          data_consent: boolean;
+          contract_type: string | null;
+          submission_date: string;
+          status: 'pending' | 'approved' | 'rejected' | 'waitlist';
+        };
+        Insert: {
+          first_name: string;
+          last_name: string;
+          email: string;
+          phone: string;
+          location?: string | null;
+          date_of_birth?: string | null;
+          gender?: string | null;
+          program_interests?: any;
+          other_interests?: string | null;
+          nationality?: string | null;
+          id_number?: string | null;
+          passport_number?: string | null;
+          work_permit?: string | null;
+          address?: string | null;
+          emergency_contact?: string | null;
+          emergency_phone?: string | null;
+          education?: string | null;
+          occupation?: string | null;
+          experience?: string | null;
+          languages?: any;
+          other_languages?: string | null;
+          health_conditions?: string | null;
+          medications?: string | null;
+          reference_info?: string | null;
+          availability?: any;
+          start_date?: string | null;
+          duration?: string | null;
+          hours_per_week?: string | null;
+          skills?: any;
+          other_skills?: string | null;
+          background_check?: boolean;
+          agreement?: boolean;
+          data_consent?: boolean;
+          contract_type?: string | null;
+          status?: 'pending' | 'approved' | 'rejected' | 'waitlist';
+        };
+        Update: {
+          first_name?: string;
+          last_name?: string;
+          email?: string;
+          phone?: string;
+          location?: string | null;
+          date_of_birth?: string | null;
+          gender?: string | null;
+          program_interests?: any;
+          other_interests?: string | null;
+          nationality?: string | null;
+          id_number?: string | null;
+          passport_number?: string | null;
+          work_permit?: string | null;
+          address?: string | null;
+          emergency_contact?: string | null;
+          emergency_phone?: string | null;
+          education?: string | null;
+          occupation?: string | null;
+          experience?: string | null;
+          languages?: any;
+          other_languages?: string | null;
+          health_conditions?: string | null;
+          medications?: string | null;
+          reference_info?: string | null;
+          availability?: any;
+          start_date?: string | null;
+          duration?: string | null;
+          hours_per_week?: string | null;
+          skills?: any;
+          other_skills?: string | null;
+          background_check?: boolean;
+          agreement?: boolean;
+          data_consent?: boolean;
+          contract_type?: string | null;
+          status?: string;
+        };
+      };
+      workflow_logs: {
+        Row: {
+          id: string;
+          content_id: string | null;
+          action: string;
+          from_status: string | null;
+          to_status: string | null;
+          performed_by: string;
+          performed_at: string;
+          notes: string | null;
+          metadata: any;
+          ip_address: string | null;
+          user_agent: string | null;
+          performed_by_id: string | null;
+        };
+        Insert: {
+          content_id?: string | null;
+          action: string;
+          from_status?: string | null;
+          to_status?: string | null;
+          performed_by: string;
+          notes?: string | null;
+          metadata?: any;
+          ip_address?: string | null;
+          user_agent?: string | null;
+          performed_by_id?: string | null;
+        };
+        Update: {
+          content_id?: string | null;
+          action?: string;
+          from_status?: string | null;
+          to_status?: string | null;
+          performed_by?: string;
+          notes?: string | null;
+          metadata?: any;
+          ip_address?: string | null;
+          user_agent?: string | null;
+          performed_by_id?: string | null;
+        };
+      };
+      philosophy_cafe_applications: {
+        Row: {
+          id: string;
+          first_name: string;
+          last_name: string;
+          email: string;
+          phone: string;
+          age: number;
+          school_grade: string | null;
+          previous_experience: string | null;
+          why_join: string;
+          availability: string[];
+          questions: string | null;
+          data_consent: boolean;
+          terms_accepted: boolean;
+          submission_date: string;
+          status: string;
+          reviewed_by: string | null;
+          reviewed_at: string | null;
+          review_notes: string | null;
+          contacted_at: string | null;
+          contacted_by: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          first_name: string;
+          last_name: string;
+          email: string;
+          phone: string;
+          age: number;
+          school_grade?: string | null;
+          previous_experience?: string | null;
+          why_join: string;
+          availability?: string[];
+          questions?: string | null;
+          data_consent?: boolean;
+          terms_accepted?: boolean;
+          submission_date?: string;
+          status?: string;
+          reviewed_by?: string | null;
+          reviewed_at?: string | null;
+          review_notes?: string | null;
+          contacted_at?: string | null;
+          contacted_by?: string | null;
+        };
+        Update: {
+          first_name?: string;
+          last_name?: string;
+          email?: string;
+          phone?: string;
+          age?: number;
+          school_grade?: string | null;
+          previous_experience?: string | null;
+          why_join?: string;
+          availability?: string[];
+          questions?: string | null;
+          data_consent?: boolean;
+          terms_accepted?: boolean;
+          submission_date?: string;
+          status?: string;
+          reviewed_by?: string | null;
+          reviewed_at?: string | null;
+          review_notes?: string | null;
+          contacted_at?: string | null;
+          contacted_by?: string | null;
+        };
+      };
+      leadership_ethics_workshop_registrations: {
+        Row: {
+          id: string;
+          first_name: string;
+          last_name: string;
+          email: string;
+          phone: string;
+          age: number;
+          education_level: string | null;
+          current_role: string | null;
+          organization: string | null;
+          leadership_experience: string | null;
+          why_attend: string;
+          expectations: string | null;
+          time_commitment: string | null;
+          questions: string | null;
+          data_consent: boolean;
+          terms_accepted: boolean;
+          submission_date: string;
+          status: string;
+        };
+        Insert: {
+          first_name: string;
+          last_name: string;
+          email: string;
+          phone: string;
+          age: number;
+          education_level?: string | null;
+          current_role?: string | null;
+          organization?: string | null;
+          leadership_experience?: string | null;
+          why_attend: string;
+          expectations?: string | null;
+          time_commitment?: string | null;
+          questions?: string | null;
+          data_consent?: boolean;
+          terms_accepted?: boolean;
+          submission_date?: string;
+          status?: string;
+        };
+        Update: {
+          first_name?: string;
+          last_name?: string;
+          email?: string;
+          phone?: string;
+          age?: number;
+          education_level?: string | null;
+          current_role?: string | null;
+          organization?: string | null;
+          leadership_experience?: string | null;
+          why_attend?: string;
+          expectations?: string | null;
+          time_commitment?: string | null;
+          questions?: string | null;
+          data_consent?: boolean;
+          terms_accepted?: boolean;
+          submission_date?: string;
+          status?: string;
+        };
+      };
+      newsletter_subscriptions: {
+        Row: {
+          email: string;
+          subscription_date: string;
+          is_active: boolean;
+          unsubscribed_at: string | null;
+          unsubscribe_token: string | null;
+          preferences: Record<string, any> | null;
+          source: string | null;
+        };
+        Insert: {
+          email: string;
+          subscription_date?: string;
+          is_active?: boolean;
+          unsubscribed_at?: string | null;
+          unsubscribe_token?: string | null;
+          preferences?: Record<string, any> | null;
+          source?: string | null;
+        };
+        Update: {
+          email?: string;
+          subscription_date?: string;
+          is_active?: boolean;
+          unsubscribed_at?: string | null;
+          unsubscribe_token?: string | null;
+          preferences?: Record<string, any> | null;
+          source?: string | null;
+        };
+      };
+    };
+};
+
+// Helper functions for database operations
+export const getPublishedContent = async (
+  type?: string,
+  limit?: number
+): Promise<{ success: boolean; data: any[]; error?: any }> => {
+  try {
+    let query = supabase
+      .from('content')
+      .select('*')
+      .eq('status', 'published')
+      .order('published_at', { ascending: false });
+
+    if (type && type !== 'all') {
+      query = query.eq('type', type);
+    }
+
+    if (limit) {
+      query = query.limit(limit);
+    }
+
+    const { data, error } = await query;
+    if (error) throw error;
+    return { success: true, data: data || [] };
+  } catch (error) {
+    console.error('Error fetching published content:', error);
+    return { success: false, error, data: [] };
+  }
+};
+
+export const submitMembershipApplication = async (applicationData: Database['public']['Tables']['membership_applications']['Insert']) => {
+  try {
+    console.log('Submitting membership application:', applicationData);
+    const { data, error } = await supabase
+      .from('membership_applications')
+      .insert([{
+        ...applicationData,
+        submission_date: new Date().toISOString(),
+        status: 'pending'
+      }])
+      .select();
+
+    if (error) throw error;
+    console.log('Membership application submitted successfully');
+    return { success: true, data };
+  } catch (error: any) {
+    console.error('Error submitting membership application:', error);
+    console.log('Error details:', error.message, error.details, error.hint);
+    return { success: false, error };
+  }
+};
+
+export const submitVolunteerApplication = async (applicationData: Database['public']['Tables']['volunteer_applications']['Insert']) => {
+  try {
+    const { data, error } = await supabase
+      .from('volunteer_applications')
+      .insert([{
+        ...applicationData,
+        submission_date: new Date().toISOString(),
+        status: 'pending'
+      }])
+      .select();
+
+    if (error) throw error;
+    return { success: true, data };
+  } catch (error) {
+    console.error('Error submitting volunteer application:', error);
+    return { success: false, error };
+  }
+};
+
+export const submitContactForm = async (contactData: Database['public']['Tables']['contact_submissions']['Insert']) => {
+  try {
+    const { data, error } = await supabase
+      .from('contact_submissions')
+      .insert([{
+        ...contactData,
+        submission_date: new Date().toISOString(),
+        status: 'new'
+      }])
+      .select();
+
+    if (error) throw error;
+    return { success: true, data };
+  } catch (error) {
+    console.error('Error submitting contact form:', error);
+    return { success: false, error };
+  }
+};
+
+export const submitDonation = async (donationData: Database['public']['Tables']['donations']['Insert']) => {
+  try {
+    const { data, error } = await supabase
+      .from('donations')
+      .insert([{
+        ...donationData,
+        donation_date: new Date().toISOString(),
+        payment_status: 'pending'
+      }])
+      .select();
+
+    if (error) throw error;
+    return { success: true, data };
+  } catch (error) {
+    console.error('Error submitting donation:', error);
+    return { success: false, error };
+  }
+};
+
+export const submitPartnershipApplication = async (applicationData: Database['public']['Tables']['partnership_applications']['Insert']) => {
+  try {
+    const { data, error } = await supabase
+      .from('partnership_applications')
+      .insert([{
+        ...applicationData,
+        submission_date: new Date().toISOString(),
+        status: 'pending'
+      }])
+      .select();
+
+    if (error) throw error;
+    return { success: true, data };
+  } catch (error) {
+    console.error('Error submitting partnership application:', error);
+    return { success: false, error };
+  }
+};
+
+export const submitPhilosophyCafeApplication = async (applicationData: Database['public']['Tables']['philosophy_cafe_applications']['Insert']) => {
+  try {
+    console.log('Submitting philosophy cafe application:', applicationData);
+    const { data, error } = await supabase
+      .from('philosophy_cafe_applications')
+      .insert([{
+        ...applicationData,
+        submission_date: new Date().toISOString(),
+        status: 'pending'
+      }])
+      .select();
+
+    if (error) throw error;
+    console.log('Philosophy cafe application submitted successfully');
+    return { success: true, data };
+  } catch (error: any) {
+    console.error('Error submitting philosophy cafe application:', error);
+    console.log('Error details:', error.message, error.details, error.hint);
+    return { success: false, error };
+  }
+};
+
+// Authentication helpers
+export const signInWithEmail = async (email: string, password: string) => {
+  try {
+    // Check if Supabase is configured
+    if (!supabaseUrl || !supabaseAnonKey) {
+      return {
+        success: false,
+        error: 'Supabase not configured. Please check your .env file and ensure VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY are set correctly.'
+      };
+    }
+
+    // Clear any existing invalid sessions first
+    try {
+      await supabase.auth.signOut({ scope: 'local' });
+    } catch (clearError) {
+      // Ignore errors when clearing - session might already be invalid
+    }
+
+    let data, error;
+
+    ({ data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    }));
+
+    if (error) {
+      // Handle specific auth errors
+      if (error.message?.includes('Invalid Refresh Token') || error.message?.includes('Refresh Token Not Found')) {
+        console.warn('Invalid refresh token during login attempt. This is normal if session was expired.');
+        // Retry the login after clearing the invalid session
+        const { data: retryData, error: retryError } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+        if (retryError) throw retryError;
+        data = retryData;
+      } else {
+        throw error;
+      }
+    }
+
+    // Log successful login
+    if (data.user) {
+      await logActivity({
+        user_id: data.user.id,
+        user_name: data.user.email || 'Unknown',
+        user_email: data.user.email || '',
+        action: 'login',
+        resource_type: 'auth',
+        details: { method: 'email_password' }
+      });
+    }
+
+    return {
+      success: true,
+      user: data.user,
+      message: 'Successfully logged in!'
+    };
+  } catch (error: any) {
+    console.error('Error signing in:', error);
+
+    // Provide specific guidance for invalid credentials
+    if (error.message?.includes('Invalid login credentials') || error.message?.includes('Invalid')) {
+      return {
+        success: false,
+        error: 'Invalid login credentials. You need to create the admin user in Supabase Auth first:\n\n1. Go to Supabase Dashboard\n2. Authentication → Users → Add user\n3. Email: admin@benirage.org\n4. Password: admin123\n5. Check "Email Confirm" ✅\n\nThen try logging in again.'
+      };
+    }
+
+    return {
+      success: false,
+      error: error.message || 'Authentication failed. Please check your credentials.'
+    };
+  }
+};
+
+export const signOut = async () => {
+  try {
+    const user = await getCurrentUser();
+    const { error } = await supabase.auth.signOut();
+
+    if (error) throw error;
+
+    // Log successful logout
+    if (user) {
+      await logActivity({
+        user_id: user.id,
+        user_name: user.email || 'Unknown',
+        user_email: user.email || '',
+        action: 'logout',
+        resource_type: 'auth',
+        details: { method: 'email_password' }
+      });
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error('Error signing out:', error);
+    return { success: false, error };
+  }
+};
+
+export const getCurrentUser = async () => {
+  try {
+    const { data: { user }, error } = await supabase.auth.getUser();
+
+    // Handle specific auth errors gracefully for anonymous users
+    if (error) {
+      if (error.message?.includes('Invalid Refresh Token') ||
+          error.message?.includes('Refresh Token Not Found') ||
+          error.message?.includes('Auth session missing') ||
+          error.status === 403) {
+        // This is expected for anonymous users - don't log as error
+        return null;
+      }
+      throw error;
+    }
+
+    return user;
+  } catch (error: any) {
+    // Handle auth errors gracefully for anonymous users
+    if (error.message?.includes('Invalid Refresh Token') ||
+        error.message?.includes('Refresh Token Not Found') ||
+        error.message?.includes('Auth session missing') ||
+        error.status === 403) {
+      // Expected for anonymous users - return null silently
+      return null;
+    }
+
+    console.error('Error getting current user:', error);
+    return null;
+  }
+};
+
+// Dashboard data functions
+export const getDashboardStats = async () => {
+  try {
+    const [memberships, volunteers, contacts, donations, contentStats] = await Promise.all([
+      supabase.from('membership_applications').select('*', { count: 'exact' }),
+      supabase.from('volunteer_applications').select('*', { count: 'exact' }),
+      supabase.from('contact_submissions').select('*', { count: 'exact' }),
+      supabase.from('donations').select('*', { count: 'exact' }),
+      supabase.from('content').select('*', { count: 'exact' })
+    ]);
+
+    // Get status breakdowns
+    const [pendingMemberships, publishedContent] = await Promise.all([
+      supabase.from('membership_applications').select('*', { count: 'exact' }).eq('status', 'pending'),
+      supabase.from('content').select('*', { count: 'exact' }).eq('status', 'published')
+    ]);
+
+    return {
+      memberships: {
+        total: memberships.count || 0,
+        pending: pendingMemberships.count || 0,
+        data: memberships.data || []
+      },
+      volunteers: {
+        total: volunteers.count || 0,
+        data: volunteers.data || []
+      },
+      contacts: {
+        total: contacts.count || 0,
+        data: contacts.data || []
+      },
+      donations: {
+        total: donations.count || 0,
+        data: donations.data || []
+      },
+      content: {
+        total: contentStats.count || 0,
+        published: publishedContent.count || 0,
+        data: contentStats.data || []
+      }
+    };
+  } catch (error) {
+    console.error('Error fetching dashboard stats:', error);
+    return {
+      memberships: { total: 0, pending: 0, data: [] },
+      volunteers: { total: 0, data: [] },
+      contacts: { total: 0, data: [] },
+      donations: { total: 0, data: [] },
+      content: { total: 0, published: 0, data: [] }
+    };
+  }
+};
+
+// Check if Supabase is properly configured
+export const checkSupabaseConnection = async () => {
+  try {
+    if (!supabaseUrl || !supabaseAnonKey) {
+      return {
+        connected: false,
+        message: 'Supabase credentials not configured. Please set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your .env file.'
+      };
+    }
+
+    // Test connection with user_profiles table
+    const { data: _data, error } = await supabase.from('user_profiles').select('*', { count: 'exact', head: true });
+
+    if (error) {
+      return {
+        connected: false,
+        message: `Database connection failed: ${error.message}. Make sure you've run the migration script.`
+      };
+    }
+
+    return {
+      connected: true,
+      message: 'Successfully connected to Supabase database!'
+    };
+  } catch (error: any) {
+    return {
+      connected: false,
+      message: `Connection error: ${error.message || error}`
+    };
+  }
+};
+
+// Content management functions
+export const getContent = async (type?: string, status?: string, limit?: number) => {
+  try {
+    let query = supabase
+      .from('content')
+      .select('*')
+      .order('updated_at', { ascending: false });
+
+    if (type && type !== 'all') {
+      query = query.eq('type', type);
+    }
+
+    if (status && status !== 'all') {
+      query = query.eq('status', status);
+    }
+
+    if (limit) {
+      query = query.limit(limit);
+    }
+
+    const { data, error } = await query;
+    if (error) throw error;
+    return { success: true, data: data || [] };
+  } catch (error) {
+    console.error('Error fetching content:', error);
+    return { success: false, error, data: [] };
+  }
+};
+
+export const createContent = async (contentData: Database['public']['Tables']['content']['Insert']) => {
+  try {
+    const { data, error } = await supabase
+      .from('content')
+      .insert([{
+        ...contentData,
+        id: crypto.randomUUID(),
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        status: contentData.status || 'draft',
+        version_number: 1
+      }])
+      .select();
+
+    if (error) throw error;
+
+    // Log content creation
+    if (data && data[0]) {
+      await logActivity({
+        user_id: contentData.author_id || null,
+        user_name: contentData.author,
+        user_email: '',
+        action: 'create',
+        resource_type: 'content',
+        resource_id: data[0].id,
+        details: { title: contentData.title, type: contentData.type }
+      });
+    }
+
+    return { success: true, data };
+  } catch (error) {
+    console.error('Error creating content:', error);
+    return { success: false, error };
+  }
+};
+
+export const updateContent = async (id: string, contentData: Database['public']['Tables']['content']['Update']) => {
+  try {
+    const { data, error } = await supabase
+      .from('content')
+      .update({
+        ...contentData,
+        updated_at: new Date().toISOString(),
+        version_number: contentData.version_number ? (contentData.version_number + 1) : undefined
+      })
+      .eq('id', id)
+      .select();
+
+    if (error) throw error;
+
+    // Log content update
+    if (data && data[0]) {
+      await logActivity({
+        user_id: contentData.last_edited_by_id || null,
+        user_name: contentData.last_edited_by || '',
+        user_email: '',
+        action: 'update',
+        resource_type: 'content',
+        resource_id: id,
+        details: { title: contentData.title }
+      });
+    }
+
+    return { success: true, data };
+  } catch (error) {
+    console.error('Error updating content:', error);
+    return { success: false, error };
+  }
+};
+
+export const deleteContent = async (id: string, deletedBy: string) => {
+  try {
+    const { data, error } = await supabase
+      .from('content')
+      .update({
+        status: 'deleted',
+        updated_at: new Date().toISOString(),
+        last_edited_by: deletedBy
+      })
+      .eq('id', id)
+      .select();
+
+    if (error) throw error;
+
+    // Log content deletion
+    await logActivity({
+      user_id: null,
+      user_name: deletedBy,
+      user_email: '',
+      action: 'delete',
+      resource_type: 'content',
+      resource_id: id,
+      details: { reason: 'soft_delete' }
+    });
+
+    return { success: true, data };
+  } catch (error) {
+    console.error('Error deleting content:', error);
+    return { success: false, error };
+  }
+};
+
+// ===== CHAT FUNCTIONALITY =====
+
+export const getChatRooms = async () => {
+  try {
+    const { data, error } = await supabase
+      .from('chat_rooms')
+      .select('*')
+      .eq('is_active', true)
+      .order('last_activity', { ascending: false });
+
+    if (error) throw error;
+    return { success: true, data: data || [] };
+  } catch (error) {
+    console.error('Error fetching chat rooms:', error);
+    return { success: false, error };
+  }
+};
+
+export const getChatMessages = async (roomId: string, limit = 50) => {
+  try {
+    const { data, error } = await supabase
+      .from('chat_messages')
+      .select('*')
+      .eq('room_id', roomId)
+      .eq('is_deleted', false)
+      .order('created_at', { ascending: false })
+      .limit(limit);
+
+    if (error) throw error;
+    return { success: true, data: data || [] };
+  } catch (error) {
+    console.error('Error fetching chat messages:', error);
+    return { success: false, error };
+  }
+};
+
+export const sendChatMessage = async (messageData: Database['public']['Tables']['chat_messages']['Insert']) => {
+  try {
+    const { data, error } = await supabase
+      .from('chat_messages')
+      .insert([messageData])
+      .select();
+
+    if (error) throw error;
+    return { success: true, data };
+  } catch (error) {
+    console.error('Error sending chat message:', error);
+    return { success: false, error };
+  }
+};
+
+export const joinChatRoom = async (roomId: string, userId: string, userName: string, userAvatar?: string) => {
+  try {
+    const { data, error } = await supabase
+      .from('chat_participants')
+      .upsert({
+        room_id: roomId,
+        user_id: userId,
+        user_name: userName,
+        user_avatar: userAvatar,
+        role: 'member',
+        joined_at: new Date().toISOString(),
+        last_seen: new Date().toISOString(),
+        is_online: true
+      }, {
+        onConflict: 'room_id,user_id'
+      })
+      .select();
+
+    if (error) {
+      console.error('Error joining chat room:', error);
+      throw error;
+    }
+    return { success: true, data };
+  } catch (error) {
+    console.error('Error joining chat room:', error);
+    return { success: false, error };
+  }
+};
+
+// ===== CONTENT MANAGEMENT =====
+
+export const getCategories = async () => {
+  try {
+    const { data, error } = await supabase
+      .from('categories')
+      .select('*')
+      .order('order_index');
+
+    if (error) throw error;
+    return { success: true, data: data || [] };
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+    return { success: false, error };
+  }
+};
+
+export const getTags = async () => {
+  try {
+    const { data, error } = await supabase
+      .from('tags')
+      .select('*')
+      .order('count', { ascending: false });
+
+    if (error) throw error;
+    return { success: true, data: data || [] };
+  } catch (error) {
+    console.error('Error fetching tags:', error);
+    return { success: false, error };
+  }
+};
+
+export const getContentTemplates = async () => {
+  try {
+    const { data, error } = await supabase
+      .from('content_templates')
+      .select('*')
+      .eq('is_public', true)
+      .order('usage_count', { ascending: false });
+
+    if (error) throw error;
+    return { success: true, data: data || [] };
+  } catch (error) {
+    console.error('Error fetching content templates:', error);
+    return { success: false, error };
+  }
+};
+
+export const getMediaLibrary = async (type?: string) => {
+  try {
+    let query = supabase
+      .from('media')
+      .select('*')
+      .order('uploaded_at', { ascending: false });
+
+    if (type) {
+      query = query.eq('type', type);
+    }
+
+    const { data, error } = await query;
+    if (error) throw error;
+    return { success: true, data: data || [] };
+  } catch (error) {
+    console.error('Error fetching media library:', error);
+    return { success: false, error };
+  }
+};
+
+// ===== NOTIFICATIONS =====
+
+export const getUserNotifications = async (userId: string) => {
+  try {
+    const { data, error } = await supabase
+      .from('user_notifications')
+      .select('*')
+      .eq('recipient_id', userId)
+      .eq('is_archived', false)
+      .order('created_at', { ascending: false })
+      .limit(50);
+
+    if (error) throw error;
+    return { success: true, data: data || [] };
+  } catch (error) {
+    console.error('Error fetching user notifications:', error);
+    return { success: false, error };
+  }
+};
+
+export const markNotificationAsRead = async (notificationId: string) => {
+  try {
+    const { data, error } = await supabase
+      .from('user_notifications')
+      .update({
+        is_read: true,
+        read_at: new Date().toISOString()
+      })
+      .eq('id', notificationId)
+      .select();
+
+    if (error) throw error;
+    return { success: true, data };
+  } catch (error) {
+    console.error('Error marking notification as read:', error);
+    return { success: false, error };
+  }
+};
+
+// ===== ANALYTICS =====
+
+export const getContentAnalytics = async (contentId?: string) => {
+  try {
+    let query = supabase
+      .from('content_analytics')
+      .select('*');
+
+    if (contentId) {
+      query = query.eq('content_id', contentId);
+    }
+
+    const { data, error } = await query.order('recorded_at', { ascending: false });
+    if (error) throw error;
+    return { success: true, data: data || [] };
+  } catch (error) {
+    console.error('Error fetching content analytics:', error);
+    return { success: false, error };
+  }
+};
+
+export const getSearchAnalytics = async (limit = 100) => {
+  try {
+    const { data, error } = await supabase
+      .from('search_analytics')
+      .select('*')
+      .order('search_time', { ascending: false })
+      .limit(limit);
+
+    if (error) throw error;
+    return { success: true, data: data || [] };
+  } catch (error) {
+    console.error('Error fetching search analytics:', error);
+    return { success: false, error };
+  }
+};
+
+// ===== USER MANAGEMENT =====
+
+export const getUserProfile = async (userId: string) => {
+  try {
+    const { data, error } = await supabase
+      .from('user_profiles')
+      .select('*')
+      .eq('user_id', userId)
+      .single();
+
+    if (error) throw error;
+    return { success: true, data };
+  } catch (error) {
+    console.error('Error fetching user profile:', error);
+    return { success: false, error };
+  }
+};
+
+export const updateUserProfile = async (userId: string, profileData: any) => {
+  try {
+    const { data, error } = await supabase
+      .from('user_profiles')
+      .update({
+        ...profileData,
+        updated_at: new Date().toISOString()
+      })
+      .eq('user_id', userId)
+      .select();
+
+    if (error) throw error;
+    return { success: true, data };
+  } catch (error) {
+    console.error('Error updating user profile:', error);
+    return { success: false, error };
+  }
+};
+
+export const getUserGroups = async () => {
+  try {
+    const { data, error } = await supabase
+      .from('user_groups')
+      .select('*')
+      .eq('is_active', true)
+      .order('order_index');
+
+    if (error) throw error;
+    return { success: true, data: data || [] };
+  } catch (error) {
+    console.error('Error fetching user groups:', error);
+    return { success: false, error };
+  }
+};
+
+export const getRoles = async () => {
+  try {
+    const { data, error } = await supabase
+      .from('roles')
+      .select('*')
+      .eq('is_active', true)
+      .order('order_index');
+
+    if (error) throw error;
+    return { success: true, data: data || [] };
+  } catch (error) {
+    console.error('Error fetching roles:', error);
+    return { success: false, error };
+  }
+};
+
+// ===== FORM MANAGEMENT =====
+
+export const getFormFields = async (pageId: string) => {
+  try {
+    const { data, error } = await supabase
+      .from('form_fields')
+      .select('*')
+      .eq('page_id', pageId)
+      .eq('is_active', true)
+      .order('order_index');
+
+    if (error) throw error;
+    return { success: true, data: data || [] };
+  } catch (error) {
+    console.error('Error fetching form fields:', error);
+    return { success: false, error };
+  }
+};
+
+export const submitForm = async (pageId: string, formData: any) => {
+  try {
+    const { data, error } = await supabase
+      .from('form_submissions')
+      .insert([{
+        page_id: pageId,
+        form_data: formData,
+        submitted_at: new Date().toISOString(),
+        status: 'new'
+      }])
+      .select();
+
+    if (error) throw error;
+    return { success: true, data };
+  } catch (error) {
+    console.error('Error submitting form:', error);
+    return { success: false, error };
+  }
+};
+
+export const getFormSubmissions = async (pageId?: string) => {
+  try {
+    let query = supabase
+      .from('form_submissions')
+      .select('*')
+      .order('submitted_at', { ascending: false });
+
+    if (pageId) {
+      query = query.eq('page_id', pageId);
+    }
+
+    const { data, error } = await query;
+    if (error) throw error;
+    return { success: true, data: data || [] };
+  } catch (error) {
+    console.error('Error fetching form submissions:', error);
+    return { success: false, error };
+  }
+};
+
+// ===== SETTINGS =====
+
+export const getSetting = async (key: string) => {
+  try {
+    const { data, error } = await supabase
+      .from('settings')
+      .select('value')
+      .eq('key', key)
+      .single();
+
+    if (error) throw error;
+    return { success: true, data: data?.value };
+  } catch (error) {
+    console.error('Error fetching setting:', error);
+    return { success: false, error };
+  }
+};
+
+export const setSetting = async (key: string, value: string, updatedBy?: string) => {
+  try {
+    const { data, error } = await supabase
+      .from('settings')
+      .upsert({
+        key,
+        value,
+        updated_by: updatedBy,
+        updated_at: new Date().toISOString()
+      })
+      .select();
+
+    if (error) throw error;
+    return { success: true, data };
+  } catch (error) {
+    console.error('Error setting value:', error);
+    return { success: false, error };
+  }
+};
+
+// ===== ACTIVITY LOGS =====
+
+export const logActivity = async (activityData: Database['public']['Tables']['activity_logs']['Insert']) => {
+  try {
+    const { data, error } = await supabase
+      .from('activity_logs')
+      .insert([{
+        ...activityData,
+        timestamp: new Date().toISOString()
+      }])
+      .select();
+
+    if (error) throw error;
+    return { success: true, data };
+  } catch (error) {
+    console.error('Error logging activity:', error);
+    return { success: false, error };
+  }
+};
+
+export const getActivityLogs = async (limit = 100) => {
+  try {
+    const { data, error } = await supabase
+      .from('activity_logs')
+      .select('*')
+      .order('timestamp', { ascending: false })
+      .limit(limit);
+
+    if (error) throw error;
+    return { success: true, data: data || [] };
+  } catch (error) {
+    console.error('Error fetching activity logs:', error);
+    return { success: false, error };
+  }
+};
+
+// ===== WORKFLOW MANAGEMENT =====
+
+export const getWorkflowLogs = async (contentId?: string) => {
+  try {
+    let query = supabase
+      .from('workflow_logs')
+      .select('*')
+      .order('performed_at', { ascending: false });
+
+    if (contentId) {
+      query = query.eq('content_id', contentId);
+    }
+
+    const { data, error } = await query;
+    if (error) throw error;
+    return { success: true, data: data || [] };
+  } catch (error) {
+    console.error('Error fetching workflow logs:', error);
+    return { success: false, error };
+  }
+};
+
+export const logWorkflowAction = async (workflowData: Database['public']['Tables']['workflow_logs']['Insert']) => {
+  try {
+    const { data, error } = await supabase
+      .from('workflow_logs')
+      .insert([{
+        ...workflowData,
+        performed_at: new Date().toISOString()
+      }])
+      .select();
+
+    if (error) throw error;
+    return { success: true, data };
+  } catch (error) {
+    console.error('Error logging workflow action:', error);
+    return { success: false, error };
+  }
+};
+
+// ===== MODERATION =====
+
+export const getModerationLogs = async (limit = 50) => {
+  try {
+    const { data, error } = await supabase
+      .from('moderation_logs')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .limit(limit);
+
+    if (error) throw error;
+    return { success: true, data: data || [] };
+  } catch (error) {
+    console.error('Error fetching moderation logs:', error);
+    return { success: false, error };
+  }
+};
+
+export const logModerationAction = async (moderationData: Database['public']['Tables']['moderation_logs']['Insert']) => {
+  try {
+    const { data, error } = await supabase
+      .from('moderation_logs')
+      .insert([{
+        ...moderationData,
+        created_at: new Date().toISOString()
+      }])
+      .select();
+
+    if (error) throw error;
+    return { success: true, data };
+  } catch (error) {
+    console.error('Error logging moderation action:', error);
+    return { success: false, error };
+  }
+};
+
+// ===== CACHE MANAGEMENT =====
+
+export const setCacheRefreshFlag = async (cacheName: string) => {
+  try {
+    const { data, error } = await supabase
+      .from('cache_refresh_flags')
+      .upsert({
+        cache_name: cacheName,
+        flagged_at: new Date().toISOString()
+      })
+      .select();
+
+    if (error) throw error;
+    return { success: true, data };
+  } catch (error) {
+    console.error('Error setting cache refresh flag:', error);
+    return { success: false, error };
+  }
+};
+
+export const getCacheRefreshFlags = async () => {
+  try {
+    const { data, error } = await supabase
+      .from('cache_refresh_flags')
+      .select('*')
+      .order('flagged_at', { ascending: false });
+
+    if (error) throw error;
+    return { success: true, data: data || [] };
+  } catch (error) {
+    console.error('Error fetching cache refresh flags:', error);
+    return { success: false, error };
+  }
+};
+
+// ===== SUGGESTIONS =====
+
+export const getContentSuggestions = async (contentId?: string) => {
+  try {
+    let query = supabase
+      .from('suggestions')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (contentId) {
+      query = query.eq('content_id', contentId);
+    }
+
+    const { data, error } = await query;
+    if (error) throw error;
+    return { success: true, data: data || [] };
+  } catch (error) {
+    console.error('Error fetching content suggestions:', error);
+    return { success: false, error };
+  }
+};
+
+export const submitSuggestion = async (suggestionData: Database['public']['Tables']['suggestions']['Insert']) => {
+  try {
+    const { data, error } = await supabase
+      .from('suggestions')
+      .insert([suggestionData])
+      .select();
+
+    if (error) throw error;
+    return { success: true, data };
+  } catch (error) {
+    console.error('Error submitting suggestion:', error);
+    return { success: false, error };
+  }
+};
+
+// ===== PAGE CONTENT MANAGEMENT =====
+
+export const getPageContent = async (pageId: string) => {
+  try {
+    const { data, error } = await supabase
+      .from('page_content')
+      .select('*')
+      .eq('page_id', pageId)
+      .eq('is_active', true)
+      .order('order_index');
+
+    if (error) throw error;
+    return { success: true, data: data || [] };
+  } catch (error) {
+    console.error('Error fetching page content:', error);
+    return { success: false, error };
+  }
+};
+
+export const updatePageContent = async (id: string, contentData: any) => {
+  try {
+    const { data, error } = await supabase
+      .from('page_content')
+      .update({
+        ...contentData,
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', id)
+      .select();
+
+    if (error) throw error;
+    return { success: true, data };
+  } catch (error) {
+    console.error('Error updating page content:', error);
+    return { success: false, error };
+  }
+};
+
+// ===== COMMENT REACTIONS =====
+
+export const addCommentReaction = async (commentId: string, userId: string, reactionType: string) => {
+  try {
+    const { data, error } = await supabase
+      .from('comment_reactions')
+      .insert([{
+        comment_id: commentId,
+        user_id: userId,
+        reaction_type: reactionType,
+        created_at: new Date().toISOString()
+      }])
+      .select();
+
+    if (error) throw error;
+    return { success: true, data };
+  } catch (error) {
+    console.error('Error adding comment reaction:', error);
+    return { success: false, error };
+  }
+};
+
+export const removeCommentReaction = async (commentId: string, userId: string) => {
+  try {
+    const { error } = await supabase
+      .from('comment_reactions')
+      .delete()
+      .eq('comment_id', commentId)
+      .eq('user_id', userId);
+
+    if (error) throw error;
+    return { success: true };
+  } catch (error) {
+    console.error('Error removing comment reaction:', error);
+    return { success: false, error };
+  }
+};
+
+// ===== REAL-TIME SUBSCRIPTIONS =====
+
+export const subscribeToChatMessages = (roomId: string, callback: (payload: any) => void) => {
+  return supabase
+    .channel(`chat_messages:${roomId}`)
+    .on(
+      'postgres_changes',
+      {
+        event: 'INSERT',
+        schema: 'public',
+        table: 'chat_messages',
+        filter: `room_id=eq.${roomId}`
+      },
+      callback
+    )
+    .subscribe();
+};
+
+export const subscribeToNotifications = (userId: string, callback: (payload: any) => void) => {
+  return supabase
+    .channel(`notifications:${userId}`)
+    .on(
+      'postgres_changes',
+      {
+        event: 'INSERT',
+        schema: 'public',
+        table: 'user_notifications',
+        filter: `recipient_id=eq.${userId}`
+      },
+      callback
+    )
+    .subscribe();
+};
+
+export const unsubscribeFromChannel = (channel: any) => {
+  supabase.removeChannel(channel);
+};
+
+// ===== AUTHENTICATION UTILITIES =====
+
+export const refreshSession = async () => {
+  try {
+    const { data, error } = await supabase.auth.refreshSession();
+    if (error) {
+      if (error.message?.includes('Invalid Refresh Token') ||
+          error.message?.includes('Refresh Token Not Found') ||
+          error.message?.includes('Auth session missing') ||
+          error.status === 403) {
+        // Expected for anonymous users - don't log as error
+        return { success: false, needsLogin: true };
+      }
+      throw error;
+    }
+    return { success: true, user: data.user };
+  } catch (error: any) {
+    // Handle anonymous users gracefully
+    if (error.message?.includes('Invalid Refresh Token') ||
+        error.message?.includes('Refresh Token Not Found') ||
+        error.message?.includes('Auth session missing') ||
+        error.status === 403) {
+      // Expected for anonymous users - return silently
+      return { success: false, needsLogin: true };
+    }
+    console.error('Error refreshing session:', error);
+    return { success: false, error };
+  }
+};
+
+export const clearAuthSession = async () => {
+  try {
+    await supabase.auth.signOut({ scope: 'local' });
+    return { success: true };
+  } catch (error) {
+    console.error('Error clearing auth session:', error);
+    return { success: false, error };
+  }
+};
+
+// ===== NEWSLETTER SUBSCRIPTION =====
+
+export const subscribeToNewsletter = async (email: string, source = 'website') => {
+  try {
+    // Check if email is already subscribed
+    const { data: existingSubscription } = await supabase
+      .from('newsletter_subscriptions')
+      .select('*')
+      .eq('email', email)
+      .eq('is_active', true)
+      .single();
+
+    if (existingSubscription) {
+      return {
+        success: false,
+        error: 'This email is already subscribed to our newsletter.'
+      };
+    }
+
+    const { data, error } = await supabase
+      .from('newsletter_subscriptions')
+      .insert([{
+        email,
+        subscription_date: new Date().toISOString(),
+        is_active: true,
+        source,
+        preferences: {}
+      }])
+      .select();
+
+    if (error) throw error;
+    return { success: true, data };
+  } catch (error: any) {
+    console.error('Error subscribing to newsletter:', error);
+    return { success: false, error: error.message };
+  }
+};
+
+export const unsubscribeFromNewsletter = async (email: string) => {
+  try {
+    const { data, error } = await supabase
+      .from('newsletter_subscriptions')
+      .update({
+        is_active: false,
+        unsubscribed_at: new Date().toISOString()
+      })
+      .eq('email', email)
+      .select();
+
+    if (error) throw error;
+    return { success: true, data };
+  } catch (error) {
+    console.error('Error unsubscribing from newsletter:', error);
+    return { success: false, error };
+  }
+};

@@ -1,0 +1,16 @@
+# Netlify redirects for SPA
+/*    /index.html   200
+
+# Admin redirects
+/admin    /admin/login    302
+/cms      /admin/cms      302
+
+# Legacy redirects (if needed)
+/old-page    /new-page    301
+
+# API redirects (if using serverless functions)
+/api/*    /.netlify/functions/:splat    200
+
+# Force HTTPS in production
+http://benirage.org/*    https://benirage.org/:splat    301!
+http://www.benirage.org/*    https://benirage.org/:splat    301!

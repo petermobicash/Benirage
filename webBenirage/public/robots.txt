@@ -1,0 +1,30 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://benirage.org/sitemap.xml
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
+
+# Disallow admin areas
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_next/
+Disallow: /static/
+
+# Allow important pages
+Allow: /
+Allow: /about
+Allow: /spiritual
+Allow: /philosophy
+Allow: /culture
+Allow: /programs
+Allow: /get-involved
+Allow: /membership
+Allow: /volunteer
+Allow: /partnership
+Allow: /donate
+Allow: /resources
+Allow: /news
+Allow: /contact

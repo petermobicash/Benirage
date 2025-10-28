@@ -1,0 +1,49 @@
+# Security Headers for Production
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  X-XSS-Protection: 1; mode=block
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https: blob:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://fjhqjsbnumcxkbirlrxj.supabase.co wss://fjhqjsbnumcxkbirlrxj.supabase.co; media-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'
+
+# Cache Control for Static Assets
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Cache Control for Images
+*.png
+  Cache-Control: public, max-age=31536000
+*.jpg
+  Cache-Control: public, max-age=31536000
+*.jpeg
+  Cache-Control: public, max-age=31536000
+*.gif
+  Cache-Control: public, max-age=31536000
+*.webp
+  Cache-Control: public, max-age=31536000
+*.svg
+  Cache-Control: public, max-age=31536000
+
+# Cache Control for Fonts
+*.woff2
+  Cache-Control: public, max-age=31536000, immutable
+*.woff
+  Cache-Control: public, max-age=31536000, immutable
+*.ttf
+  Cache-Control: public, max-age=31536000, immutable
+
+# Cache Control for CSS and JS
+*.css
+  Cache-Control: public, max-age=31536000, immutable
+*.js
+  Cache-Control: public, max-age=31536000, immutable
+
+# No cache for HTML files
+*.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Service Worker
+/sw.js
+  Cache-Control: public, max-age=0, must-revalidate

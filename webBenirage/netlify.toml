@@ -1,0 +1,102 @@
+[build]
+  publish = "dist"
+  command = "npm run build:production"
+
+[build.environment]
+  NODE_VERSION = "20"
+  NPM_VERSION = "9"
+
+# Production build settings
+[context.production]
+  command = "npm run build:production"
+  
+[context.production.environment]
+  NODE_ENV = "production"
+  VITE_APP_VERSION = "1.0.0"
+
+# Preview builds
+[context.deploy-preview]
+  command = "npm run build"
+
+# Branch deploys
+[context.branch-deploy]
+  command = "npm run build"
+
+# Headers for security and performance
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000"
+
+[[headers]]
+  for = "*.jpg"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000"
+
+[[headers]]
+  for = "*.jpeg"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000"
+
+# Redirects
+[[redirects]]
+  from = "/admin"
+  to = "/admin/login"
+  status = 302
+
+[[redirects]]
+  from = "/cms"
+  to = "/admin/cms"
+  status = 302
+
+[[redirects]]
+  from = "/deploy"
+  to = "/deployment-guide"
+  status = 302
+
+[[redirects]]
+  from = "/setup"
+  to = "/deployment-guide"
+  status = 302
+# SPA fallback
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Force HTTPS
+[[redirects]]
+  from = "http://benirage.org/*"
+  to = "https://benirage.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.benirage.org/*"
+  to = "https://benirage.org/:splat"
+  status = 301
+  force = true
