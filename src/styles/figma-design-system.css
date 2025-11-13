@@ -1,0 +1,343 @@
+/* Figma-Inspired Design System for BENIRAGE CMS */
+:root {
+  /* Figma Color Palette */
+  --figma-primary: #6366f1; /* Indigo */
+  --figma-primary-light: #818cf8;
+  --figma-primary-dark: #4f46e5;
+  --figma-secondary: #ec4899; /* Pink */
+  --figma-secondary-light: #f472b6;
+  --figma-secondary-dark: #db2777;
+  
+  /* Neutral Colors */
+  --figma-white: #ffffff;
+  --figma-gray-50: #f8fafc;
+  --figma-gray-100: #f1f5f9;
+  --figma-gray-200: #e2e8f0;
+  --figma-gray-300: #cbd5e1;
+  --figma-gray-400: #94a3b8;
+  --figma-gray-500: #64748b;
+  --figma-gray-600: #475569;
+  --figma-gray-700: #334155;
+  --figma-gray-800: #1e293b;
+  --figma-gray-900: #0f172a;
+  
+  /* Accent Colors */
+  --figma-success: #10b981;
+  --figma-warning: #f59e0b;
+  --figma-error: #ef4444;
+  --figma-info: #3b82f6;
+  
+  /* Glass Morphism */
+  --figma-glass: rgba(255, 255, 255, 0.1);
+  --figma-glass-border: rgba(255, 255, 255, 0.2);
+  --figma-glass-blur: blur(12px);
+  
+  /* Shadows */
+  --figma-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --figma-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --figma-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --figma-shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --figma-shadow-glow: 0 0 0 1px rgb(99 102 241 / 0.1), 0 20px 25px -5px rgb(99 102 241 / 0.1);
+  
+  /* Border Radius */
+  --figma-radius-sm: 6px;
+  --figma-radius-md: 8px;
+  --figma-radius-lg: 12px;
+  --figma-radius-xl: 16px;
+  --figma-radius-2xl: 20px;
+  --figma-radius-full: 9999px;
+  
+  /* Transitions */
+  --figma-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --figma-transition-slow: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Typography */
+  --figma-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  --figma-font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+/* Base Styles */
+.figma-body {
+  font-family: var(--figma-font-sans);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+}
+
+/* Glass Morphism Cards */
+.figma-card {
+  background: var(--figma-glass);
+  border: 1px solid var(--figma-glass-border);
+  backdrop-filter: var(--figma-glass-blur);
+  -webkit-backdrop-filter: var(--figma-glass-blur);
+  border-radius: var(--figma-radius-xl);
+  box-shadow: var(--figma-shadow-lg);
+  transition: var(--figma-transition);
+}
+
+.figma-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--figma-shadow-glow);
+  border-color: var(--figma-primary-light);
+}
+
+/* Modern Buttons */
+.figma-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--figma-radius-md);
+  font-weight: 500;
+  transition: var(--figma-transition);
+  cursor: pointer;
+  border: none;
+  outline: none;
+  font-family: inherit;
+}
+
+.figma-btn-primary {
+  background: linear-gradient(135deg, var(--figma-primary) 0%, var(--figma-primary-dark) 100%);
+  color: var(--figma-white);
+  box-shadow: var(--figma-shadow-md);
+}
+
+.figma-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--figma-shadow-lg);
+  background: linear-gradient(135deg, var(--figma-primary-dark) 0%, var(--figma-primary) 100%);
+}
+
+.figma-btn-secondary {
+  background: var(--figma-glass);
+  color: var(--figma-gray-700);
+  border: 1px solid var(--figma-glass-border);
+  backdrop-filter: var(--figma-glass-blur);
+}
+
+.figma-btn-secondary:hover {
+  background: var(--figma-gray-100);
+  border-color: var(--figma-primary-light);
+  color: var(--figma-primary);
+}
+
+/* Navigation Styles */
+.figma-nav-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  border-radius: var(--figma-radius-lg);
+  margin-bottom: 4px;
+  transition: var(--figma-transition);
+  cursor: pointer;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--figma-gray-600);
+  font-weight: 500;
+}
+
+.figma-nav-item:hover {
+  background: var(--figma-glass);
+  border-color: var(--figma-glass-border);
+  color: var(--figma-gray-800);
+  transform: translateX(4px);
+}
+
+.figma-nav-item.active {
+  background: linear-gradient(135deg, var(--figma-primary) 0%, var(--figma-primary-light) 100%);
+  color: var(--figma-white);
+  box-shadow: var(--figma-shadow-md);
+  border-color: var(--figma-primary);
+}
+
+/* Layout Styles */
+.figma-container {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+}
+
+.figma-main {
+  background: var(--figma-white);
+  margin: 24px;
+  border-radius: var(--figma-radius-2xl);
+  box-shadow: var(--figma-shadow-xl);
+  overflow: hidden;
+  min-height: calc(100vh - 48px);
+}
+
+.figma-sidebar {
+  background: var(--figma-glass);
+  border-right: 1px solid var(--figma-glass-border);
+  backdrop-filter: var(--figma-glass-blur);
+  -webkit-backdrop-filter: var(--figma-glass-blur);
+}
+
+/* Modern Typography */
+.figma-heading {
+  font-family: var(--figma-font-sans);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--figma-gray-900);
+}
+
+.figma-heading-xl {
+  font-size: 2.25rem;
+  margin-bottom: 1rem;
+}
+
+.figma-heading-lg {
+  font-size: 1.875rem;
+  margin-bottom: 0.75rem;
+}
+
+.figma-heading-md {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.figma-heading-sm {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Form Elements */
+.figma-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--figma-gray-300);
+  border-radius: var(--figma-radius-md);
+  background: var(--figma-white);
+  font-family: inherit;
+  font-size: 14px;
+  transition: var(--figma-transition);
+}
+
+.figma-input:focus {
+  outline: none;
+  border-color: var(--figma-primary);
+  box-shadow: 0 0 0 3px rgb(99 102 241 / 0.1);
+}
+
+.figma-select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--figma-gray-300);
+  border-radius: var(--figma-radius-md);
+  background: var(--figma-white);
+  font-family: inherit;
+  font-size: 14px;
+  transition: var(--figma-transition);
+  cursor: pointer;
+}
+
+.figma-select:focus {
+  outline: none;
+  border-color: var(--figma-primary);
+  box-shadow: 0 0 0 3px rgb(99 102 241 / 0.1);
+}
+
+/* Status Indicators */
+.figma-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: var(--figma-radius-full);
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.figma-badge-success {
+  background: rgb(16 185 129 / 0.1);
+  color: var(--figma-success);
+}
+
+.figma-badge-warning {
+  background: rgb(245 158 11 / 0.1);
+  color: var(--figma-warning);
+}
+
+.figma-badge-error {
+  background: rgb(239 68 68 / 0.1);
+  color: var(--figma-error);
+}
+
+.figma-badge-info {
+  background: rgb(59 130 246 / 0.1);
+  color: var(--figma-info);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.figma-fade-in {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.figma-slide-in {
+  animation: slideIn 0.3s ease-out;
+}
+
+/* Loading States */
+.figma-skeleton {
+  background: linear-gradient(90deg, var(--figma-gray-200) 25%, var(--figma-gray-300) 50%, var(--figma-gray-200) 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .figma-main {
+    margin: 12px;
+    border-radius: var(--figma-radius-xl);
+  }
+  
+  .figma-nav-item:hover {
+    transform: none;
+  }
+}
+
+/* Custom Scrollbar */
+.figma-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.figma-scrollbar::-webkit-scrollbar-track {
+  background: var(--figma-gray-100);
+  border-radius: var(--figma-radius-full);
+}
+
+.figma-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--figma-gray-400);
+  border-radius: var(--figma-radius-full);
+}
+
+.figma-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--figma-gray-500);
+}

@@ -167,7 +167,7 @@ export const useOfflineChat = (roomId?: string) => {
       window.removeEventListener('online', handleOnline);
       window.removeEventListener('offline', handleOffline);
     };
-  }, [roomId]);
+  }, [roomId, processMessageQueue]);
 
   // Add message to queue when offline
   const queueMessage = useCallback((message: string) => {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { FileText, Users, Image, Settings, BarChart3, LogOut, Home, Shield, Key, UserCheck, MessageSquare, Zap, Mail, Search, Calendar, Database, Megaphone, BookOpen, Globe, RefreshCw } from 'lucide-react';
 import Button from '../ui/Button';
 import { getCurrentUserProfile, getUserAllPermissions } from '../../utils/rbac';
@@ -96,15 +96,15 @@ const CMSLayout: React.FC<CMSLayoutProps> = ({
     initializePermissions();
   }, [currentUser]);
 
-  // Helper function to check permissions with fallback
-  const hasPermission = (requiredPermissions: string[]): boolean => {
+  // Memoized helper function to check permissions with fallback
+  const hasPermission = useCallback((requiredPermissions: string[]): boolean => {
     if (!requiredPermissions.length) return true;
     if (requiredPermissions.includes('*')) return true;
     return requiredPermissions.some(perm => permissions.includes(perm as Permission));
-  };
+  }, [permissions]);
 
-  // Helper function to create navigation items with permission checks
-  const createNavItems = (
+  // Memoized helper function to create navigation items with permission checks
+  const createNavItems = useCallback((
     items: Array<{ id: string; name: string; icon: React.ComponentType<{ className?: string }>; permission?: string | null }>,
     requiredPermissions: string[]
   ): NavigationItem[] => {
@@ -115,7 +115,7 @@ const CMSLayout: React.FC<CMSLayoutProps> = ({
       icon: item.icon,
       permission: item.permission
     }));
-  };
+  }, [hasPermission]);
 
   // Memoized navigation sections for performance
   const navigationSections: NavigationSection[] = useMemo(() => [
@@ -233,7 +233,7 @@ const CMSLayout: React.FC<CMSLayoutProps> = ({
         ], ['system.edit_settings', '*'])
       ]
     }
-  ], [permissions, currentUser?.email, createNavItems]);
+  ], [createNavItems]);
 
   // Loading state for permissions
   if (isLoadingPermissions) {

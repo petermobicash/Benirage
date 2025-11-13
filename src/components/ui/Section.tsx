@@ -5,20 +5,23 @@ interface SectionProps {
   className?: string;
   background?: 'white' | 'gray' | 'blue' | 'cultural' | 'premium';
   padding?: 'sm' | 'md' | 'lg' | 'xl';
+  id?: string;
 }
 
 const Section: React.FC<SectionProps> = ({
   children,
   className = '',
   background = 'white',
-  padding = 'lg'
+  padding = 'lg',
+  id
 }) => {
   const backgroundClasses = {
-    white: 'bg-white',
-    gray: 'bg-gray-50',
-    blue: 'bg-blue-50',
-    cultural: 'bg-gradient-to-br from-gray-50 to-blue-50',
-    premium: 'bg-gradient-to-br from-white via-gray-50 to-blue-50'
+    white: 'bg-neutral-white',
+    gray: 'bg-neutral-cloud-white',
+    blue: 'bg-brand-main-50',
+    teal: 'bg-brand-middle-50',
+    cultural: 'bg-gradient-to-br from-brand-main-50 to-brand-middle-50',
+    premium: 'bg-gradient-to-br from-neutral-white via-neutral-cloud-white to-brand-main-50'
   };
 
   const paddingClasses = {
@@ -29,7 +32,10 @@ const Section: React.FC<SectionProps> = ({
   };
 
   return (
-    <section className={`${backgroundClasses[background]} ${paddingClasses[padding]} ${className}`}>
+    <section
+      className={`${backgroundClasses[background]} ${paddingClasses[padding]} ${className}`}
+      id={id}
+    >
       <div className="max-w-7xl mx-auto">
         {children}
       </div>

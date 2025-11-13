@@ -18,6 +18,29 @@
 const http = require('http');
 const https = require('https');
 const url = require('url');
+const fs = require('fs');
+const path = require('path');
+
+// Load environment variables from project root .env file
+function loadEnvFile() {
+  const envPath = path.join(__dirname, '../.env');
+  if (fs.existsSync(envPath)) {
+    const envContent = fs.readFileSync(envPath, 'utf8');
+    const lines = envContent.split('\n');
+    
+    for (const line of lines) {
+      const trimmedLine = line.trim();
+      if (trimmedLine && !trimmedLine.startsWith('#') && trimmedLine.includes('=')) {
+        const [key, ...valueParts] = trimmedLine.split('=');
+        const value = valueParts.join('=').replace(/^["']|["']$/g, '');
+        process.env[key] = value;
+      }
+    }
+  }
+}
+
+// Load environment variables
+loadEnvFile();
 
 // Configuration
 const PORT = process.env.PORT || 3001;

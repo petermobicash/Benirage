@@ -70,7 +70,7 @@ What aspects of spiritual growth resonate most with your personal journey?`);
       name: 'AI Content Suggestions', 
       icon: Sparkles, 
       description: 'Smart content optimization',
-      color: 'from-purple-500 to-pink-600'
+      color: 'from-brand-accent to-brand-accent-200'
     },
     { 
       id: 'notifications', 
@@ -133,7 +133,7 @@ What aspects of spiritual growth resonate most with your personal journey?`);
       name: 'Advanced User Management', 
       icon: Users, 
       description: 'Comprehensive user administration',
-      color: 'from-violet-500 to-purple-600'
+      color: 'from-brand-accent to-brand-accent-400'
     }
   ];
 
@@ -150,7 +150,7 @@ What aspects of spiritual growth resonate most with your personal journey?`);
   return (
     <div>
       {/* Hero */}
-      <Section className="py-20 bg-gradient-to-br from-purple-600 to-blue-600 text-white">
+      <Section className="py-20 bg-gradient-to-br from-brand-accent to-brand-main text-white">
         <div className="text-center">
           <Zap className="w-16 h-16 text-white mx-auto mb-6 animate-float" />
           <h1 className="text-5xl md:text-6xl font-bold mb-6">
@@ -347,7 +347,7 @@ What aspects of spiritual growth resonate most with your personal journey?`);
               <h3 className="text-2xl font-bold text-blue-900 mb-6 text-center">
                 ⚡ Workflow Automation Demo
               </h3>
-              <WorkflowAutomation contentType="post" />
+              <WorkflowAutomation />
             </div>
           )}
 
@@ -465,7 +465,7 @@ What aspects of spiritual growth resonate most with your personal journey?`);
       </Section>
 
       {/* Call to Action */}
-      <Section className="py-20 bg-gradient-to-br from-blue-900 to-purple-900 text-white">
+      <Section className="py-20 bg-gradient-to-br from-brand-main to-brand-accent text-white">
         <div className="text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-8">
             Experience the Future of Content Management

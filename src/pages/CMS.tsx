@@ -5,7 +5,8 @@ import { getCurrentUserProfile, getUserAllPermissions } from '../utils/rbac';
 import { SYSTEM_PERMISSIONS, CONTENT_PERMISSIONS, USER_PERMISSIONS, MEDIA_PERMISSIONS, ANALYTICS_PERMISSIONS } from '../types/permissions';
 import type { UserProfile } from '../types/permissions';
 import ProtectedRoute from '../components/auth/ProtectedRoute';
-import CMSLayout from '../components/cms/CMSLayout';
+import FigmaCMSLayout from '../components/cms/FigmaCMSLayout';
+import '../styles/figma-design-system.css';
 import ContentList from '../components/cms/ContentList';
 import ContentEditor from '../components/cms/ContentEditor';
 import MediaLibrary from '../components/cms/MediaLibrary';
@@ -34,7 +35,7 @@ import SecurityAudit from '../components/advanced/SecurityAudit';
 import PerformanceMonitor from '../components/advanced/PerformanceMonitor';
 import AdvancedUserManagement from '../components/advanced/AdvancedUserManagement';
 import AdvancedFeatures from './AdvancedFeatures';
-import EnhancedDashboard from '../components/admin/EnhancedDashboard';
+import FigmaDashboard from '../components/cms/FigmaDashboard';
 import AIContentSuggestions from '../components/advanced/AIContentSuggestions';
 import ContentAnalytics from '../components/advanced/ContentAnalytics';
 import RefactoringInfo from '../components/cms/RefactoringInfo';
@@ -108,7 +109,6 @@ const CMS = () => {
     }
   }, [currentUser, permissions, currentPage, getDefaultPage]);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleLogin = (user: any) => {
     setCurrentUser(user);
     setIsLoggedIn(true);
@@ -138,7 +138,7 @@ const CMS = () => {
     switch (currentPage) {
 
       case 'dashboard':
-        return <EnhancedDashboard onNavigate={handleNavigate} />;
+        return <FigmaDashboard onNavigate={handleNavigate} />;
 
       case 'content-guide':
         return <ContentGuide />;
@@ -600,14 +600,14 @@ const CMS = () => {
   };
 
   return (
-    <CMSLayout
+    <FigmaCMSLayout
       currentPage={currentPage}
       onNavigate={handleNavigate}
       currentUser={currentUser as { id: string; email: string; app_metadata: Record<string, unknown>; user_metadata: Record<string, unknown>; aud: string; created_at: string;[key: string]: unknown }}
       onLogout={handleLogout}
     >
       {renderCurrentPage()}
-    </CMSLayout>
+    </FigmaCMSLayout>
   );
 };
 

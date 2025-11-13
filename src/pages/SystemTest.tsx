@@ -19,7 +19,7 @@ import {
 
 const SystemTest = () => {
   const [testSuites, setTestSuites] = useState<TestSuite[]>([]);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  
   const [healthCheck, setHealthCheck] = useState<any>(null);
   const [isRunning, setIsRunning] = useState(false);
   const [currentTest, setCurrentTest] = useState('');

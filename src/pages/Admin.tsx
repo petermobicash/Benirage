@@ -2,15 +2,24 @@ import React, { useState, useEffect } from 'react';
 import { supabase, signInWithEmail, signOut, getCurrentUser } from '../lib/supabase';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
+import SuperAdminDashboard from '../components/admin/SuperAdminDashboard';
+import { getCurrentUserProfile } from '../utils/rbac';
 
 const Admin = () => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [user, setUser] = useState<any>(null);
+  
+  const [user, setUser] = useState<{ id: string; email?: string } | null>(null);
   const [loading, setLoading] = useState(true);
   const [loginData, setLoginData] = useState({ email: '', password: '' });
   const [isLoggingIn, setIsLoggingIn] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [dashboardData, setDashboardData] = useState<any>(null);
+  const [currentProfile, setCurrentProfile] = useState<any>(null);
+  const [isSuperAdmin, setIsSuperAdmin] = useState(false);
+  
+  const [dashboardData, setDashboardData] = useState<{
+    memberships: any[];
+    volunteers: any[];
+    contacts: any[];
+    donations: any[];
+  } | null>(null);
 
   useEffect(() => {
     checkUser();
@@ -20,10 +29,19 @@ const Admin = () => {
     try {
       const currentUser = await getCurrentUser();
       setUser(currentUser);
+      
       if (currentUser) {
-        // Redirect to CMS page instead of showing dashboard
-        window.location.href = '/cms';
-        return;
+        // Check if user is super admin
+        const profile = await getCurrentUserProfile();
+        setCurrentProfile(profile);
+        setIsSuperAdmin(profile?.isSuperAdmin || false);
+        
+        // If not super admin, redirect to CMS
+        if (!profile?.isSuperAdmin) {
+          window.location.href = '/cms';
+          return;
+        }
+        // If super admin, show super admin dashboard
       }
     } catch (error) {
       console.error('Error checking user:', error);
@@ -160,6 +178,12 @@ const Admin = () => {
     );
   }
 
+  // If user is super admin, show the comprehensive super admin dashboard
+  if (isSuperAdmin && currentProfile) {
+    return <SuperAdminDashboard />;
+  }
+
+  // For regular admin users, show the standard admin dashboard
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -284,7 +308,7 @@ const Admin = () => {
               <Card>
                 <h4 className="text-lg font-semibold text-blue-900 mb-4">Latest Membership Applications</h4>
                 <div className="space-y-3">
-                  {dashboardData.memberships.slice(0, 5).map((member: any, index: number) => ( // eslint-disable-line @typescript-eslint/no-explicit-any
+                  {dashboardData.memberships.slice(0, 5).map((member: any, index: number) => (
                     <div key={index} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
                       <div>
                         <p className="font-medium text-blue-900">{member.first_name} {member.last_name}</p>
@@ -304,7 +328,7 @@ const Admin = () => {
               <Card>
                 <h4 className="text-lg font-semibold text-blue-900 mb-4">Latest Contact Messages</h4>
                 <div className="space-y-3">
-                  {dashboardData.contacts.slice(0, 5).map((contact: any, index: number) => ( // eslint-disable-line @typescript-eslint/no-explicit-any
+                  {dashboardData.contacts.slice(0, 5).map((contact: any, index: number) => (
                     <div key={index} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
                       <div>
                         <p className="font-medium text-blue-900">{contact.first_name} {contact.last_name}</p>

@@ -1,92 +1,156 @@
-import { Component, ErrorInfo, ReactNode } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
-interface Props {
-  children: ReactNode;
-  fallback?: ReactNode;
-  onError?: (error: Error, errorInfo: ErrorInfo) => void;
+interface OptimizedImageProps {
+  src: string;
+  alt: string;
+  className?: string;
+  loading?: 'lazy' | 'eager';
+  width?: number;
+  height?: number;
+  fallback?: string;
+  quality?: number;
+  sizes?: string;
 }
 
-interface State {
-  hasError: boolean;
-  error?: Error;
-  errorInfo?: ErrorInfo;
-}
+const OptimizedImage: React.FC<OptimizedImageProps> = ({
+  src,
+  alt,
+  className = '',
+  loading = 'lazy',
+  width,
+  height,
+  fallback = '/images/placeholder.jpg',
+  quality = 85,
+  sizes = '100vw'
+}) => {
+  const [imageSrc, setImageSrc] = useState<string>('');
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [hasError, setHasError] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
+  const [inView, setInView] = useState(loading === 'eager');
 
-class ErrorBoundary extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = { hasError: false };
-  }
+  // Intersection Observer for lazy loading
+  useEffect(() => {
+    if (loading !== 'lazy') return;
 
-  static getDerivedStateFromError(error: Error): State {
-    return { hasError: true, error };
-  }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setInView(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '50px' } // Start loading 50px before the image comes into view
+    );
 
-  componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
-    this.setState({ errorInfo });
-    this.props.onError?.(error, errorInfo);
-    
-    // Log error to console in development
-    if (import.meta.env.DEV) {
-      console.error('ErrorBoundary caught an error:', error, errorInfo);
+    if (imgRef.current) {
+      observer.observe(imgRef.current);
     }
-  }
 
-  handleRetry = (): void => {
-    this.setState({ hasError: false, error: undefined, errorInfo: undefined });
+    return () => observer.disconnect();
+  }, [loading]);
+
+  // Generate optimized image URL (WebP format with quality)
+  const generateOptimizedUrl = (originalSrc: string): string => {
+    // If it's already an optimized URL, return as is
+    if (originalSrc.includes('optimize') || originalSrc.includes('webp')) {
+      return originalSrc;
+    }
+
+    // For external URLs, return as is (assuming they're already optimized)
+    if (originalSrc.startsWith('http')) {
+      return originalSrc;
+    }
+
+    // For local images, we would integrate with an image optimization service
+    // For now, return the original src
+    return originalSrc;
   };
 
-  render(): ReactNode {
-    if (this.state.hasError) {
-      if (this.props.fallback) {
-        return this.props.fallback;
-      }
+  useEffect(() => {
+    if (inView) {
+      const optimizedSrc = generateOptimizedUrl(src);
+      setImageSrc(optimizedSrc);
+    }
+  }, [inView, src]);
 
-      return (
-        <div className="min-h-[400px] flex items-center justify-center p-8">
-          <div className="text-center max-w-md mx-auto">
-            <div className="text-6xl mb-6">⚠️</div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">
-              Something went wrong
-            </h2>
-            <p className="text-gray-600 mb-6">
-              We encountered an unexpected error. Please try refreshing the page or contact support if the problem persists.
-            </p>
-            <div className="space-y-3">
-              <button
-                onClick={this.handleRetry}
-                className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-              >
-                Try Again
-              </button>
-              <div>
-                <button
-                  onClick={() => window.location.reload()}
-                  className="w-full px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
-                >
-                  Refresh Page
-                </button>
-              </div>
-            </div>
-            {import.meta.env.DEV && this.state.error && (
-              <details className="mt-6 text-left">
-                <summary className="cursor-pointer text-sm text-gray-500 hover:text-gray-700">
-                  Error Details (Development)
-                </summary>
-                <pre className="mt-2 text-xs bg-gray-100 p-3 rounded overflow-auto max-h-32">
-                  {this.state.error.toString()}
-                  {'\n'}
-                  {this.state.errorInfo?.componentStack}
-                </pre>
-              </details>
-            )}
+  const handleLoad = () => {
+    setIsLoaded(true);
+    setHasError(false);
+  };
+
+  const handleError = () => {
+    setHasError(true);
+    setIsLoaded(false);
+    if (imageSrc !== fallback) {
+      setImageSrc(fallback);
+    }
+  };
+
+  // Generate srcSet for responsive images
+  const generateSrcSet = (baseSrc: string): string => {
+    if (baseSrc.startsWith('http')) {
+      return baseSrc; // For external images, use the same URL
+    }
+    
+    // For local images, generate different sizes
+    const sizes = [400, 800, 1200, 1600];
+    return sizes
+      .map(size => `${baseSrc}?w=${size}&q=${quality}&f=webp ${size}w`)
+      .join(', ');
+  };
+
+  const finalSrcSet = imageSrc ? generateSrcSet(imageSrc) : undefined;
+
+  return (
+    <div 
+      ref={imgRef} 
+      className={`relative overflow-hidden ${className}`}
+      style={{ width, height }}
+    >
+      {/* Loading placeholder */}
+      {!isLoaded && !hasError && (
+        <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center">
+          <div className="w-8 h-8 border-4 border-gray-300 border-t-blue-600 rounded-full animate-spin"></div>
+        </div>
+      )}
+
+      {/* Error state */}
+      {hasError && (
+        <div className="absolute inset-0 bg-gray-100 flex items-center justify-center text-gray-500">
+          <div className="text-center">
+            <div className="w-12 h-12 mx-auto mb-2 text-gray-400">📷</div>
+            <p className="text-sm">Image unavailable</p>
           </div>
         </div>
-      );
-    }
+      )}
 
-    return this.props.children;
-  }
-}
+      {/* Actual image */}
+      {imageSrc && (
+        <img
+          src={imageSrc}
+          srcSet={finalSrcSet}
+          sizes={sizes}
+          alt={alt}
+          width={width}
+          height={height}
+          onLoad={handleLoad}
+          onError={handleError}
+          className={`
+            w-full h-full object-cover transition-opacity duration-300
+            ${isLoaded ? 'opacity-100' : 'opacity-0'}
+          `}
+          loading={loading}
+          decoding="async"
+        />
+      )}
 
-export default ErrorBoundary;
+      {/* Progressive enhancement overlay */}
+      {isLoaded && (
+        <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-transparent pointer-events-none" />
+      )}
+    </div>
+  );
+};
+
+export default OptimizedImage;

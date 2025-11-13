@@ -10,6 +10,7 @@ interface ButtonProps {
   disabled?: boolean;
   className?: string;
   icon?: LucideIcon;
+  title?: string;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -20,7 +21,8 @@ const Button: React.FC<ButtonProps> = ({
   size = 'md',
   disabled = false,
   className = '',
-  icon: Icon
+  icon: Icon,
+  title
 }) => {
   const baseClasses = 'font-semibold rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 touch-manipulation -webkit-tap-highlight-color-transparent';
   
@@ -45,6 +47,7 @@ const Button: React.FC<ButtonProps> = ({
       type={type}
       onClick={onClick}
       disabled={disabled}
+      title={title}
       className={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${disabledClasses} ${className}`}
     >
       <div className="flex items-center justify-center space-x-2">

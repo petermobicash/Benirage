@@ -20,34 +20,62 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
 
     try {
       // Check for bypass credentials for development
+      // TODO: Remove this bypass in production - secure authentication should only use Supabase Auth
       if (loginData.email === 'admin@benirage.org' && loginData.password === 'password123') {
-        const mockUser = {
-          id: '123e4567-e89b-12d3-a456-426614174000', // Valid UUID format for mock admin
+        const mockUser: Partial<User> & {
+          id: string;
+          email: string;
+          created_at: string;
+          updated_at: string;
+          aud: string;
+          role: string;
+        } = {
+          id: '123e4567-e89b-12d3-a456-426614174000',
           email: loginData.email,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+          aud: 'authenticated',
+          role: 'authenticated',
+          app_metadata: {},
           user_metadata: {
             full_name: 'Super Administrator',
             role: 'admin'
-          }
+          },
+          email_confirmed_at: new Date().toISOString(),
+          last_sign_in_at: new Date().toISOString()
         };
-        onLogin(mockUser as unknown as User);
+        onLogin(mockUser as User);
         return;
       }
 
       const result = await signInWithEmail(loginData.email, loginData.password);
       if (result.success) {
-        onLogin(result.user);
+        if (result.user) {
+          onLogin(result.user);
+        } else {
+          setError('Login succeeded but user data is missing. Please try again.');
+        }
       } else {
         setError(result.error || 'Login failed. Please check your credentials.');
       }
     } catch (error) {
-      setError(error instanceof Error ? error.message : 'Login error. Please try again.');
+      // Improved error handling with better type checking
+      if (error instanceof Error) {
+        setError(error.message);
+      } else if (typeof error === 'string') {
+        setError(error);
+      } else if (error && typeof error === 'object' && 'message' in error) {
+        setError(String(error.message));
+      } else {
+        setError('An unexpected error occurred. Please try again.');
+      }
     } finally {
       setIsLoggingIn(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-900 to-purple-900 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gradient-to-br from-brand-main to-brand-accent flex items-center justify-center px-4">
       <Card variant="premium" className="w-full max-w-md">
         <div className="text-center mb-8">
           <img src="/LOGO_CLEAR_stars.png" alt="BENIRAGE" className="w-16 h-16 mx-auto mb-4" />
@@ -107,12 +135,15 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
         <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
           <h3 className="font-semibold text-blue-800 mb-2">🔧 Development Mode</h3>
           <p className="text-blue-700 text-sm mb-3">
-            Use these credentials for development:
+            Use these credentials for testing (⚠️ Development only):
           </p>
           <div className="bg-gray-100 p-3 rounded text-sm font-mono">
             <p><strong>Email:</strong> admin@benirage.org</p>
             <p><strong>Password:</strong> password123</p>
           </div>
+          <p className="text-blue-600 text-xs mt-2">
+            Remove this section in production builds.
+          </p>
         </div>
       </Card>
     </div>

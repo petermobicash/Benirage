@@ -28,7 +28,7 @@ const ChatDemo = () => {
   return (
     <div>
       {/* Hero */}
-      <Section className="py-20 bg-gradient-to-br from-blue-600 to-purple-600 text-white">
+      <Section className="py-20 bg-gradient-to-br from-brand-accent to-brand-accent-400 text-brand-main">
         <div className="text-center">
           <MessageSquare className="w-16 h-16 text-white mx-auto mb-6 animate-float" />
           <h1 className="text-5xl md:text-6xl font-bold mb-6">

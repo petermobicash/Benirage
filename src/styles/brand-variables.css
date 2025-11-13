@@ -1,0 +1,250 @@
+/**
+ * BENIRAGE Brand Color System
+ * CSS Variables Implementation
+ * Following the Three-Color Foundation Strategy
+ * 
+ * Color Distribution: 60% Main Blue, 30% Teal, 10% Gold
+ */
+
+/* ===== ROOT VARIABLES ===== */
+:root {
+  /* Brand Colors - Three Foundation */
+  --color-main: #05294B;           /* Deep Ocean Blue - 60% usage */
+  --color-middle: #003C3B;          /* Dark Teal - 30% usage */
+  --color-accent: #CEB43C;          /* Elegant Gold - 10% usage */
+
+  /* Extended Main Color Family (Blue) */
+  --color-main-50: #f0f4f8;
+  --color-main-100: #d9e3ec;
+  --color-main-200: #b3c7d9;
+  --color-main-300: #8dabc6;
+  --color-main-400: #5a8fb3;
+  --color-main: #05294B;            /* Main Brand Color */
+  --color-main-600: #04203a;
+  --color-main-700: #031829;        /* Ultra Dark Navy */
+  --color-main-800: #021018;
+  --color-main-900: #010905;
+  --color-main-950: #000000;
+
+  /* Extended Middle Color Family (Teal) */
+  --color-middle-50: #f0f6f6;
+  --color-middle-100: #dce8e8;
+  --color-middle-200: #b9d1d1;
+  --color-middle-300: #87baba;
+  --color-middle-400: #3e8e8d;
+  --color-middle: #003C3B;          /* Main Teal */
+  --color-middle-600: #003333;
+  --color-middle-700: #001e1d;      /* Deep Teal */
+  --color-middle-800: #001111;
+  --color-middle-900: #000808;
+  --color-middle-950: #000000;
+
+  /* Extended Accent Color Family (Gold) */
+  --color-accent-50: #f9f7ec;
+  --color-accent-100: #f1ebd1;
+  --color-accent-200: #e3d7a3;
+  --color-accent-300: #d4c375;
+  --color-accent-400: #c6af47;
+  --color-accent: #CEB43C;          /* Main Elegant Gold */
+  --color-accent-600: #b8a235;
+  --color-accent-700: #a69230;      /* Rich Dark Gold */
+  --color-accent-800: #8a7d29;
+  --color-accent-900: #6e6320;
+  --color-accent-950: #3d3811;
+
+  /* ===== NEUTRAL SUPPORT COLORS ===== */
+  --color-white: #ffffff;
+  --color-cloud-white: #f8f9fa;     /* Off-white backgrounds */
+  --color-light-gray: #e9ecef;      /* Borders, dividers */
+  --color-medium-gray: #6c757d;     /* Secondary text */
+  --color-dark-gray: #343a40;       /* Body text alternative */
+  --color-almost-black: #212529;    /* Deep text */
+  --color-black: #000000;
+
+  /* ===== SEMANTIC COLORS ===== */
+  /* Success (Green) */
+  --color-success-50: #f0fdf4;
+  --color-success-100: #dcfce7;
+  --color-success-200: #bbf7d0;
+  --color-success-300: #86efac;
+  --color-success-400: #4ade80;
+  --color-success: #28a745;
+  --color-success-600: #16a34a;
+  --color-success-700: #15803d;
+  --color-success-800: #166534;
+  --color-success-900: #14532d;
+
+  /* Warning (Amber) */
+  --color-warning-50: #fffbeb;
+  --color-warning-100: #fef3c7;
+  --color-warning-200: #fde68a;
+  --color-warning-300: #fcd34d;
+  --color-warning-400: #fbbf24;
+  --color-warning: #ffc107;
+  --color-warning-600: #d97706;
+  --color-warning-700: #b45309;
+  --color-warning-800: #92400e;
+  --color-warning-900: #78350f;
+
+  /* Error (Red) */
+  --color-error-50: #fef2f2;
+  --color-error-100: #fee2e2;
+  --color-error-200: #fecaca;
+  --color-error-300: #fca5a5;
+  --color-error-400: #f87171;
+  --color-error: #dc3545;
+  --color-error-600: #dc2626;
+  --color-error-700: #b91c1c;
+  --color-error-800: #991b1b;
+  --color-error-900: #7f1d1d;
+
+  /* Info (Blue variant) */
+  --color-info-50: #eff6ff;
+  --color-info-100: #dbeafe;
+  --color-info-200: #bfdbfe;
+  --color-info-300: #93c5fd;
+  --color-info-400: #60a5fa;
+  --color-info: #3b82f6;
+  --color-info-600: #2563eb;
+  --color-info-700: #1d4ed8;
+  --color-info-800: #1e40af;
+  --color-info-900: #1e3a8a;
+
+  /* ===== BRAND GRADIENTS ===== */
+  --gradient-hero: linear-gradient(135deg, var(--color-main) 0%, var(--color-middle) 100%);
+  --gradient-section: linear-gradient(to right, var(--color-middle) 0%, var(--color-middle-400) 100%);
+  --gradient-card: linear-gradient(135deg, var(--color-main) 0%, var(--color-main-400) 100%);
+  --gradient-gold: linear-gradient(to bottom, var(--color-accent) 0%, var(--color-accent-200) 100%);
+  --gradient-button: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-200) 100%);
+  --gradient-modern: linear-gradient(135deg, var(--color-cloud-white) 0%, var(--color-light-gray) 100%);
+  --gradient-text: linear-gradient(135deg, var(--color-main) 0%, var(--color-middle) 100%);
+  --gradient-text-gold: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-200) 100%);
+  --gradient-image-overlay: linear-gradient(to bottom, rgba(5, 41, 75, 0.7) 0%, rgba(0, 60, 59, 0.8) 100%);
+
+  /* ===== SHADOW SYSTEM ===== */
+  --shadow-sm: 0 2px 8px rgba(5, 41, 75, 0.08);
+  --shadow-md: 0 4px 15px rgba(5, 41, 75, 0.12);
+  --shadow-lg: 0 8px 25px rgba(5, 41, 75, 0.15);
+  --shadow-xl: 0 12px 40px rgba(5, 41, 75, 0.2);
+  --shadow-gold: 0 4px 20px rgba(206, 180, 60, 0.3);
+  --shadow-brand-glow: 0 0 20px rgba(5, 41, 75, 0.25);
+  --shadow-teal-glow: 0 0 20px rgba(0, 60, 59, 0.3);
+  --shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.1);
+
+  /* ===== SPACING & LAYOUT ===== */
+  --spacing-xs: 0.5rem;   /* 8px */
+  --spacing-sm: 1rem;     /* 16px */
+  --spacing-md: 1.5rem;   /* 24px */
+  --spacing-lg: 2rem;     /* 32px */
+  --spacing-xl: 3rem;     /* 48px */
+  --spacing-2xl: 4rem;    /* 64px */
+  --spacing-3xl: 6rem;    /* 96px */
+
+  /* ===== BORDER RADIUS ===== */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 20px;
+  --radius-2xl: 1.5rem;
+  --radius-full: 9999px;
+
+  /* ===== TRANSITIONS ===== */
+  --transition-fast: all 0.2s ease-in-out;
+  --transition-standard: all 0.3s ease;
+  --transition-slow: all 0.5s ease;
+
+  /* ===== TYPOGRAPHY ===== */
+  --font-family-primary: 'Inter', system-ui, sans-serif;
+  --font-family-display: 'Inter', system-ui, sans-serif;
+  --font-family-accent: 'Playfair Display', serif;
+
+  /* Text shadows for readability */
+  --text-shadow: 2px 2px 4px rgba(5, 41, 75, 0.5);
+  --text-shadow-light: 1px 1px 2px rgba(0, 0, 0, 0.3);
+
+  /* ===== ACCESSIBILITY FOCUS STATES ===== */
+  --focus-ring: 3px solid var(--color-accent);
+  --focus-ring-offset: 2px;
+}
+
+/* ===== DARK THEME VARIABLES ===== */
+[data-theme="dark"] {
+  --color-main: #031829;            /* Lighter variant for dark theme */
+  --color-middle: #001e1d;          /* Lighter variant for dark theme */
+  --color-accent: #e0c64e;          /* Brighter gold for dark theme */
+  
+  --color-white: #0f1115;
+  --color-cloud-white: #1a1d20;
+  --color-light-gray: #2d3238;
+  --color-medium-gray: #6c757d;
+  --color-dark-gray: #e9ecef;
+  --color-almost-black: #ffffff;
+}
+
+/* ===== ACCESSIBILITY CLASSES ===== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --color-main: #000000;
+    --color-middle: #000000;
+    --color-accent: #000000;
+    --color-white: #ffffff;
+    --color-black: #000000;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-fast: none;
+    --transition-standard: none;
+    --transition-slow: none;
+  }
+}
+
+/* ===== USAGE EXAMPLES ===== */
+/*
+Usage in components:
+
+Primary text on light background
+.heading {
+  color: var(--color-main);
+  background: var(--color-white);
+}
+
+Gold accent on dark background
+.accent-text {
+  color: var(--color-accent);
+  background: var(--color-main);
+}
+
+Brand gradient background
+.hero {
+  background: var(--gradient-hero);
+}
+
+Card with brand shadow
+.card {
+  background: var(--color-white);
+  box-shadow: var(--shadow-md);
+  border-radius: var(--radius-lg);
+}
+
+Gold focus ring for accessibility
+.button:focus {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+*/

@@ -171,7 +171,7 @@ const Membership = () => {
         code_of_conduct_accepted: formData.codeOfConductAccepted,
         communication_consent: formData.communicationConsent,
         status: 'pending'
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        
       } as any);
 
       if (result.success) {

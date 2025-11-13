@@ -87,16 +87,16 @@ const Stories = () => {
       if (dbError) throw dbError;
 
       // Convert database stories to MultimediaStory format
-      const allStories: MultimediaStory[] = (dbStories || []).map((story: any) => ({ // eslint-disable-line @typescript-eslint/no-explicit-any
+      const allStories: MultimediaStory[] = (dbStories || []).map((story: any) => ({
         id: story.id,
         title: story.title,
         content: story.content,
         author_name: story.author_name,
         author_email: story.author_email,
         author_location: story.author_location,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        
         story_type: story.story_type as any,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        
         category: story.category as any,
         is_anonymous: story.is_anonymous,
         is_featured: story.is_featured,
@@ -236,7 +236,7 @@ const Stories = () => {
       if (insertError) throw insertError;
 
       // Upload media files if provided
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      
       const multimediaData: any = {};
 
       if (formData.audio_file && storyRecord.id) {

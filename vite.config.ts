@@ -99,9 +99,57 @@ export default defineConfig(({ mode }) => ({
     minify: mode === 'production' ? 'terser' : false,
     rollupOptions: {
       output: {
-        manualChunks: {
-          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          'vendor': ['@supabase/supabase-js']
+        manualChunks: (id) => {
+          // Vendor chunks for third-party libraries with better separation
+          if (id.includes('node_modules')) {
+            // Core React ecosystem
+            if (id.includes('react') || id.includes('react-dom') || id.includes('react-router')) {
+              return 'react-vendor';
+            }
+            
+            // Supabase vendor
+            if (id.includes('@supabase')) {
+              return 'supabase-vendor';
+            }
+            
+            // Database and heavy utilities
+            if (id.includes('pg') || id.includes('sequelize') || id.includes('jspdf') || id.includes('recharts')) {
+              return 'heavy-utils-vendor';
+            }
+            
+            // UI components and icons
+            if (id.includes('lucide-react') || id.includes('@radix-ui') || id.includes('@headlessui')) {
+              return 'ui-vendor';
+            }
+            
+            // Development tools
+            if (id.includes('vitest') || id.includes('testing-library') || id.includes('@vitest')) {
+              return 'test-vendor';
+            }
+            
+            return 'vendor';
+          }
+          
+          // Application chunks based on directory structure
+          if (id.includes('/src/pages/')) {
+            return 'pages';
+          }
+          
+          if (id.includes('/src/components/')) {
+            // Separate admin and heavy components
+            if (id.includes('/advanced/') || id.includes('/admin/')) {
+              return 'admin-components';
+            }
+            return 'components';
+          }
+          
+          if (id.includes('/src/hooks/') || id.includes('/src/utils/')) {
+            return 'utils';
+          }
+          
+          if (id.includes('/src/services/')) {
+            return 'services';
+          }
         },
         assetFileNames: (assetInfo) => {
           const info = assetInfo.name!.split('.');
@@ -129,8 +177,14 @@ export default defineConfig(({ mode }) => ({
         comments: false
       }
     },
-    chunkSizeWarningLimit: 600,
-    reportCompressedSize: true
+    chunkSizeWarningLimit: 1000, // Restored to original 1000KB limit
+    reportCompressedSize: true,
+    // Additional optimizations
+    assetsInlineLimit: 4096, // Inline assets smaller than 4KB
+    cssCodeSplit: true, // Enable CSS code splitting
+    modulePreload: {
+      polyfill: true
+    }
   },
   define: {
     __APP_VERSION__: JSON.stringify(process.env.npm_package_version),

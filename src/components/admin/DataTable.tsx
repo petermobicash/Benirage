@@ -80,7 +80,7 @@ function DataTable<T extends Record<string, unknown>>({
       filtered = filtered.filter(item =>
         columns.some(column => {
           const value = column.key.toString().split('.').reduce<unknown>((obj, key) => (obj as Record<string, unknown>)?.[key], item as unknown);
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          
           return (value as any)?.toString().toLowerCase().includes(searchQuery.toLowerCase());
         })
       );
@@ -92,11 +92,11 @@ function DataTable<T extends Record<string, unknown>>({
         const aValue = sortConfig.key.split('.').reduce<unknown>((obj, key) => (obj as Record<string, unknown>)?.[key], a as unknown);
         const bValue = sortConfig.key.split('.').reduce<unknown>((obj, key) => (obj as Record<string, unknown>)?.[key], b as unknown);
 
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        
         if ((aValue as any) < (bValue as any)) {
           return sortConfig.direction === 'asc' ? -1 : 1;
         }
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        
         if ((aValue as any) > (bValue as any)) {
           return sortConfig.direction === 'asc' ? 1 : -1;
         }
@@ -161,7 +161,7 @@ function DataTable<T extends Record<string, unknown>>({
   };
 
   const getItemId = (item: T): string => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    
     return (item as any).id?.toString() || (item as any).key?.toString() || Math.random().toString();
   };
 
@@ -339,12 +339,11 @@ function DataTable<T extends Record<string, unknown>>({
                         }`}
                       >
                         {column.render ? (
-                          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                          
                           column.render(value as any, item)
                         ) : (
                           <span className={value ? 'text-gray-900' : 'text-gray-500'}>
-                            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                            {(value as any)?.toString() || '-'}
+                            {value?.toString() || '-'}
                           </span>
                         )}
                       </td>

@@ -58,12 +58,28 @@ export const useVideoCall = (options: UseVideoCallOptions = {}) => {
 
   // Check if media devices are supported and context is secure
   const checkMediaSupport = useCallback(async () => {
-    if (!window.isSecureContext) {
+    // Allow localhost development (secure context for localhost)
+    if (!window.isSecureContext && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
       throw new Error('Media devices require a secure context (HTTPS). Please ensure your site is served over HTTPS.');
     }
 
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
       throw new Error('Media devices are not supported in this browser.');
+    }
+
+    // Check if we can access media devices
+    try {
+      // First check if media devices are available
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      const hasVideo = devices.some(device => device.kind === 'videoinput');
+      const hasAudio = devices.some(device => device.kind === 'audioinput');
+      
+      if (!hasVideo && !hasAudio) {
+        throw new Error('No camera or microphone found. Please connect audio/video devices and try again.');
+      }
+    } catch (deviceError) {
+      console.warn('Could not enumerate devices:', deviceError);
+      // Continue anyway - some browsers may not support enumerateDevices
     }
 
     // Check permissions for camera and microphone
@@ -112,6 +128,10 @@ export const useVideoCall = (options: UseVideoCallOptions = {}) => {
         errorMessage += 'No camera or microphone found.';
       } else if (err.name === 'NotReadableError') {
         errorMessage += 'Camera or microphone is already in use by another application.';
+      } else if (err.name === 'DOMException' && err.message.includes('object can not be found')) {
+        errorMessage += 'Media devices are not available. Please check your browser permissions and try again.';
+      } else if (err.name === 'DOMException' && err.message.includes('NotAllowedError')) {
+        errorMessage += 'Permission denied. Please allow camera and microphone access in your browser settings.';
       } else if (err.message.includes('secure context')) {
         errorMessage += err.message;
       } else {

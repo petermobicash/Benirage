@@ -1,23 +1,106 @@
 import CommentSystem from '../components/chat/CommentSystem';
+import Section from '../components/ui/Section';
+import Card from '../components/ui/Card';
 
 const About = () => {
   return (
     <div className="w-full">
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-br from-blue-950 via-blue-800 to-gold-600 text-white px-4">
+      <Section background="blue" padding="xl">
         <div className="text-center max-w-4xl mx-auto">
-          <h1 className="text-5xl md:text-6xl font-bold mb-8">
+          <div className="text-6xl mb-6">🏛️</div>
+          <h1 className="text-5xl md:text-6xl font-bold text-blue-900 mb-8">
             About BENIRAGE
           </h1>
-          <p className="text-xl md:text-2xl mb-12 leading-relaxed">
-            A non-governmental organization founded in May 2024, officially registered
-            under legal personality 000070|RGB|NGO|LP|01|2025 by the Rwanda Governance Board
+          <p className="text-xl md:text-2xl text-gray-700 mb-8 leading-relaxed">
+            A legally registered non-governmental organization founded in May 2024, operating under
+            legal personality number <span className="font-semibold text-blue-900">000070|RGB|NGO|LP|01|2025</span> as granted by the Rwanda Governance Board
           </p>
+          <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 inline-block">
+            <p className="text-lg text-blue-900 font-medium">
+              🇷🇼 Officially Registered NGO in Rwanda | May 2024 | Legal Personality 000070
+            </p>
+          </div>
         </div>
-      </section>
+      </Section>
+
+      {/* Organization Overview */}
+      <Section background="cultural" padding="xl">
+        <div className="max-w-6xl mx-auto text-center">
+          <h2 className="text-4xl md:text-5xl font-bold text-blue-900 mb-8">
+            Our Commitment
+          </h2>
+          <div className="bg-white rounded-3xl p-12 shadow-xl">
+            <p className="text-xl md:text-2xl text-gray-700 leading-relaxed">
+              Our organization is dedicated to enhancing the well-being and development of communities
+              through a deep commitment to Rwanda's distinctive heritage and cultural traditions.
+            </p>
+          </div>
+        </div>
+      </Section>
+
+      {/* Four Interconnected Pillars */}
+      <Section background="white" padding="xl">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-blue-900 mb-6">
+              Our Four Interconnected Pillars
+            </h2>
+            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
+              We pursue our mission through four interconnected pillars that form the foundation of our work
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <Card variant="premium" className="text-center hover:scale-105 transition-transform">
+              <div className="text-5xl mb-6">🏺</div>
+              <h3 className="text-2xl font-bold text-blue-900 mb-4">
+                Cultural Values & Practices
+              </h3>
+              <p className="text-gray-600 leading-relaxed">
+                The preservation and revitalization of cultural values and practices that define
+                Rwanda's unique identity and heritage for future generations.
+              </p>
+            </Card>
+
+            <Card variant="premium" className="text-center hover:scale-105 transition-transform">
+              <div className="text-5xl mb-6">🎓</div>
+              <h3 className="text-2xl font-bold text-blue-900 mb-4">
+                Education & Research
+              </h3>
+              <p className="text-gray-600 leading-relaxed">
+                The advancement of education and academic research to deepen understanding
+                of Rwanda's history, culture, and development path.
+              </p>
+            </Card>
+
+            <Card variant="premium" className="text-center hover:scale-105 transition-transform">
+              <div className="text-5xl mb-6">🤝</div>
+              <h3 className="text-2xl font-bold text-blue-900 mb-4">
+                Knowledge Transfer & Capacity Building
+              </h3>
+              <p className="text-gray-600 leading-relaxed">
+                The facilitation of knowledge transfer and capacity building to empower
+                communities with the skills and understanding needed for sustainable development.
+              </p>
+            </Card>
+
+            <Card variant="premium" className="text-center hover:scale-105 transition-transform">
+              <div className="text-5xl mb-6">🏛️</div>
+              <h3 className="text-2xl font-bold text-blue-900 mb-4">
+                Historic Site Stewardship
+              </h3>
+              <p className="text-gray-600 leading-relaxed">
+                The stewardship of historically significant sites that embody our national
+                memory and identity, preserving them for future generations.
+              </p>
+            </Card>
+          </div>
+        </div>
+      </Section>
 
       {/* Mission & Vision */}
-      <section className="py-20 from-yellow-500 to-orange-500  px-4">
+      <Section background="blue" padding="xl">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div className="bg-white p-8 rounded-2xl shadow-lg text-center">
@@ -26,61 +109,74 @@ const About = () => {
               </div>
               <h3 className="text-3xl font-bold text-blue-900 mb-6">Our Mission</h3>
               <p className="text-gray-600 leading-relaxed text-lg">
-                To promote the well-being of the population based on Rwandan heritage and culture
-                through the preservation of cultural values, support for education and research,
-                knowledge enhancement, and protection of historical sites.
+                To enhance the well-being and development of communities through deep commitment
+                to Rwanda's distinctive heritage and cultural traditions, working across our four
+                interconnected pillars to create lasting positive impact.
               </p>
             </div>
 
             <div className="bg-white p-8 rounded-2xl shadow-lg text-center">
-              <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6">
+              <div className="w-20 h-20 bg-gradient-to-br from-brand-accent to-brand-accent-400 rounded-full flex items-center justify-center mx-auto mb-6">
                 <span className="text-4xl">👁️</span>
               </div>
               <h3 className="text-3xl font-bold text-blue-900 mb-6">Our Vision</h3>
               <p className="text-gray-600 leading-relaxed text-lg">
                 A Rwanda and a world where heritage, culture, wisdom, and spirituality form
-                the foundation of peace, resilience, and sustainable development.
+                the foundation of peace, resilience, and sustainable development for all communities.
               </p>
             </div>
           </div>
         </div>
-      </section>
+      </Section>
 
-      {/* Core Objectives */}
-      <section className="py-20 bg-gray-50 px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-blue-900 mb-6">
-              Core Objectives
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {[
-              "Preserve Rwandan culture and its core values",
-              "Support education and research on Rwandan history",
-              "Promote awareness campaigns on cultural heritage",
-              "Protect historical sites and encourage culture-based tourism"
-            ].map((objective, index) => (
-              <div key={index} className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
-                <div className="flex items-start space-x-6">
-                  <div className="w-12 h-12 bg-gradient-to-br from-yellow-500 to-orange-500 text-white rounded-full flex items-center justify-center font-bold text-lg">
-                    {index + 1}
-                  </div>
-                  <p className="text-gray-600 font-medium text-lg leading-relaxed">{objective}</p>
+      {/* Organization Details */}
+      <Section background="cultural" padding="xl">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl md:text-5xl font-bold text-blue-900 mb-8">
+            Legal Foundation
+          </h2>
+          <div className="bg-white rounded-3xl p-12 shadow-xl">
+            <div className="space-y-6">
+              <div className="flex items-center justify-center space-x-4">
+                <span className="text-3xl">📋</span>
+                <div className="text-left">
+                  <h4 className="text-xl font-semibold text-blue-900">Legal Registration</h4>
+                  <p className="text-gray-600">Legal Personality Number: 000070|RGB|NGO|LP|01|2025</p>
                 </div>
               </div>
-            ))}
+              <div className="flex items-center justify-center space-x-4">
+                <span className="text-3xl">🏛️</span>
+                <div className="text-left">
+                  <h4 className="text-xl font-semibold text-blue-900">Regulatory Authority</h4>
+                  <p className="text-gray-600">Rwanda Governance Board</p>
+                </div>
+              </div>
+              <div className="flex items-center justify-center space-x-4">
+                <span className="text-3xl">📅</span>
+                <div className="text-left">
+                  <h4 className="text-xl font-semibold text-blue-900">Founded</h4>
+                  <p className="text-gray-600">May 2024</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </section>
+      </Section>
 
       {/* Comments Section */}
-      <section className="py-20 bg-white px-4">
+      <Section background="white" padding="xl">
         <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-blue-900 mb-6">
+              Join Our Mission
+            </h2>
+            <p className="text-xl text-blue-900">
+              Share your thoughts and help us strengthen our community
+            </p>
+          </div>
           <CommentSystem contentSlug="about-page" allowComments={true} />
         </div>
-      </section>
+      </Section>
     </div>
   );
 };

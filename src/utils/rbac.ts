@@ -47,9 +47,14 @@ export const getUserProfile = async (userId: string): Promise<UserProfile | null
       .from('users')
       .select('*')
       .eq('user_id', userId)
-      .single();
+      .maybeSingle(); // Use maybeSingle() instead of single() to handle 0 rows gracefully
 
     if (error) throw error;
+    
+    // If no user found, return null gracefully
+    if (!data) {
+      return null;
+    }
 
     // Map the data to match UserProfile interface
     return {

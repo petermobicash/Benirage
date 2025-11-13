@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { supabase, getContent, updateContent } from '../../lib/supabase';
 import { Database } from '../../lib/supabase';
-import { ArrowLeft, Image, X } from 'lucide-react';
+import { ArrowLeft, Image, X, Type, AlignLeft, AlignCenter, AlignRight, Bold, Italic, Underline, List, ListOrdered, Link2, Quote, Code, Eye } from 'lucide-react';
 import { getUserPermissions } from '../../utils/permissions';
 import Card from '../ui/Card';
 import Button from '../ui/Button';
@@ -83,6 +83,7 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
   const [saving, setSaving] = useState(false);
   const [showAdvancedFeatures, setShowAdvancedFeatures] = useState(true);
   const [showMediaLibrary, setShowMediaLibrary] = useState(false);
+  const [showPreview, setShowPreview] = useState(false);
   const [mediaItems, setMediaItems] = useState<Array<{
     id: string;
     url: string;
@@ -92,6 +93,7 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
   }>>([]);
   
   const permissions = getUserPermissions(currentUser);
+  const editorRef = useRef<HTMLDivElement>(null);
 
   const loadMediaItems = async () => {
     try {
@@ -204,6 +206,42 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
     });
   };
 
+  // WYSIWYG Editor functions
+  const execCommand = (command: string, value?: string) => {
+    document.execCommand(command, false, value);
+    updateContentFromEditor();
+  };
+
+  const updateContentFromEditor = () => {
+    if (editorRef.current) {
+      const content = editorRef.current.innerHTML;
+      handleInputChange('content', content);
+    }
+  };
+
+  const handleEditorInput = () => {
+    updateContentFromEditor();
+  };
+
+  const insertLink = () => {
+    const url = prompt('Enter URL:');
+    if (url) {
+      execCommand('createLink', url);
+    }
+  };
+
+  const insertImage = () => {
+    const url = prompt('Enter image URL:');
+    if (url) {
+      execCommand('insertImage', url);
+    }
+  };
+
+  const toggleFormat = (command: string) => {
+    execCommand(command);
+    editorRef.current?.focus();
+  };
+
   const handleSave = async (status: string = 'draft') => {
     if (!formData.title || !formData.content) {
       alert('Please fill in title and content');
@@ -281,11 +319,18 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
           </div>
         </div>
         <div className="flex items-center space-x-3">
-          <Button 
-            variant="ghost" 
+          <Button
+            variant="ghost"
             onClick={() => setShowAdvancedFeatures(!showAdvancedFeatures)}
           >
             {showAdvancedFeatures ? 'Hide' : 'Show'} Advanced Features
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => setShowPreview(!showPreview)}
+            icon={Eye}
+          >
+            {showPreview ? 'Edit' : 'Preview'}
           </Button>
           <Button variant="outline" onClick={() => handleSave('draft')} disabled={saving}>
             {saving ? <div className="flex items-center justify-center p-8"><div className="w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div><span className="ml-2 text-gray-600">Loading...</span></div> : 'Save Draft'}
@@ -366,13 +411,155 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
                 <label className="block text-sm font-medium text-blue-900 mb-2">
                   Content *
                 </label>
-                <textarea
-                  value={formData.content}
-                  onChange={(e) => handleInputChange('content', e.target.value)}
-                  rows={15}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-                  placeholder="Write your content here..."
-                />
+                {showPreview ? (
+                  <div
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 min-h-[400px] prose max-w-none"
+                    dangerouslySetInnerHTML={{ __html: formData.content }}
+                  />
+                ) : (
+                  <div className="border border-gray-300 rounded-lg">
+                    {/* WYSIWYG Toolbar */}
+                    <div className="flex items-center gap-1 p-2 border-b border-gray-200 bg-gray-50 flex-wrap">
+                      <button
+                        type="button"
+                        onClick={() => toggleFormat('bold')}
+                        className="p-2 hover:bg-gray-200 rounded transition-colors"
+                        title="Bold"
+                      >
+                        <Bold className="w-4 h-4" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => toggleFormat('italic')}
+                        className="p-2 hover:bg-gray-200 rounded transition-colors"
+                        title="Italic"
+                      >
+                        <Italic className="w-4 h-4" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => toggleFormat('underline')}
+                        className="p-2 hover:bg-gray-200 rounded transition-colors"
+                        title="Underline"
+                      >
+                        <Underline className="w-4 h-4" />
+                      </button>
+                      
+                      <div className="w-px h-6 bg-gray-300 mx-1" />
+                      
+                      <button
+                        type="button"
+                        onClick={() => execCommand('formatBlock', '<h1>')}
+                        className="p-2 hover:bg-gray-200 rounded transition-colors"
+                        title="Heading 1"
+                      >
+                        <Type className="w-4 h-4" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => execCommand('formatBlock', '<h2>')}
+                        className="p-2 hover:bg-gray-200 rounded transition-colors"
+                        title="Heading 2"
+                      >
+                        <Type className="w-3 h-3" />
+                      </button>
+                      
+                      <div className="w-px h-6 bg-gray-300 mx-1" />
+                      
+                      <button
+                        type="button"
+                        onClick={() => execCommand('justifyLeft')}
+                        className="p-2 hover:bg-gray-200 rounded transition-colors"
+                        title="Align Left"
+                      >
+                        <AlignLeft className="w-4 h-4" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => execCommand('justifyCenter')}
+                        className="p-2 hover:bg-gray-200 rounded transition-colors"
+                        title="Align Center"
+                      >
+                        <AlignCenter className="w-4 h-4" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => execCommand('justifyRight')}
+                        className="p-2 hover:bg-gray-200 rounded transition-colors"
+                        title="Align Right"
+                      >
+                        <AlignRight className="w-4 h-4" />
+                      </button>
+                      
+                      <div className="w-px h-6 bg-gray-300 mx-1" />
+                      
+                      <button
+                        type="button"
+                        onClick={() => execCommand('insertUnorderedList')}
+                        className="p-2 hover:bg-gray-200 rounded transition-colors"
+                        title="Bullet List"
+                      >
+                        <List className="w-4 h-4" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => execCommand('insertOrderedList')}
+                        className="p-2 hover:bg-gray-200 rounded transition-colors"
+                        title="Numbered List"
+                      >
+                        <ListOrdered className="w-4 h-4" />
+                      </button>
+                      
+                      <div className="w-px h-6 bg-gray-300 mx-1" />
+                      
+                      <button
+                        type="button"
+                        onClick={insertLink}
+                        className="p-2 hover:bg-gray-200 rounded transition-colors"
+                        title="Insert Link"
+                      >
+                        <Link2 className="w-4 h-4" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={insertImage}
+                        className="p-2 hover:bg-gray-200 rounded transition-colors"
+                        title="Insert Image"
+                      >
+                        <Image className="w-4 h-4" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => execCommand('formatBlock', '<blockquote>')}
+                        className="p-2 hover:bg-gray-200 rounded transition-colors"
+                        title="Quote"
+                      >
+                        <Quote className="w-4 h-4" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => execCommand('formatBlock', '<code>')}
+                        className="p-2 hover:bg-gray-200 rounded transition-colors"
+                        title="Code Block"
+                      >
+                        <Code className="w-4 h-4" />
+                      </button>
+                    </div>
+                    
+                    {/* WYSIWYG Editor */}
+                    <div
+                      ref={editorRef}
+                      contentEditable
+                      onInput={handleEditorInput}
+                      className="w-full px-4 py-3 min-h-[400px] focus:outline-none prose max-w-none"
+                      style={{
+                        wordBreak: 'break-word',
+                        overflowWrap: 'break-word'
+                      }}
+                      dangerouslySetInnerHTML={{ __html: formData.content || '<p>Start writing your content here...</p>' }}
+                    />
+                  </div>
+                )}
               </div>
 
               <div>
