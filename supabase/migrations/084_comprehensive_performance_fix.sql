@@ -226,12 +226,13 @@ WITH CHECK (
 );
 
 -- Fix form_submissions table policies
+-- Note: form_submissions table doesn't have user_id column, so we allow authenticated users to view all
 DROP POLICY IF EXISTS "Authenticated users can view their own submissions" ON public.form_submissions;
-CREATE POLICY "Authenticated users can view their own submissions" ON public.form_submissions
+CREATE POLICY "Authenticated users can view submissions" ON public.form_submissions
 FOR SELECT
 TO authenticated
 USING (
-  user_id = (select auth.uid())::text AND (select auth.uid()) IS NOT NULL
+  (select auth.uid()) IS NOT NULL
 );
 
 DROP POLICY IF EXISTS "Authenticated users can manage form submissions" ON public.form_submissions;
@@ -491,7 +492,7 @@ CREATE POLICY "Authenticated users can view their alerts" ON public.content_aler
 FOR SELECT
 TO authenticated
 USING (
-  assigned_to = (select auth.uid())::text AND (select auth.uid()) IS NOT NULL
+  (select auth.uid())::text = ANY(assigned_to) AND (select auth.uid()) IS NOT NULL
 );
 
 DROP POLICY IF EXISTS "Users can update their own alerts" ON public.content_alerts;
@@ -499,10 +500,10 @@ CREATE POLICY "Users can update their own alerts" ON public.content_alerts
 FOR UPDATE
 TO authenticated
 USING (
-  assigned_to = (select auth.uid())::text AND (select auth.uid()) IS NOT NULL
+  (select auth.uid())::text = ANY(assigned_to) AND (select auth.uid()) IS NOT NULL
 )
 WITH CHECK (
-  assigned_to = (select auth.uid())::text AND (select auth.uid()) IS NOT NULL
+  (select auth.uid())::text = ANY(assigned_to) AND (select auth.uid()) IS NOT NULL
 );
 
 -- Fix suggestions table policies
@@ -519,7 +520,7 @@ CREATE POLICY "Users can insert their own suggestions" ON public.suggestions
 FOR INSERT
 TO authenticated
 WITH CHECK (
-  user_id = (select auth.uid())::text AND (select auth.uid()) IS NOT NULL
+  user_id = (select auth.uid()) AND (select auth.uid()) IS NOT NULL
 );
 
 DROP POLICY IF EXISTS "Users can update their own pending suggestions" ON public.suggestions;
@@ -527,10 +528,10 @@ CREATE POLICY "Users can update their own pending suggestions" ON public.suggest
 FOR UPDATE
 TO authenticated
 USING (
-  user_id = (select auth.uid())::text AND (select auth.uid()) IS NOT NULL
+  user_id = (select auth.uid()) AND (select auth.uid()) IS NOT NULL
 )
 WITH CHECK (
-  user_id = (select auth.uid())::text AND (select auth.uid()) IS NOT NULL
+  user_id = (select auth.uid()) AND (select auth.uid()) IS NOT NULL
 );
 
 -- Fix monthly_goals table policies
@@ -547,7 +548,7 @@ CREATE POLICY "Users can insert their own goals" ON public.monthly_goals
 FOR INSERT
 TO authenticated
 WITH CHECK (
-  created_by = (select auth.uid())::text AND (select auth.uid()) IS NOT NULL
+  created_by = (select auth.uid()) AND (select auth.uid()) IS NOT NULL
 );
 
 DROP POLICY IF EXISTS "Users can update their own goals" ON public.monthly_goals;
@@ -555,10 +556,10 @@ CREATE POLICY "Users can update their own goals" ON public.monthly_goals
 FOR UPDATE
 TO authenticated
 USING (
-  created_by = (select auth.uid())::text AND (select auth.uid()) IS NOT NULL
+  created_by = (select auth.uid()) AND (select auth.uid()) IS NOT NULL
 )
 WITH CHECK (
-  created_by = (select auth.uid())::text AND (select auth.uid()) IS NOT NULL
+  created_by = (select auth.uid()) AND (select auth.uid()) IS NOT NULL
 );
 
 DROP POLICY IF EXISTS "Users can delete their own goals" ON public.monthly_goals;
@@ -566,36 +567,41 @@ CREATE POLICY "Users can delete their own goals" ON public.monthly_goals
 FOR DELETE
 TO authenticated
 USING (
-  created_by = (select auth.uid())::text AND (select auth.uid()) IS NOT NULL
+  created_by = (select auth.uid()) AND (select auth.uid()) IS NOT NULL
 );
 
--- Fix chat_rooms table policies
-DROP POLICY IF EXISTS "Authenticated users can view all active chat rooms" ON public.chat_rooms;
-CREATE POLICY "Authenticated users can view all active chat rooms" ON public.chat_rooms
-FOR SELECT
-TO authenticated
-USING (
-  (select auth.uid()) IS NOT NULL
-);
+-- Fix chat_rooms table policies (only if table exists)
+DO $$
+BEGIN
+  IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'chat_rooms') THEN
+    EXECUTE 'DROP POLICY IF EXISTS "Authenticated users can view all active chat rooms" ON public.chat_rooms';
+    EXECUTE 'CREATE POLICY "Authenticated users can view all active chat rooms" ON public.chat_rooms
+    FOR SELECT
+    TO authenticated
+    USING (
+      (select auth.uid()) IS NOT NULL
+    )';
 
-DROP POLICY IF EXISTS "Authenticated users can create chat rooms" ON public.chat_rooms;
-CREATE POLICY "Authenticated users can create chat rooms" ON public.chat_rooms
-FOR INSERT
-TO authenticated
-WITH CHECK (
-  created_by = (select auth.uid())::text AND (select auth.uid()) IS NOT NULL
-);
+    EXECUTE 'DROP POLICY IF EXISTS "Authenticated users can create chat rooms" ON public.chat_rooms';
+    EXECUTE 'CREATE POLICY "Authenticated users can create chat rooms" ON public.chat_rooms
+    FOR INSERT
+    TO authenticated
+    WITH CHECK (
+      created_by = (select auth.uid())::text AND (select auth.uid()) IS NOT NULL
+    )';
 
-DROP POLICY IF EXISTS "Users can update their own chat rooms" ON public.chat_rooms;
-CREATE POLICY "Users can update their own chat rooms" ON public.chat_rooms
-FOR UPDATE
-TO authenticated
-USING (
-  created_by = (select auth.uid())::text AND (select auth.uid()) IS NOT NULL
-)
-WITH CHECK (
-  created_by = (select auth.uid())::text AND (select auth.uid()) IS NOT NULL
-);
+    EXECUTE 'DROP POLICY IF EXISTS "Users can update their own chat rooms" ON public.chat_rooms';
+    EXECUTE 'CREATE POLICY "Users can update their own chat rooms" ON public.chat_rooms
+    FOR UPDATE
+    TO authenticated
+    USING (
+      created_by = (select auth.uid())::text AND (select auth.uid()) IS NOT NULL
+    )
+    WITH CHECK (
+      created_by = (select auth.uid())::text AND (select auth.uid()) IS NOT NULL
+    )';
+  END IF;
+END $$;
 
 -- Fix user_activity_log table policies
 DROP POLICY IF EXISTS "Users can view their own activity" ON public.user_activity_log;
@@ -603,7 +609,7 @@ CREATE POLICY "Users can view their own activity" ON public.user_activity_log
 FOR SELECT
 TO authenticated
 USING (
-  user_id = (select auth.uid())::text AND (select auth.uid()) IS NOT NULL
+  user_id = (select auth.uid()) AND (select auth.uid()) IS NOT NULL
 );
 
 -- Fix user_sessions table policies
@@ -612,7 +618,7 @@ CREATE POLICY "Users can view their own sessions" ON public.user_sessions
 FOR SELECT
 TO authenticated
 USING (
-  user_id = (select auth.uid())::text AND (select auth.uid()) IS NOT NULL
+  user_id = (select auth.uid()) AND (select auth.uid()) IS NOT NULL
 );
 
 DROP POLICY IF EXISTS "Users can manage their own sessions" ON public.user_sessions;
@@ -620,10 +626,10 @@ CREATE POLICY "Users can manage their own sessions" ON public.user_sessions
 FOR ALL
 TO authenticated
 USING (
-  user_id = (select auth.uid())::text AND (select auth.uid()) IS NOT NULL
+  user_id = (select auth.uid()) AND (select auth.uid()) IS NOT NULL
 )
 WITH CHECK (
-  user_id = (select auth.uid())::text AND (select auth.uid()) IS NOT NULL
+  user_id = (select auth.uid()) AND (select auth.uid()) IS NOT NULL
 );
 
 -- Fix groups table policies
@@ -644,7 +650,7 @@ CREATE POLICY "Users can view their own group memberships" ON public.group_users
 FOR SELECT
 TO authenticated
 USING (
-  user_id = (select auth.uid())::text AND (select auth.uid()) IS NOT NULL
+  user_id = (select auth.uid()) AND (select auth.uid()) IS NOT NULL
 );
 
 DROP POLICY IF EXISTS "Authenticated users can manage group memberships" ON public.group_users;
@@ -676,7 +682,7 @@ CREATE POLICY "Users can view their own profile" ON public.users
 FOR SELECT
 TO authenticated
 USING (
-  id = (select auth.uid())::text AND (select auth.uid()) IS NOT NULL
+  user_id = (select auth.uid()) AND (select auth.uid()) IS NOT NULL
 );
 
 DROP POLICY IF EXISTS "Users can update their own profile" ON public.users;
@@ -684,10 +690,10 @@ CREATE POLICY "Users can update their own profile" ON public.users
 FOR UPDATE
 TO authenticated
 USING (
-  id = (select auth.uid())::text AND (select auth.uid()) IS NOT NULL
+  user_id = (select auth.uid()) AND (select auth.uid()) IS NOT NULL
 )
 WITH CHECK (
-  id = (select auth.uid())::text AND (select auth.uid()) IS NOT NULL
+  user_id = (select auth.uid()) AND (select auth.uid()) IS NOT NULL
 );
 
 DROP POLICY IF EXISTS "Users can insert their own profile" ON public.users;
@@ -695,7 +701,7 @@ CREATE POLICY "Users can insert their own profile" ON public.users
 FOR INSERT
 TO authenticated
 WITH CHECK (
-  id = (select auth.uid())::text AND (select auth.uid()) IS NOT NULL
+  user_id = (select auth.uid()) AND (select auth.uid()) IS NOT NULL
 );
 
 -- Fix user_profiles table policies
@@ -704,7 +710,7 @@ CREATE POLICY "Users can view their own profile" ON public.user_profiles
 FOR SELECT
 TO authenticated
 USING (
-  user_id = (select auth.uid())::text AND (select auth.uid()) IS NOT NULL
+  user_id = (select auth.uid()) AND (select auth.uid()) IS NOT NULL
 );
 
 DROP POLICY IF EXISTS "Users can update their own profile" ON public.user_profiles;
@@ -712,10 +718,10 @@ CREATE POLICY "Users can update their own profile" ON public.user_profiles
 FOR UPDATE
 TO authenticated
 USING (
-  user_id = (select auth.uid())::text AND (select auth.uid()) IS NOT NULL
+  user_id = (select auth.uid()) AND (select auth.uid()) IS NOT NULL
 )
 WITH CHECK (
-  user_id = (select auth.uid())::text AND (select auth.uid()) IS NOT NULL
+  user_id = (select auth.uid()) AND (select auth.uid()) IS NOT NULL
 );
 
 DROP POLICY IF EXISTS "Users can insert their own profile" ON public.user_profiles;
@@ -723,7 +729,7 @@ CREATE POLICY "Users can insert their own profile" ON public.user_profiles
 FOR INSERT
 TO authenticated
 WITH CHECK (
-  user_id = (select auth.uid())::text AND (select auth.uid()) IS NOT NULL
+  user_id = (select auth.uid()) AND (select auth.uid()) IS NOT NULL
 );
 
 -- =====================================================
@@ -770,10 +776,10 @@ DROP POLICY IF EXISTS "Users can update their own pending suggestions" ON public
 CREATE POLICY "Suggestions update policy" ON public.suggestions
 FOR UPDATE TO anon, authenticated, authenticator, dashboard_user
 USING (
-  user_id = (select auth.uid())::text AND (select auth.uid()) IS NOT NULL
+  user_id = (select auth.uid()) AND (select auth.uid()) IS NOT NULL
 )
 WITH CHECK (
-  user_id = (select auth.uid())::text AND (select auth.uid()) IS NOT NULL
+  user_id = (select auth.uid()) AND (select auth.uid()) IS NOT NULL
 );
 
 -- Consolidate tags SELECT policies
@@ -794,7 +800,7 @@ DROP POLICY IF EXISTS "Users can view their own activity" ON public.user_activit
 CREATE POLICY "User activity policy" ON public.user_activity_log
 FOR SELECT TO anon, authenticated, authenticator, dashboard_user
 USING (
-  user_id = (select auth.uid())::text AND (select auth.uid()) IS NOT NULL
+  user_id = (select auth.uid()) AND (select auth.uid()) IS NOT NULL
 );
 
 -- Consolidate user_groups SELECT policies
@@ -816,10 +822,10 @@ DROP POLICY IF EXISTS "Users can insert their own profile" ON public.user_profil
 CREATE POLICY "User profiles policy" ON public.user_profiles
 FOR ALL TO anon, authenticated, authenticator, dashboard_user
 USING (
-  user_id = (select auth.uid())::text AND (select auth.uid()) IS NOT NULL
+  user_id = (select auth.uid()) AND (select auth.uid()) IS NOT NULL
 )
 WITH CHECK (
-  user_id = (select auth.uid())::text AND (select auth.uid()) IS NOT NULL
+  user_id = (select auth.uid()) AND (select auth.uid()) IS NOT NULL
 );
 
 -- Consolidate user_sessions SELECT policies
@@ -830,7 +836,7 @@ DROP POLICY IF EXISTS "Users can view their own sessions" ON public.user_session
 CREATE POLICY "User sessions policy" ON public.user_sessions
 FOR SELECT TO anon, authenticated, authenticator, dashboard_user
 USING (
-  user_id = (select auth.uid())::text AND (select auth.uid()) IS NOT NULL
+  user_id = (select auth.uid()) AND (select auth.uid()) IS NOT NULL
 );
 
 -- Consolidate users policies
@@ -840,10 +846,10 @@ DROP POLICY IF EXISTS "Users can insert their own profile" ON public.users;
 CREATE POLICY "Users policy" ON public.users
 FOR ALL TO anon, authenticated, authenticator, dashboard_user
 USING (
-  id = (select auth.uid())::text AND (select auth.uid()) IS NOT NULL
+  user_id = (select auth.uid()) AND (select auth.uid()) IS NOT NULL
 )
 WITH CHECK (
-  id = (select auth.uid())::text AND (select auth.uid()) IS NOT NULL
+  user_id = (select auth.uid()) AND (select auth.uid()) IS NOT NULL
 );
 
 -- =====================================================

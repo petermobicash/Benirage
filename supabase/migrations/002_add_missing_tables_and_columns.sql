@@ -142,6 +142,10 @@ CREATE TABLE IF NOT EXISTS comment_reactions (
 -- Enable RLS on comment_reactions table
 ALTER TABLE comment_reactions ENABLE ROW LEVEL SECURITY;
 
+-- Drop existing policies if they exist and recreate
+DROP POLICY IF EXISTS "Anyone can view comment reactions" ON comment_reactions;
+DROP POLICY IF EXISTS "Authenticated users can manage their own reactions" ON comment_reactions;
+
 -- Create policies for comment_reactions table
 CREATE POLICY "Anyone can view comment reactions" ON comment_reactions
     FOR SELECT USING (true);

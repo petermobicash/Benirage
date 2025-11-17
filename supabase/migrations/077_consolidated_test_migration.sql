@@ -47,10 +47,16 @@ CREATE INDEX IF NOT EXISTS idx_content_published_at ON public.content(published_
 -- VERIFY RLS POLICIES ARE CORRECT
 -- =====================================================
 
--- Enable RLS on all tables
+-- Enable RLS on all tables (only if they exist)
 ALTER TABLE public.user_profiles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.chat_messages ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.chat_rooms ENABLE ROW LEVEL SECURITY;
+-- Skip chat_rooms as it may not exist in all environments
+DO $$
+BEGIN
+    IF EXISTS (SELECT FROM pg_tables WHERE schemaname = 'public' AND tablename = 'chat_rooms') THEN
+        ALTER TABLE public.chat_rooms ENABLE ROW LEVEL SECURITY;
+    END IF;
+END $$;
 ALTER TABLE public.content ENABLE ROW LEVEL SECURITY;
 
 -- =====================================================

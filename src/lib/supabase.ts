@@ -2535,36 +2535,64 @@ export const submitPhilosophyCafeApplication = async (applicationData: Database[
 // Authentication helpers
 export const signInWithEmail = async (email: string, password: string) => {
   try {
+    console.log('🔐 Starting sign in process for:', email);
+
     // Check if Supabase is configured
     if (!supabaseUrl || !supabaseAnonKey) {
+      console.log('❌ Supabase not configured');
       return {
         success: false,
         error: 'Supabase not configured. Please check your .env file and ensure VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY are set correctly.'
       };
     }
 
+    console.log('✅ Supabase configured, URL:', supabaseUrl);
+
     // Clear unknown existing invalid sessions first
     try {
+      console.log('🧹 Clearing existing sessions...');
       await supabase.auth.signOut({ scope: 'local' });
-    } catch {
+      console.log('✅ Sessions cleared');
+    } catch (clearError) {
+      console.log('⚠️ Error clearing sessions (expected):', clearError);
       // Ignore errors when clearing - session might already be invalid
     }
 
+    console.log('🔑 Attempting authentication...');
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
 
+    console.log('📊 Auth response:', { data: !!data, error: error?.message || 'none', errorDetails: error });
+
     if (error) {
+      console.log('❌ Auth error:', error);
+      console.log('❌ Auth error details:', {
+        message: error.message,
+        status: (error as any).status,
+        details: (error as any).details,
+        hint: (error as any).hint
+      });
       // Handle specific auth errors
       if (error.message?.includes('Invalid Refresh Token') || error.message?.includes('Refresh Token Not Found')) {
         console.warn('Invalid refresh token during login attempt. This is normal if session was expired.');
         // Retry the login after clearing the invalid session
+        console.log('🔄 Retrying authentication...');
         const { data: retryData, error: retryError } = await supabase.auth.signInWithPassword({
           email,
           password,
         });
-        if (retryError) throw retryError;
+        console.log('📊 Retry response:', { data: !!retryData, error: retryError?.message || 'none', errorDetails: retryError });
+        if (retryError) {
+          console.log('❌ Retry auth error details:', {
+            message: retryError.message,
+            status: (retryError as any).status,
+            details: (retryError as any).details,
+            hint: (retryError as any).hint
+          });
+          throw retryError;
+        }
         return {
           success: true,
           user: retryData.user,

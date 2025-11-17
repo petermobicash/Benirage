@@ -72,20 +72,32 @@ const ContentCalendar = () => {
       setLoading(true);
       const { data, error } = await supabase
         .from('content_calendar')
-        .select(`
-          *,
-          profiles!author_id(full_name)
-        `)
+        .select('*')
         .order('publish_date');
 
       if (error) throw error;
 
-      const eventsWithAuthorNames = data?.map(event => ({
-        ...event,
-        author_name: event.profiles
-          ? event.profiles.full_name || 'Unknown Author'
-          : 'Unknown Author'
-      })) || [];
+      // Fetch author names separately to avoid foreign key issues
+      const eventsWithAuthorNames = await Promise.all(
+        (data || []).map(async (event) => {
+          let author_name = 'Unknown Author';
+          
+          if (event.author_id) {
+            const { data: profile } = await supabase
+              .from('user_profiles')
+              .select('display_name, username')
+              .eq('user_id', event.author_id)
+              .single();
+            
+            author_name = profile?.display_name || profile?.username || 'Unknown Author';
+          }
+          
+          return {
+            ...event,
+            author_name
+          };
+        })
+      );
 
       setEvents(eventsWithAuthorNames);
     } catch (error) {

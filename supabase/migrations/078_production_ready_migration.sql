@@ -168,8 +168,8 @@ DECLARE
     tbl TEXT;
 BEGIN
     FOR tbl IN SELECT unnest(ARRAY[
-        'user_profiles', 'content', 'chat_messages', 
-        'chat_rooms', 'audit_logs'
+        'user_profiles', 'content', 'chat_messages',
+        'audit_logs'
     ])
     LOOP
         IF NOT EXISTS (

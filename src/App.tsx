@@ -1,13 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Suspense, lazy, useState, useEffect, useMemo } from 'react';
+import { Suspense, lazy, useState, useEffect } from 'react';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import MobileAppShell from './components/layout/MobileAppShell';
 import SplashScreen from './components/pwa/SplashScreen';
 import ErrorBoundary from './components/ui/ErrorBoundary';
 import Toast from './components/ui/Toast';
-import TopBanner from './components/announcements/TopBanner';
-import { useAnnouncements } from './hooks/useAnnouncements';
 import { useToast } from './hooks/useToast';
 
 // Lazy load pages for better performance
@@ -35,8 +33,6 @@ const WhatsAppChatDemo = lazy(() => import('./pages/WhatsAppChatDemo'));
 const AdvancedFeatures = lazy(() => import('./pages/AdvancedFeatures'));
 const PublicChat = lazy(() => import('./pages/PublicChat'));
 const Stories = lazy(() => import('./pages/Stories'));
-const AdminAds = lazy(() => import('./pages/AdminAds'));
-const AdDemo = lazy(() => import('./pages/AdDemo'));
 const UserManagement = lazy(() => import('./pages/UserManagement'));
 const Privacy = lazy(() => import('./pages/Privacy'));
 const DynamicPage = lazy(() => import('./pages/DynamicPage'));
@@ -44,7 +40,6 @@ const DynamicPage = lazy(() => import('./pages/DynamicPage'));
 function App() {
   const [isMobile, setIsMobile] = useState(false);
   const [showSplash, setShowSplash] = useState(true);
-  const [currentPath, setCurrentPath] = useState(window.location.pathname);
   const { toasts, removeToast } = useToast();
 
   useEffect(() => {
@@ -67,32 +62,6 @@ function App() {
     return () => clearTimeout(timer);
   }, []);
 
-  // Memoize device type for announcements
-  const deviceType = useMemo((): 'desktop' | 'mobile' | 'tablet' => {
-    if (isMobile) return 'mobile';
-    if (window.innerWidth >= 1024) return 'desktop';
-    return 'tablet';
-  }, [isMobile]);
-
-  // Update current path when location changes
-  useEffect(() => {
-    const handleLocationChange = () => {
-      setCurrentPath(window.location.pathname);
-    };
-
-    window.addEventListener('popstate', handleLocationChange);
-    return () => window.removeEventListener('popstate', handleLocationChange);
-  }, []);
-
-  // Announcements hook
-  const {
-    topAnnouncements,
-    dismissAnnouncement
-  } = useAnnouncements({
-    currentPath,
-    deviceType,
-    userType: 'visitor'
-  });
 
   const LoadingFallback = () => (
     <div className="flex items-center justify-center p-8">
@@ -129,8 +98,6 @@ function App() {
       <Route path="chat" element={<Suspense fallback={<LoadingFallback />}><PublicChat /></Suspense>} />
       <Route path="advanced-features" element={<Suspense fallback={<LoadingFallback />}><AdvancedFeatures /></Suspense>} />
       <Route path="stories" element={<Suspense fallback={<LoadingFallback />}><Stories /></Suspense>} />
-      <Route path="admin-ads" element={<Suspense fallback={<LoadingFallback />}><AdminAds /></Suspense>} />
-      <Route path="ad-demo" element={<Suspense fallback={<LoadingFallback />}><AdDemo /></Suspense>} />
       <Route path="user-management" element={<Suspense fallback={<LoadingFallback />}><UserManagement /></Suspense>} />
       <Route path="privacy" element={<Suspense fallback={<LoadingFallback />}><Privacy /></Suspense>} />
     </Routes>
@@ -160,25 +127,16 @@ function App() {
             } />
             
             {/* Public routes - mobile vs desktop */}
-            {deviceType === 'mobile' ? (
+            {isMobile ? (
               <Route path="/*" element={
-                <MobileAppShell
-                  topAnnouncements={topAnnouncements}
-                  onDismissAnnouncement={dismissAnnouncement}
-                >
+                <MobileAppShell>
                   <PublicRoutes />
                 </MobileAppShell>
               } />
-            ) : deviceType === 'tablet' ? (
+            ) : window.innerWidth < 1024 ? (
               <Route path="/*" element={
                 <>
                   <Header />
-                  {/* Top banner for tablet */}
-                  <TopBanner
-                    announcements={topAnnouncements}
-                    onDismiss={dismissAnnouncement}
-                    deviceType="tablet"
-                  />
                   <div className="flex flex-col min-h-screen">
                     
 
@@ -206,24 +164,7 @@ function App() {
               <Route path="/*" element={
                 <>
                   <Header />
-                  {/* Top banner for desktop */}
-                  <TopBanner
-                    announcements={topAnnouncements}
-                    onDismiss={dismissAnnouncement}
-                    deviceType="desktop"
-                  />
                   <div className="flex flex-col min-h-screen">
-                    {/* Top Banner Ad - Essential placement */}
-                    <div className="w-full bg-[#05294B]/95">
-                      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="py-3 flex justify-center">
-                          <div className="bg-gradient-to-r from-brand-accent to-brand-accent-400 text-brand-main px-6 py-2 rounded-lg shadow-lg text-center min-h-[60px] flex items-center">
-                           
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
                     <div className="flex flex-1">
                       {/* Main Content Area - flex-1 to fill remaining space */}
                       <main className="flex-1 bg-[#05294B]/95 relative min-h-screen">

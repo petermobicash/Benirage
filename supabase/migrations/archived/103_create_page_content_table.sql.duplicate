@@ -1,0 +1,54 @@
+-- Create the page_content table that is referenced in the TypeScript types
+
+CREATE TABLE IF NOT EXISTS public.page_content (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    page_id TEXT NOT NULL,
+    section_id TEXT NOT NULL,
+    title TEXT NOT NULL,
+    content TEXT NOT NULL,
+    image_url TEXT,
+    order_index INTEGER DEFAULT 0,
+    is_active BOOLEAN DEFAULT true,
+    updated_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_by TEXT,
+    updated_by_id UUID
+);
+
+-- Create indexes
+CREATE INDEX IF NOT EXISTS idx_page_content_page_id ON public.page_content(page_id);
+CREATE INDEX IF NOT EXISTS idx_page_content_section_id ON public.page_content(section_id);
+CREATE INDEX IF NOT EXISTS idx_page_content_order_index ON public.page_content(order_index);
+CREATE INDEX IF NOT EXISTS idx_page_content_is_active ON public.page_content(is_active);
+
+-- Enable RLS
+ALTER TABLE public.page_content ENABLE ROW LEVEL SECURITY;
+
+-- Create policies (simplified for now)
+CREATE POLICY "Anyone can view active page content" ON public.page_content FOR SELECT USING (is_active = true);
+CREATE POLICY "Authenticated users can manage page content" ON public.page_content FOR ALL USING (auth.role() = 'authenticated');
+
+-- Create update trigger
+CREATE OR REPLACE FUNCTION update_updated_at_column()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_at = NOW();
+    RETURN NEW;
+END;
+$$ language 'plpgsql';
+
+CREATE TRIGGER update_page_content_updated_at BEFORE UPDATE ON public.page_content FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+-- Success message
+DO $$
+BEGIN
+    RAISE NOTICE '========================================';
+    RAISE NOTICE 'PAGE CONTENT TABLE CREATED SUCCESSFULLY';
+    RAISE NOTICE '========================================';
+    RAISE NOTICE '✅ Created page_content table';
+    RAISE NOTICE '✅ Added performance indexes';
+    RAISE NOTICE '✅ Configured RLS policies';
+    RAISE NOTICE '✅ Created update trigger';
+    RAISE NOTICE '';
+    RAISE NOTICE 'The page_content table is now available!';
+    RAISE NOTICE '========================================';
+END $$;

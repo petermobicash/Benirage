@@ -98,6 +98,12 @@ EXCEPTION
 END;
 $$;
 
+-- Drop existing policies if they exist and recreate
+DROP POLICY IF EXISTS "Anyone can view public media" ON media;
+DROP POLICY IF EXISTS "Authenticated users can upload media" ON media;
+DROP POLICY IF EXISTS "Users can update their own media" ON media;
+DROP POLICY IF EXISTS "Super admins can manage all media" ON media;
+
 -- Create policies for media table
 CREATE POLICY "Anyone can view public media" ON media
     FOR SELECT USING (is_public = true);

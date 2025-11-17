@@ -1,0 +1,365 @@
+-- =====================================================
+-- COMPREHENSIVE RLS POLICIES FOR 29 MISSING POLICY TABLES
+-- =====================================================
+-- This migration resolves Supabase database linting warnings for 29 tables 
+-- that have RLS enabled but no policies defined.
+-- Based on existing performance optimization patterns.
+-- =====================================================
+
+-- =====================================================
+-- Helper Functions (reusing existing patterns)
+-- =====================================================
+
+-- Drop existing helper functions if they exist
+DROP FUNCTION IF EXISTS get_current_user_id() CASCADE;
+DROP FUNCTION IF EXISTS is_authenticated() CASCADE;
+DROP FUNCTION IF EXISTS get_user_role() CASCADE;
+DROP FUNCTION IF EXISTS get_is_super_admin() CASCADE;
+
+-- Create optimized helper functions
+CREATE OR REPLACE FUNCTION get_current_user_id()
+RETURNS UUID AS $$
+BEGIN
+  RETURN (SELECT auth.uid());
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER STABLE;
+
+CREATE OR REPLACE FUNCTION is_authenticated()
+RETURNS BOOLEAN AS $$
+BEGIN
+  RETURN (SELECT auth.uid()) IS NOT NULL;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER STABLE;
+
+CREATE OR REPLACE FUNCTION get_user_role()
+RETURNS TEXT AS $$
+BEGIN
+  RETURN (SELECT auth.role());
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER STABLE;
+
+CREATE OR REPLACE FUNCTION get_is_super_admin()
+RETURNS BOOLEAN AS $$
+BEGIN
+  RETURN (
+    SELECT EXISTS (
+      SELECT 1 FROM user_profiles 
+      WHERE user_id = (SELECT auth.uid())::text 
+      AND is_super_admin = true
+    )
+  );
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER STABLE;
+
+-- =====================================================
+-- PHASE 1: ADMIN-ONLY TABLES (Super Admin Management)
+-- =====================================================
+
+-- Permissions table
+CREATE POLICY "Optimized Permissions Access" ON public.permissions
+  FOR ALL USING (get_is_super_admin());
+
+-- Roles table  
+CREATE POLICY "Optimized Roles Access" ON public.roles
+  FOR ALL USING (get_is_super_admin());
+
+-- Groups table (admin-only management)
+CREATE POLICY "Optimized Groups Access" ON public.groups
+  FOR ALL USING (get_is_super_admin());
+
+-- Permission categories table
+CREATE POLICY "Optimized Permission Categories Access" ON public.permission_categories
+  FOR ALL USING (get_is_super_admin());
+
+-- Group permissions table
+CREATE POLICY "Optimized Group Permissions Access" ON public.group_permissions
+  FOR ALL USING (get_is_super_admin());
+
+-- =====================================================
+-- PHASE 2: ACTIVE/PUBLIC READ, ADMIN WRITE TABLES
+-- =====================================================
+
+-- Categories table
+CREATE POLICY "Optimized Categories View" ON public.categories
+  FOR SELECT USING (
+    get_is_super_admin() OR (SELECT is_active) = true
+  );
+
+CREATE POLICY "Optimized Categories Manage" ON public.categories
+  FOR ALL USING (get_is_super_admin());
+
+-- Tags table
+CREATE POLICY "Optimized Tags View" ON public.tags
+  FOR SELECT USING (
+    get_is_super_admin() OR (SELECT is_active) = true
+  );
+
+CREATE POLICY "Optimized Tags Manage" ON public.tags
+  FOR ALL USING (get_is_super_admin());
+
+-- Organizations table
+CREATE POLICY "Optimized Organizations View" ON public.organizations
+  FOR SELECT USING (
+    get_is_super_admin() OR (SELECT is_active) = true
+  );
+
+CREATE POLICY "Optimized Organizations Manage" ON public.organizations
+  FOR ALL USING (get_is_super_admin());
+
+-- Newsletter lists table
+CREATE POLICY "Optimized Newsletter Lists View" ON public.newsletter_lists
+  FOR SELECT USING (
+    get_is_super_admin() OR (SELECT is_active) = true
+  );
+
+CREATE POLICY "Optimized Newsletter Lists Manage" ON public.newsletter_lists
+  FOR ALL USING (get_is_super_admin());
+
+-- Newsletter templates table
+CREATE POLICY "Optimized Newsletter Templates View" ON public.newsletter_templates
+  FOR SELECT USING (
+    get_is_super_admin() OR (SELECT is_active) = true
+  );
+
+CREATE POLICY "Optimized Newsletter Templates Manage" ON public.newsletter_templates
+  FOR ALL USING (get_is_super_admin());
+
+-- Form fields table
+CREATE POLICY "Optimized Form Fields View" ON public.form_fields
+  FOR SELECT USING (
+    get_is_super_admin() OR (SELECT is_active) = true
+  );
+
+CREATE POLICY "Optimized Form Fields Manage" ON public.form_fields
+  FOR ALL USING (get_is_super_admin());
+
+-- Form templates table
+CREATE POLICY "Optimized Form Templates View" ON public.form_templates
+  FOR SELECT USING (
+    get_is_super_admin() OR (SELECT is_active) = true
+  );
+
+CREATE POLICY "Optimized Form Templates Manage" ON public.form_templates
+  FOR ALL USING (get_is_super_admin());
+
+-- Content categories table
+CREATE POLICY "Optimized Content Categories View" ON public.content_categories
+  FOR SELECT USING (
+    get_is_super_admin() OR (SELECT is_active) = true
+  );
+
+CREATE POLICY "Optimized Content Categories Manage" ON public.content_categories
+  FOR ALL USING (get_is_super_admin());
+
+-- Content tags table
+CREATE POLICY "Optimized Content Tags View" ON public.content_tags
+  FOR SELECT USING (
+    get_is_super_admin() OR (SELECT is_active) = true
+  );
+
+CREATE POLICY "Optimized Content Tags Manage" ON public.content_tags
+  FOR ALL USING (get_is_super_admin());
+
+-- =====================================================
+-- PHASE 3: AUTHENTICATED READ, CREATOR/ADMIN WRITE TABLES
+-- =====================================================
+
+-- Content versions table
+CREATE POLICY "Optimized Content Versions View" ON public.content_versions
+  FOR SELECT USING (get_is_super_admin() OR is_authenticated());
+
+CREATE POLICY "Optimized Content Versions Manage" ON public.content_versions
+  FOR ALL USING (
+    get_is_super_admin() OR (
+      is_authenticated() AND (SELECT author_id) = (SELECT auth.uid())::text
+    )
+  );
+
+-- Content calendar table
+CREATE POLICY "Optimized Content Calendar View" ON public.content_calendar
+  FOR SELECT USING (get_is_super_admin() OR is_authenticated());
+
+CREATE POLICY "Optimized Content Calendar Manage" ON public.content_calendar
+  FOR ALL USING (
+    get_is_super_admin() OR (
+      is_authenticated() AND (SELECT created_by) = (SELECT auth.uid())::text
+    )
+  );
+
+-- Content deadlines table
+CREATE POLICY "Optimized Content Deadlines View" ON public.content_deadlines
+  FOR SELECT USING (get_is_super_admin() OR is_authenticated());
+
+CREATE POLICY "Optimized Content Deadlines Manage" ON public.content_deadlines
+  FOR ALL USING (get_is_super_admin());
+
+-- Content publication schedule table
+CREATE POLICY "Optimized Content Publication Schedule View" ON public.content_publication_schedule
+  FOR SELECT USING (get_is_super_admin() OR is_authenticated());
+
+CREATE POLICY "Optimized Content Publication Schedule Manage" ON public.content_publication_schedule
+  FOR ALL USING (get_is_super_admin());
+
+-- Content workflow stages table
+CREATE POLICY "Optimized Content Workflow Stages View" ON public.content_workflow_stages
+  FOR SELECT USING (get_is_super_admin() OR is_authenticated());
+
+CREATE POLICY "Optimized Content Workflow Stages Manage" ON public.content_workflow_stages
+  FOR ALL USING (get_is_super_admin());
+
+-- Editorial calendar settings table
+CREATE POLICY "Optimized Editorial Calendar Settings View" ON public.editorial_calendar_settings
+  FOR SELECT USING (get_is_super_admin() OR is_authenticated());
+
+CREATE POLICY "Optimized Editorial Calendar Settings Manage" ON public.editorial_calendar_settings
+  FOR ALL USING (get_is_super_admin());
+
+-- Page content table
+CREATE POLICY "Optimized Page Content View" ON public.page_content
+  FOR SELECT USING (
+    get_is_super_admin() OR (SELECT is_active) = true
+  );
+
+CREATE POLICY "Optimized Page Content Manage" ON public.page_content
+  FOR ALL USING (
+    get_is_super_admin() OR (
+      is_authenticated() AND (SELECT created_by) = (SELECT auth.uid())::text
+    )
+  );
+
+-- Newsletter campaigns table
+CREATE POLICY "Optimized Newsletter Campaigns View" ON public.newsletter_campaigns
+  FOR SELECT USING (get_is_super_admin() OR is_authenticated());
+
+CREATE POLICY "Optimized Newsletter Campaigns Manage" ON public.newsletter_campaigns
+  FOR ALL USING (
+    get_is_super_admin() OR (
+      is_authenticated() AND (SELECT created_by) = (SELECT auth.uid())::text
+    )
+  );
+
+-- Newsletter links table
+CREATE POLICY "Optimized Newsletter Links View" ON public.newsletter_links
+  FOR SELECT USING (get_is_super_admin() OR is_authenticated());
+
+CREATE POLICY "Optimized Newsletter Links Manage" ON public.newsletter_links
+  FOR ALL USING (get_is_super_admin());
+
+-- Newsletter sends table
+CREATE POLICY "Optimized Newsletter Sends View" ON public.newsletter_sends
+  FOR SELECT USING (get_is_super_admin() OR is_authenticated());
+
+CREATE POLICY "Optimized Newsletter Sends Manage" ON public.newsletter_sends
+  FOR ALL USING (get_is_super_admin());
+
+-- CMS settings table
+CREATE POLICY "Optimized CMS Settings View" ON public.cms_settings
+  FOR SELECT USING (get_is_super_admin() OR is_authenticated());
+
+CREATE POLICY "Optimized CMS Settings Manage" ON public.cms_settings
+  FOR ALL USING (get_is_super_admin());
+
+-- =====================================================
+-- PHASE 4: SPECIAL CASE TABLES
+-- =====================================================
+
+-- Newsletter subscribers table (open signup + own data access)
+CREATE POLICY "Optimized Newsletter Subscribers View" ON public.newsletter_subscribers
+  FOR SELECT USING (
+    get_is_super_admin() OR (
+      is_authenticated() AND (SELECT email) = (SELECT auth.email())
+    )
+  );
+
+CREATE POLICY "Optimized Newsletter Subscribers Insert" ON public.newsletter_subscribers
+  FOR INSERT WITH CHECK (TRUE);  -- Allow anyone to subscribe
+
+CREATE POLICY "Optimized Newsletter Subscribers Manage" ON public.newsletter_subscribers
+  FOR ALL USING (
+    get_is_super_admin() OR (
+      is_authenticated() AND (SELECT email) = (SELECT auth.email())
+    )
+  );
+
+-- Media table (public read, authenticated upload)
+CREATE POLICY "Optimized Media View" ON public.media
+  FOR SELECT USING (get_is_super_admin() OR is_authenticated());
+
+CREATE POLICY "Optimized Media Insert" ON public.media
+  FOR INSERT WITH CHECK (
+    get_is_super_admin() OR (
+      is_authenticated() AND (SELECT uploaded_by) = (SELECT auth.uid())::text
+    )
+  );
+
+CREATE POLICY "Optimized Media Update" ON public.media
+  FOR UPDATE USING (
+    get_is_super_admin() OR (
+      is_authenticated() AND (SELECT uploaded_by) = (SELECT auth.uid())::text
+    )
+  );
+
+CREATE POLICY "Optimized Media Delete" ON public.media
+  FOR DELETE USING (
+    get_is_super_admin() OR (
+      is_authenticated() AND (SELECT uploaded_by) = (SELECT auth.uid())::text
+    )
+  );
+
+-- User groups table (authenticated access)
+CREATE POLICY "Optimized User Groups View" ON public.user_groups
+  FOR SELECT USING (get_is_super_admin() OR is_authenticated());
+
+CREATE POLICY "Optimized User Groups Manage" ON public.user_groups
+  FOR ALL USING (get_is_super_admin());
+
+-- Subscriber lists table (authenticated access)
+CREATE POLICY "Optimized Subscriber Lists View" ON public.subscriber_lists
+  FOR SELECT USING (get_is_super_admin() OR is_authenticated());
+
+CREATE POLICY "Optimized Subscriber Lists Manage" ON public.subscriber_lists
+  FOR ALL USING (get_is_super_admin());
+
+-- =====================================================
+-- PHASE 5: GRANT PERMISSIONS AND FINALIZE
+-- =====================================================
+
+-- Grant execute permissions on helper functions
+GRANT EXECUTE ON FUNCTION get_current_user_id() TO authenticated, anon, service_role;
+GRANT EXECUTE ON FUNCTION is_authenticated() TO authenticated, anon, service_role;
+GRANT EXECUTE ON FUNCTION get_user_role() TO authenticated, anon, service_role;
+GRANT EXECUTE ON FUNCTION get_is_super_admin() TO authenticated, anon, service_role;
+
+-- =====================================================
+-- SUCCESS MESSAGE
+-- =====================================================
+
+DO $$
+BEGIN
+    RAISE NOTICE '========================================';
+    RAISE NOTICE 'COMPREHENSIVE RLS POLICIES CREATED';
+    RAISE NOTICE '========================================';
+    RAISE NOTICE '✅ Created optimized policies for 29 tables';
+    RAISE NOTICE '';
+    RAISE NOTICE 'Admin-only tables (5):';
+    RAISE NOTICE '  - permissions, roles, groups, permission_categories, group_permissions';
+    RAISE NOTICE '';
+    RAISE NOTICE 'Active/Public read tables (10):';
+    RAISE NOTICE '  - categories, tags, organizations, newsletter_lists, newsletter_templates';
+    RAISE NOTICE '  - form_fields, form_templates, content_categories, content_tags';
+    RAISE NOTICE '';
+    RAISE NOTICE 'Authenticated read tables (11):';
+    RAISE NOTICE '  - content_versions, content_calendar, content_deadlines';
+    RAISE NOTICE '  - content_publication_schedule, content_workflow_stages, editorial_calendar_settings';
+    RAISE NOTICE '  - page_content, newsletter_campaigns, newsletter_links, newsletter_sends';
+    RAISE NOTICE '  - cms_settings';
+    RAISE NOTICE '';
+    RAISE NOTICE 'Special case tables (3):';
+    RAISE NOTICE '  - newsletter_subscribers (open signup + own data access)';
+    RAISE NOTICE '  - media (authenticated upload)';
+    RAISE NOTICE '  - user_groups, subscriber_lists (authenticated access)';
+    RAISE NOTICE '';
+    RAISE NOTICE 'All RLS warnings should now be resolved!';
+    RAISE NOTICE 'Helper functions created for performance';
+    RAISE NOTICE '========================================';
+END $$;

@@ -102,7 +102,7 @@ RETURNS TABLE (
 )
 LANGUAGE plpgsql
 SECURITY DEFINER
-SET search_path = ''
+SET search_path = 'public'
 AS $$
 BEGIN
     RETURN QUERY
@@ -130,9 +130,9 @@ BEGIN
         s.video_duration,
         s.transcript,
         s.thumbnail_url
-    FROM stories s
+    FROM public.stories s
     WHERE s.is_approved = true
-    ORDER BY 
+    ORDER BY
         s.is_featured DESC,
         s.submitted_at DESC;
 END;
@@ -143,11 +143,11 @@ CREATE OR REPLACE FUNCTION increment_story_views(story_id UUID)
 RETURNS void
 LANGUAGE plpgsql
 SECURITY DEFINER
-SET search_path = ''
+SET search_path = 'public'
 AS $$
 BEGIN
-    UPDATE stories
-    SET 
+    UPDATE public.stories
+    SET
         view_count = view_count + 1,
         updated_at = NOW()
     WHERE id = story_id;
@@ -183,7 +183,7 @@ RETURNS TABLE (
 )
 LANGUAGE plpgsql
 SECURITY DEFINER
-SET search_path = ''
+SET search_path = 'public'
 AS $$
 BEGIN
     RETURN QUERY
@@ -211,7 +211,7 @@ BEGIN
         s.video_duration,
         s.transcript,
         s.thumbnail_url
-    FROM stories s
+    FROM public.stories s
     WHERE s.is_approved = true AND s.is_featured = true
     ORDER BY s.submitted_at DESC;
 END;
@@ -251,7 +251,7 @@ RETURNS TABLE (
 )
 LANGUAGE plpgsql
 SECURITY DEFINER
-SET search_path = ''
+SET search_path = 'public'
 AS $$
 BEGIN
     RETURN QUERY
@@ -279,8 +279,8 @@ BEGIN
         s.video_duration,
         s.transcript,
         s.thumbnail_url
-    FROM stories s
-    WHERE 
+    FROM public.stories s
+    WHERE
         s.is_approved = true
         AND (search_query = '' OR (
             s.title ILIKE '%' || search_query || '%' OR
@@ -290,7 +290,7 @@ BEGIN
         AND (media_type_filter = 'all' OR s.media_type = media_type_filter)
         AND (story_type_filter = 'all' OR s.story_type = story_type_filter)
         AND (category_filter = 'all' OR s.category = category_filter)
-    ORDER BY 
+    ORDER BY
         s.is_featured DESC,
         s.submitted_at DESC;
 END;
@@ -304,7 +304,7 @@ CREATE OR REPLACE FUNCTION update_stories_updated_at()
 RETURNS TRIGGER
 LANGUAGE plpgsql
 SECURITY DEFINER
-SET search_path = ''
+SET search_path = 'public'
 AS $$
 BEGIN
     NEW.updated_at = NOW();

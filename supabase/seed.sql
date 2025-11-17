@@ -114,37 +114,39 @@ ON CONFLICT DO NOTHING;
 -- 3. SAMPLE USER PROFILES
 -- ===============================================
 
--- Insert sample user profiles for testing presence features
-INSERT INTO user_profiles (id, user_id, username, display_name, status, is_online, last_seen)
-VALUES
-    (
-        gen_random_uuid(),
-        NULL,
-        'community_manager',
-        'Community Manager',
-        'online',
-        true,
-        NOW()
-    ),
-    (
-        gen_random_uuid(),
-        NULL,
-        'new_member',
-        'New Member',
-        'online',
-        true,
-        NOW()
-    ),
-    (
-        gen_random_uuid(),
-        NULL,
-        'contributor',
-        'Regular Contributor',
-        'away',
-        false,
-        NOW() - INTERVAL '15 minutes'
-    )
-ON CONFLICT (user_id) DO NOTHING;
+-- COMMENTED OUT: These sample profiles have NULL user_id which violates NOT NULL constraint
+-- To use sample profiles, first create users in auth.users, then insert profiles with valid user_ids
+--
+-- INSERT INTO user_profiles (id, user_id, username, display_name, status, is_online, last_seen)
+-- VALUES
+--     (
+--         gen_random_uuid(),
+--         NULL,
+--         'community_manager',
+--         'Community Manager',
+--         'online',
+--         true,
+--         NOW()
+--     ),
+--     (
+--         gen_random_uuid(),
+--         NULL,
+--         'new_member',
+--         'New Member',
+--         'online',
+--         true,
+--         NOW()
+--     ),
+--     (
+--         gen_random_uuid(),
+--         NULL,
+--         'contributor',
+--         'Regular Contributor',
+--         'away',
+--         false,
+--         NOW() - INTERVAL '15 minutes'
+--     )
+-- ON CONFLICT (user_id) DO NOTHING;
 
 -- ===============================================
 -- 4. SAMPLE FORM SUBMISSIONS AND APPLICATIONS
