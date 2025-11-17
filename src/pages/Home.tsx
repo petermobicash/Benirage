@@ -265,21 +265,21 @@ const Home = () => {
             <div className="space-y-6">
               <ModernCard className="bg-gradient-to-br from-white to-gray-50 text-center p-4 lg:p-6 hover:shadow-2xl transition-all duration-500 border-2 border-yellow-400 hover:border-yellow-500 transform hover:scale-105">
                 <div className="w-10 lg:w-12 h-10 lg:h-12 bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-lg flex items-center justify-center mx-auto mb-3 shadow-lg">
-                  <Award className="w-5 lg:w-6 h-5 lg:h-6 text-white" />
-                </div>
-                <h3 className="text-lg lg:text-xl font-bold text-gray-900 mb-2">Our Mission</h3>
-                <p className="text-gray-700 leading-relaxed text-xs lg:text-sm font-medium">
-                  To promote well-being through Rwandan heritage and culture, education, and historical preservation.
-                </p>
-              </ModernCard>
-
-              <ModernCard className="bg-gradient-to-br from-white to-gray-50 text-center p-4 lg:p-6 hover:shadow-2xl transition-all duration-500 border-2 border-yellow-400 hover:border-yellow-500 transform hover:scale-105">
-                <div className="w-10 lg:w-12 h-10 lg:h-12 bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-lg flex items-center justify-center mx-auto mb-3 shadow-lg">
                   <Heart className="w-5 lg:w-6 h-5 lg:h-6 text-white" />
                 </div>
                 <h3 className="text-lg lg:text-xl font-bold text-gray-900 mb-2">Our Vision</h3>
                 <p className="text-gray-700 leading-relaxed text-xs lg:text-sm font-medium">
                   A world where heritage, culture, wisdom, and spirituality form the foundation of peace and development.
+                </p>
+              </ModernCard>
+
+              <ModernCard className="bg-gradient-to-br from-white to-gray-50 text-center p-4 lg:p-6 hover:shadow-2xl transition-all duration-500 border-2 border-yellow-400 hover:border-yellow-500 transform hover:scale-105">
+                <div className="w-10 lg:w-12 h-10 lg:h-12 bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-lg flex items-center justify-center mx-auto mb-3 shadow-lg">
+                  <Award className="w-5 lg:w-6 h-5 lg:h-6 text-white" />
+                </div>
+                <h3 className="text-lg lg:text-xl font-bold text-gray-900 mb-2">Our Mission</h3>
+                <p className="text-gray-700 leading-relaxed text-xs lg:text-sm font-medium">
+                  To promote well-being through Rwandan heritage and culture, education, and historical preservation.
                 </p>
               </ModernCard>
             </div>
