@@ -363,7 +363,7 @@ const Footer = () => {
             <div className="text-center lg:text-left">
               <p className="text-blue-200 flex items-center justify-center lg:justify-start space-x-2">
                 <span>© {currentYear} BENIRAGE. All rights reserved.</span>
-                <Heart className="w-4 h-4 text-red-400 animate-pulse" />
+                
               </p>
               <p className="text-blue-300 text-sm mt-1">
                 {t('footer.copyright') || 'Crafted with passion for community and growth'}

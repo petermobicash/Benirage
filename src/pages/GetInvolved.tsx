@@ -51,7 +51,7 @@ const GetInvolved = () => {
             <h3 className="text-lg lg:text-xl font-bold text-gray-900 mb-4">
               Membership
             </h3>
-            <p className="text-gray-600 leading-relaxed mb-6">
+            <p className="text-xs lg:text-sm text-gray-600 leading-relaxed mb-6">
               Join our community and be part of the transformation
             </p>
             <div className="space-y-2 text-sm text-gray-600 mb-6">
@@ -70,7 +70,7 @@ const GetInvolved = () => {
             <h3 className="text-lg lg:text-xl font-bold text-gray-900 mb-4">
               Volunteer
             </h3>
-            <p className="text-gray-600 leading-relaxed mb-6">
+            <p className="text-xs lg:text-sm text-gray-600 leading-relaxed mb-6">
               Share your skills and time to make a difference
             </p>
             <div className="space-y-2 text-sm text-gray-600 mb-6">
@@ -89,7 +89,7 @@ const GetInvolved = () => {
             <h3 className="text-lg lg:text-xl font-bold text-gray-900 mb-4">
               Partnership
             </h3>
-            <p className="text-gray-600 leading-relaxed mb-6">
+            <p className="text-xs lg:text-sm text-gray-600 leading-relaxed mb-6">
               Collaborate with schools, NGOs, and organizations
             </p>
             <div className="space-y-2 text-sm text-gray-600 mb-6">
@@ -108,7 +108,7 @@ const GetInvolved = () => {
             <h3 className="text-lg lg:text-xl font-bold text-gray-900 mb-4">
               Donate
             </h3>
-            <p className="text-gray-600 leading-relaxed mb-6">
+            <p className="text-xs lg:text-sm text-gray-600 leading-relaxed mb-6">
               Support our programs and community initiatives
             </p>
             <div className="space-y-2 text-sm text-gray-600 mb-6">
@@ -143,7 +143,7 @@ const GetInvolved = () => {
                 <h3 className="text-lg lg:text-xl font-bold text-gray-900 mb-4">
                   Spiritual Development
                 </h3>
-                <p className="text-gray-600 leading-relaxed mb-4">
+                <p className="text-xs lg:text-sm text-gray-600 leading-relaxed mb-4">
                   Help individuals find inner peace and spiritual grounding through guided practices and community support.
                 </p>
                 <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
@@ -161,7 +161,7 @@ const GetInvolved = () => {
                 <h3 className="text-lg lg:text-xl font-bold text-gray-900 mb-4">
                   Cultural Preservation
                 </h3>
-                <p className="text-gray-600 leading-relaxed mb-4">
+                <p className="text-xs lg:text-sm text-gray-600 leading-relaxed mb-4">
                   Preserve and celebrate Rwandan heritage for future generations through documentation and education.
                 </p>
                 <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
@@ -179,7 +179,7 @@ const GetInvolved = () => {
                 <h3 className="text-lg lg:text-xl font-bold text-gray-900 mb-4">
                   Youth Empowerment
                 </h3>
-                <p className="text-gray-600 leading-relaxed mb-4">
+                <p className="text-xs lg:text-sm text-gray-600 leading-relaxed mb-4">
                   Empower young people with wisdom and leadership skills through mentorship and training programs.
                 </p>
                 <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
@@ -197,7 +197,7 @@ const GetInvolved = () => {
                 <h3 className="text-lg lg:text-xl font-bold text-gray-900 mb-4">
                   Community Building
                 </h3>
-                <p className="text-gray-600 leading-relaxed mb-4">
+                <p className="text-xs lg:text-sm text-gray-600 leading-relaxed mb-4">
                   Strengthen communities through unity and shared purpose in collaborative projects.
                 </p>
                 <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">

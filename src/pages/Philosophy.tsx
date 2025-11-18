@@ -45,11 +45,11 @@ const Philosophy = () => {
       <Section background="white" padding="lg">
         <div className="max-w-4xl mx-auto">
           <Card variant="premium" className="text-center">
-            <blockquote className="text-2xl md:text-3xl font-serif italic text-blue-900 mb-6 leading-relaxed">
-              "Philosophy is not only for books — it is for life. At BENIRAGE, philosophy teaches us 
+            <blockquote className="text-sm md:text-lg font-serif italic text-blue-900 mb-6 leading-relaxed">
+              "Philosophy is not only for books — it is for life. At BENIRAGE, philosophy teaches us
               to question, to understand, and to act with integrity."
             </blockquote>
-            <cite className="text-yellow-600 font-semibold text-lg">— BENIRAGE Philosophy</cite>
+            <cite className="text-yellow-600 font-semibold text-xs md:text-sm">— BENIRAGE Philosophy</cite>
           </Card>
         </div>
       </Section>
@@ -71,7 +71,7 @@ const Philosophy = () => {
             <h3 className="text-lg lg:text-xl font-bold text-gray-900 mb-4">
               Ubuntu Philosophy
             </h3>
-            <p className="text-gray-600 leading-relaxed mb-6">
+            <p className="text-xs lg:text-sm text-gray-600 leading-relaxed mb-6">
               "I am because we are" - the interconnectedness of all humanity and our collective responsibility.
             </p>
             <Button variant="outline" size="sm">
@@ -84,7 +84,7 @@ const Philosophy = () => {
             <h3 className="text-lg lg:text-xl font-bold text-gray-900 mb-4">
               Wisdom of Ancestors
             </h3>
-            <p className="text-gray-600 leading-relaxed mb-6">
+            <p className="text-xs lg:text-sm text-gray-600 leading-relaxed mb-6">
               Learning from the accumulated knowledge and wisdom of our forebears and cultural traditions.
             </p>
             <Button variant="outline" size="sm">
@@ -97,7 +97,7 @@ const Philosophy = () => {
             <h3 className="text-lg lg:text-xl font-bold text-gray-900 mb-4">
               Ethical Leadership
             </h3>
-            <p className="text-gray-600 leading-relaxed mb-6">
+            <p className="text-xs lg:text-sm text-gray-600 leading-relaxed mb-6">
               Leading with integrity, compassion, and moral courage in all aspects of life.
             </p>
             <Button variant="outline" size="sm">
@@ -129,7 +129,7 @@ const Philosophy = () => {
               <h3 className="text-lg lg:text-xl font-bold text-gray-900 mb-4">
                 Philosophy Cafes
               </h3>
-              <p className="text-gray-600 leading-relaxed mb-6">
+              <p className="text-xs lg:text-sm text-gray-600 leading-relaxed mb-6">
                 Informal discussions on life's big questions in a welcoming, supportive environment.
               </p>
               <div className="space-y-2 text-sm text-gray-600 mb-6">
@@ -155,7 +155,7 @@ const Philosophy = () => {
               <h3 className="text-lg lg:text-xl font-bold text-gray-900 mb-4">
                 Leadership Ethics Workshop
               </h3>
-              <p className="text-gray-600 leading-relaxed mb-6">
+              <p className="text-xs lg:text-sm text-gray-600 leading-relaxed mb-6">
                 Training ethical leaders for tomorrow through practical philosophy and real-world applications.
               </p>
               <div className="space-y-2 text-sm text-gray-600 mb-6">
@@ -183,7 +183,7 @@ const Philosophy = () => {
               <h2 className="text-lg lg:text-xl font-bold text-gray-900 mb-4">
                 Join Our Philosophy Cafe Community
               </h2>
-              <p className="text-gray-600">
+              <p className="text-xs lg:text-sm text-gray-600">
                 Take the first step towards meaningful philosophical exploration
               </p>
             </div>
@@ -208,7 +208,7 @@ const Philosophy = () => {
               <h2 className="text-lg lg:text-xl font-bold text-gray-900 mb-4">
                 Leadership Ethics Workshop Registration
               </h2>
-              <p className="text-gray-600">
+              <p className="text-xs lg:text-sm text-gray-600">
                 Develop ethical leadership skills through practical philosophy and real-world applications
               </p>
             </div>

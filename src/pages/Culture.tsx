@@ -52,7 +52,7 @@ const Culture = () => {
             <h3 className="text-lg lg:text-xl font-bold text-gray-900 mb-4">
               Traditional Arts & Crafts
             </h3>
-            <p className="text-gray-600 leading-relaxed mb-6">
+            <p className="text-xs lg:text-sm text-gray-600 leading-relaxed mb-6">
               Preserving and teaching traditional Rwandan artistic expressions through hands-on workshops.
             </p>
             <ul className="text-sm text-gray-600 mb-6 space-y-1">
@@ -71,7 +71,7 @@ const Culture = () => {
             <h3 className="text-lg lg:text-xl font-bold text-gray-900 mb-4">
               Music & Dance Heritage
             </h3>
-            <p className="text-gray-600 leading-relaxed mb-6">
+            <p className="text-xs lg:text-sm text-gray-600 leading-relaxed mb-6">
               Celebrating Rwandan musical traditions and dance forms through community performances.
             </p>
             <ul className="text-sm text-gray-600 mb-6 space-y-1">
@@ -90,7 +90,7 @@ const Culture = () => {
             <h3 className="text-lg lg:text-xl font-bold text-gray-900 mb-4">
               Storytelling & Oral History
             </h3>
-            <p className="text-gray-600 leading-relaxed mb-6">
+            <p className="text-xs lg:text-sm text-gray-600 leading-relaxed mb-6">
               Preserving wisdom through traditional storytelling and documenting our rich oral traditions.
             </p>
             <ul className="text-sm text-gray-600 mb-6 space-y-1">
@@ -131,7 +131,7 @@ const Culture = () => {
                 <h3 className="text-lg lg:text-xl font-bold text-gray-900">
                   Heritage Festival 2025
                 </h3>
-                <p className="text-gray-600 leading-relaxed">
+                <p className="text-xs lg:text-sm text-gray-600 leading-relaxed">
                   Three-day celebration of Rwandan culture with music, dance, art, and traditional food.
                 </p>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-gray-600">
@@ -160,7 +160,7 @@ const Culture = () => {
                 <h3 className="text-lg lg:text-xl font-bold text-gray-900">
                   Storytelling Night
                 </h3>
-                <p className="text-gray-600 leading-relaxed">
+                <p className="text-xs lg:text-sm text-gray-600 leading-relaxed">
                   Weekly gatherings where elders share traditional stories and wisdom with the community.
                 </p>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-gray-600">

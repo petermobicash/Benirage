@@ -28,7 +28,7 @@ const sanitizeInput = (input: string): string => {
 // Mock testimonials and social proof data
 const testimonials = [
   {
-    name: "Sarah Nakimuli",
+    name: "Benirage family member",
     role: "Community Leader",
     avatar: "/avatars/sarah.jpg",
     quote: "Benirage has transformed our community. Their programs have helped over 200 families, and my own children are now thriving thanks to their educational initiatives.",
@@ -36,7 +36,7 @@ const testimonials = [
     rating: 5
   },
   {
-    name: "Dr. James Mwangi",
+    name: "Benirage family member",
     role: "Education Director",
     avatar: "/avatars/james.jpg", 
     quote: "The scholarship program changed my life trajectory. I'm now a doctor serving rural communities, and I give back to the program that believed in me.",
@@ -44,7 +44,7 @@ const testimonials = [
     rating: 5
   },
   {
-    name: "Grace Mukamana",
+    name: "Benirage family member",
     role: "Youth Participant",
     avatar: "/avatars/grace.jpg",
     quote: "Through Benirage's cultural preservation program, I've learned traditional crafts that are now my livelihood. They preserve our heritage while creating opportunities.",
@@ -1168,7 +1168,7 @@ const Donate = () => {
                 
                 <Quote className="w-8 h-8 text-yellow-400 mb-3" aria-hidden="true" />
                 
-                <p id={`testimonial-${index}-quote`} className="text-gray-700 mb-4 italic">"{testimonial.quote}"</p>
+                <p id={`testimonial-${index}-quote`} className="text-xs lg:text-sm text-gray-700 mb-4 italic">"{testimonial.quote}"</p>
                 
                 <div className="bg-green-50 border border-green-200 rounded-lg p-3">
                   <p className="text-sm text-green-800 font-medium">
@@ -1185,7 +1185,7 @@ const Donate = () => {
               <div className="flex justify-center mb-4" role="img" aria-label={`${testimonials[showTestimonial].rating} out of 5 stars`}>
                 {renderStars(testimonials[showTestimonial].rating)}
               </div>
-              <blockquote className="text-2xl md:text-3xl font-medium text-gray-800 mb-6 italic">
+              <blockquote className="text-sm md:text-lg font-medium text-gray-800 mb-6 italic">
                 "{testimonials[showTestimonial].quote}"
               </blockquote>
               <div className="flex items-center justify-center">
@@ -1249,7 +1249,7 @@ const Donate = () => {
                   <h3 className="text-2xl font-bold text-dark-blue mb-2" aria-label={`$${example.amount} donation`}>
                     ${example.amount}
                   </h3>
-                  <p className="text-gray-700 font-medium">{example.impact}</p>
+                  <p className="text-xs lg:text-sm text-gray-700 font-medium">{example.impact}</p>
                 </div>
               </Card>
             ))}
@@ -1327,7 +1327,7 @@ const Donate = () => {
                 <Shield className="w-6 h-6 text-green-600" />
                 <span className="font-semibold text-green-800">Bank-Level Security</span>
               </div>
-              <p className="text-sm text-green-700">
+              <p className="text-xs lg:text-sm text-green-700">
                 256-bit SSL encryption protects your donation information
               </p>
             </div>
@@ -1337,7 +1337,7 @@ const Donate = () => {
                 <CheckCircle className="w-6 h-6 text-blue-600" />
                 <span className="font-semibold text-blue-800">Tax Deductible</span>
               </div>
-              <p className="text-sm text-blue-700">
+              <p className="text-xs lg:text-sm text-blue-700">
                 All donations are tax-deductible and receipt provided
               </p>
             </div>
@@ -1347,7 +1347,7 @@ const Donate = () => {
                 <Target className="w-6 h-6 text-purple-600" />
                 <span className="font-semibold text-purple-800">95% Direct Impact</span>
               </div>
-              <p className="text-sm text-purple-700">
+              <p className="text-xs lg:text-sm text-purple-700">
                 95% of your donation goes directly to programs
               </p>
             </div>
@@ -1371,25 +1371,25 @@ const Donate = () => {
             <div className="text-center p-6">
               <Award className="w-12 h-12 text-yellow-400 mx-auto mb-4" />
               <h3 className="text-xl font-semibold mb-2">Certified Charity</h3>
-              <p className="text-blue-100">Registered and certified non-profit organization</p>
+              <p className="text-xs lg:text-sm text-blue-100">Registered and certified non-profit organization</p>
             </div>
 
             <div className="text-center p-6">
               <TrendingUp className="w-12 h-12 text-yellow-400 mx-auto mb-4" />
               <h3 className="text-xl font-semibold mb-2">Annual Reports</h3>
-              <p className="text-blue-100">Detailed impact reports and financial transparency</p>
+              <p className="text-xs lg:text-sm text-blue-100">Detailed impact reports and financial transparency</p>
             </div>
 
             <div className="text-center p-6">
               <Users className="w-12 h-12 text-yellow-400 mx-auto mb-4" />
               <h3 className="text-xl font-semibold mb-2">Community Board</h3>
-              <p className="text-blue-100">Community-led governance and decision making</p>
+              <p className="text-xs lg:text-sm text-blue-100">Community-led governance and decision making</p>
             </div>
 
             <div className="text-center p-6">
               <Globe className="w-12 h-12 text-yellow-400 mx-auto mb-4" />
               <h3 className="text-xl font-semibold mb-2">Global Partners</h3>
-              <p className="text-blue-100">Recognized by international development organizations</p>
+              <p className="text-xs lg:text-sm text-blue-100">Recognized by international development organizations</p>
             </div>
           </div>
 
@@ -1406,22 +1406,22 @@ const Donate = () => {
               <div className="text-center">
                 <Phone className="w-8 h-8 text-yellow-400 mx-auto mb-3" />
                 <h4 className="font-semibold mb-2">Call Us</h4>
-                <p className="text-blue-100">+250 788 529 611</p>
-                <p className="text-sm text-blue-200">Available Mon-Fri, 9AM-5PM</p>
+                <p className="text-xs lg:text-sm text-blue-100">+250 788 529 611</p>
+                <p className="text-xs text-blue-200">Available Mon-Fri, 9AM-5PM</p>
               </div>
 
               <div className="text-center">
                 <Mail className="w-8 h-8 text-yellow-400 mx-auto mb-3" />
                 <h4 className="font-semibold mb-2">Email Us</h4>
-                <p className="text-blue-100">info@benirage.org</p>
-                <p className="text-sm text-blue-200">We respond within 24 hours</p>
+                <p className="text-xs lg:text-sm text-blue-100">info@benirage.org</p>
+                <p className="text-xs text-blue-200">We respond within 24 hours</p>
               </div>
 
               <div className="text-center">
                 <MapPin className="w-8 h-8 text-yellow-400 mx-auto mb-3" />
                 <h4 className="font-semibold mb-2">Visit Us</h4>
-                <p className="text-blue-100">Kigali, Rwanda</p>
-                <p className="text-sm text-blue-200">By appointment only</p>
+                <p className="text-xs lg:text-sm text-blue-100">Kigali, Rwanda</p>
+                <p className="text-xs text-blue-200">By appointment only</p>
               </div>
             </div>
           </div>

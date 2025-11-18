@@ -392,7 +392,7 @@ const Home = () => {
                 </div>
                 <div className="flex items-center space-x-2 text-gray-700 text-xs lg:text-sm">
                   <Phone className="w-4 h-4" />
-                  <span>+250 XXX XXX XXX</span>
+                  <span>(+250) 788 310 932</span>
                 </div>
                 <div className="flex items-center space-x-2 text-gray-700 text-xs lg:text-sm">
                   <Mail className="w-4 h-4" />

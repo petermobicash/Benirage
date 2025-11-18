@@ -39,11 +39,11 @@ const Spiritual = () => {
       <Section background="white" padding="lg">
         <div className="max-w-4xl mx-auto">
           <Card variant="premium" className="text-center">
-            <blockquote className="text-2xl md:text-3xl font-serif italic text-blue-900 mb-6 leading-relaxed">
-              "To be grounded in spirit is to walk in balance between the visible and invisible. 
+            <blockquote className="text-sm md:text-lg font-serif italic text-blue-900 mb-6 leading-relaxed">
+              "To be grounded in spirit is to walk in balance between the visible and invisible.
               At BENIRAGE, we believe that when the heart is at peace, the world begins to heal."
             </blockquote>
-            <cite className="text-yellow-600 font-semibold text-lg">— BENIRAGE Spiritual Teaching</cite>
+            <cite className="text-yellow-600 font-semibold text-xs md:text-sm">— BENIRAGE Spiritual Teaching</cite>
           </Card>
         </div>
       </Section>
@@ -65,7 +65,7 @@ const Spiritual = () => {
             <h3 className="text-lg lg:text-xl font-bold text-gray-900 mb-4">
               Meditation & Mindfulness
             </h3>
-            <p className="text-gray-600 leading-relaxed mb-6">
+            <p className="text-xs lg:text-sm text-gray-600 leading-relaxed mb-6">
               Daily practices for inner peace and spiritual awakening through guided meditation and mindfulness exercises.
             </p>
             <Button variant="outline" size="sm">
@@ -78,7 +78,7 @@ const Spiritual = () => {
             <h3 className="text-lg lg:text-xl font-bold text-gray-900 mb-4">
               Healing Circles
             </h3>
-            <p className="text-gray-600 leading-relaxed mb-6">
+            <p className="text-xs lg:text-sm text-gray-600 leading-relaxed mb-6">
               Community gatherings for emotional and spiritual healing through shared wisdom and support.
             </p>
             <Button variant="outline" size="sm">
@@ -91,7 +91,7 @@ const Spiritual = () => {
             <h3 className="text-lg lg:text-xl font-bold text-gray-900 mb-4">
               Spiritual Retreats
             </h3>
-            <p className="text-gray-600 leading-relaxed mb-6">
+            <p className="text-xs lg:text-sm text-gray-600 leading-relaxed mb-6">
               Intensive weekend experiences for deep transformation and spiritual renewal.
             </p>
             <Button variant="outline" size="sm">

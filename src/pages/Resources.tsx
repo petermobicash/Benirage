@@ -189,7 +189,7 @@ const Resources = () => {
                       {resource.title}
                     </h3>
 
-                    <p className="text-gray-600 leading-relaxed">{resource.description}</p>
+                    <p className="text-xs lg:text-sm text-gray-600 leading-relaxed">{resource.description}</p>
 
                     <div className="flex items-center justify-between text-sm text-gray-600">
                       <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-medium">
@@ -230,7 +230,7 @@ const Resources = () => {
                         {resource.title}
                       </h3>
 
-                      <p className="text-gray-600 leading-relaxed">{resource.description}</p>
+                      <p className="text-xs lg:text-sm text-gray-600 leading-relaxed">{resource.description}</p>
 
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-4 text-sm text-gray-600">
