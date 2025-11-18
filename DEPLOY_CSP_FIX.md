@@ -1,123 +1,78 @@
-# CSP Fix Deployment Checklist
+# CSP Fix Deployment Instructions
 
-## ✅ Changes Made
+## Why You're Still Seeing the Error
+The CSP fix has been successfully pushed to GitHub, but your live website hasn't been redeployed yet with the updated code. The error you're seeing is from the currently deployed version that still has the old CSP configuration.
 
-The following files have been updated to fix the CSP Supabase URL issue:
+## Deploy the Fix to Production
 
-1. **`public/_headers`** (Line 9)
-   - ✅ Removed old Supabase URLs
-   - ✅ Only allows: `https://sshguczouozvsdwzfcbx.supabase.co`
+### Option 1: Trigger Automatic Deployment (Netlify)
+If you have Netlify auto-deployment set up:
 
-2. **`netlify.toml`** (Line 43)
-   - ✅ Added CSP header configuration
-   - ✅ Only allows: `https://sshguczouozvsdwzfcbx.supabase.co`
+1. **Commit Triggered Deployment**: Since we pushed to the `main` branch, Netlify should automatically deploy the changes
+2. **Check Netlify Dashboard**: Go to your Netlify dashboard → Deploys tab
+3. **Manual Trigger**: If auto-deployment isn't working, click "Trigger deploy" in Netlify
 
-## 🚀 Deployment Steps
+### Option 2: Manual Build and Deploy
+If you need to manually build and deploy:
 
-### Step 1: Commit Changes
 ```bash
-git add public/_headers netlify.toml CSP_SUPABASE_FIX.md DEPLOY_CSP_FIX.md
-git commit -m "fix: Update CSP to allow correct Supabase URL only"
-git push origin main
+# 1. Install dependencies (if needed)
+npm install
+
+# 2. Build for production
+npm run build:production
+
+# 3. Deploy the dist/ folder to your hosting platform
+# (Netlify, Vercel, or your preferred hosting)
 ```
 
-### Step 2: Wait for Netlify Deployment
-- Go to your Netlify dashboard
-- Wait for the automatic deployment to complete (usually 2-5 minutes)
-- Check the deploy logs for any errors
+### Option 3: Netlify CLI Deployment
+If you have Netlify CLI installed:
 
-### Step 3: Clear Browser Cache
-After deployment completes:
+```bash
+# 1. Build the project
+npm run build:production
 
-**Chrome/Edge:**
-1. Press `Ctrl+Shift+Delete` (Windows/Linux) or `Cmd+Shift+Delete` (Mac)
-2. Select "Cached images and files"
-3. Click "Clear data"
-
-**Firefox:**
-1. Press `Ctrl+Shift+Delete` (Windows/Linux) or `Cmd+Shift+Delete` (Mac)
-2. Select "Cache"
-3. Click "Clear Now"
-
-### Step 4: Hard Refresh
-- Chrome/Edge: `Ctrl+Shift+R` (Windows/Linux) or `Cmd+Shift+R` (Mac)
-- Firefox: `Ctrl+F5` (Windows/Linux) or `Cmd+Shift+R` (Mac)
-
-### Step 5: Verify Fix
-1. Open Developer Tools (F12)
-2. Go to Console tab
-3. Refresh the page
-4. ✅ **Success**: No CSP errors appear
-5. ✅ **Success**: Stories and content load properly
-6. ✅ **Success**: No network errors in Network tab
-
-## 🔍 What Was Fixed
-
-### Before:
-```
-Content-Security-Policy: ... connect-src 'self' 
-  https://fjhqjsbnumcxkbirlrxj.supabase.co  ❌ (old URL)
-  wss://fjhqjsbnumcxkbirlrxj.supabase.co    ❌ (old URL)
+# 2. Deploy to Netlify
+netlify deploy --prod --dir=dist
 ```
 
-### After:
+### Option 4: Alternative Hosting Solutions
+If using other platforms:
+
+**Vercel**:
+```bash
+npm run build:production
+vercel --prod
 ```
-Content-Security-Policy: ... connect-src 'self' 
-  https://sshguczouozvsdwzfcbx.supabase.co  ✅ (correct URL)
-  wss://sshguczouozvsdwzfcbx.supabase.co    ✅ (correct URL)
+
+**GitHub Pages**:
+```bash
+npm run build:production
+# Push dist/ folder contents to gh-pages branch
 ```
 
-## 🐛 Troubleshooting
+## Verification Steps
+After deployment, verify the fix by:
 
-### If CSP errors persist after deployment:
+1. **Clear Browser Cache**: Hard refresh (Ctrl+F5 or Cmd+Shift+R)
+2. **Check Network Tab**: Open browser DevTools → Network tab
+3. **Test Supabase Request**: The XHR request to `https://sshguczouozvsdwzfcbx.supabase.co/rest/v1/content?select=id&slug=eq.about-page` should now succeed
+4. **Verify CSP Headers**: Check response headers for the correct CSP policy
 
-1. **Verify deployment completed successfully**
-   - Check Netlify deploy logs
-   - Ensure no build errors occurred
+## Expected Result
+Once deployed, you should no longer see this error:
+```
+Content-Security-Policy: The page's settings blocked the loading of a resource (connect-src) at https://sshguczouozvsdwzfcbx.supabase.co/rest/v1/content?select=id&slug=eq.about-page because it violates the following directive: "connect-src 'self' https://fjhqjsbnumcxkbirlrxj.supabase.co wss://fjhqjsbnumcxkbirlrxj.supabase.co"
+```
 
-2. **Force clear CDN cache**
-   ```bash
-   # Using Netlify CLI (if installed)
-   netlify api clearCache --site-id YOUR_SITE_ID
-   ```
+## Troubleshooting
+If the issue persists after deployment:
 
-3. **Check headers are applied**
-   - Open DevTools → Network tab
-   - Refresh page
-   - Click on the main document request
-   - Check Response Headers for `Content-Security-Policy`
-   - Verify it includes `https://sshguczouozvsdwzfcbx.supabase.co`
-
-4. **Try incognito/private browsing**
-   - This ensures no cached data interferes
-
-### If stories still don't load:
-
-1. **Check Supabase environment variables in Netlify**
-   - Go to Netlify Dashboard → Site Settings → Environment Variables
-   - Verify `VITE_SUPABASE_URL` = `https://sshguczouozvsdwzfcbx.supabase.co`
-   - Verify `VITE_SUPABASE_ANON_KEY` is set correctly
-
-2. **Check Supabase project is active**
-   - Log into Supabase dashboard
-   - Verify project is running
-   - Check API settings
-
-## 📝 Notes
-
-- The minified JavaScript you saw is normal production output
-- The CSP fix is in the HTTP headers, not the JavaScript code
-- Changes take effect immediately after deployment and cache clearing
-- Both `_headers` and `netlify.toml` are configured for redundancy
-
-## ✨ Expected Result
-
-After successful deployment:
-- ✅ No CSP errors in browser console
-- ✅ Supabase API calls succeed
-- ✅ Stories page loads content
-- ✅ All features work normally
+1. **Cache Issues**: Ensure your browser cache is completely cleared
+2. **CDN Cache**: If using CloudFlare or similar CDN, may need to purge cache
+3. **Verify Headers**: Check that the deployed site has the updated CSP headers
+4. **Build Verification**: Confirm the `dist/_headers` file in deployment has the correct URL
 
 ---
-
-**Need Help?** Check the detailed guide in [`CSP_SUPABASE_FIX.md`](./CSP_SUPABASE_FIX.md)
+**Status**: 🟡 **AWAITING DEPLOYMENT** - Fix ready, needs to be deployed to production
