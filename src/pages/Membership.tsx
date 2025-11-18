@@ -232,15 +232,15 @@ const Membership = () => {
         return (
           <div className="space-y-6">
             <div className="text-center mb-8">
-              <h3 className="font-display text-2xl font-semibold text-dark-blue mb-4">
+              <h3 className="font-display text-lg lg:text-xl font-semibold text-gray-900 mb-4">
                 👤 Personal Information
               </h3>
-              <p className="text-clear-gray">Let's start with your basic information</p>
+              <p className="text-xs lg:text-sm text-gray-700">Let's start with your basic information</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label htmlFor="firstName" className="block text-sm font-medium text-dark-blue mb-2">
+                <label htmlFor="firstName" className="block text-sm font-medium text-gray-900 mb-2">
                   First Name *
                 </label>
                 <input
@@ -254,7 +254,7 @@ const Membership = () => {
                 />
               </div>
               <div>
-                <label htmlFor="lastName" className="block text-sm font-medium text-dark-blue mb-2">
+                <label htmlFor="lastName" className="block text-sm font-medium text-gray-900 mb-2">
                   Last Name *
                 </label>
                 <input
@@ -271,7 +271,7 @@ const Membership = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label htmlFor="fatherName" className="block text-sm font-medium text-dark-blue mb-2">
+                <label htmlFor="fatherName" className="block text-sm font-medium text-gray-900 mb-2">
                   Father's Name
                 </label>
                 <input
@@ -284,7 +284,7 @@ const Membership = () => {
                 />
               </div>
               <div>
-                <label htmlFor="motherName" className="block text-sm font-medium text-dark-blue mb-2">
+                <label htmlFor="motherName" className="block text-sm font-medium text-gray-900 mb-2">
                   Mother's Name
                 </label>
                 <input
@@ -299,7 +299,7 @@ const Membership = () => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-dark-blue mb-2">
+                <label htmlFor="email" className="block text-sm font-medium text-gray-900 mb-2">
                   Email Address *
                 </label>
                 <input
@@ -313,7 +313,7 @@ const Membership = () => {
                 />
               </div>
               <div>
-                <label htmlFor="phone" className="block text-sm font-medium text-dark-blue mb-2">
+                <label htmlFor="phone" className="block text-sm font-medium text-gray-900 mb-2">
                   Phone/WhatsApp *
                 </label>
                 <input
@@ -330,7 +330,7 @@ const Membership = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div>
-                <label htmlFor="gender" className="block text-sm font-medium text-dark-blue mb-2">
+                <label htmlFor="gender" className="block text-sm font-medium text-gray-900 mb-2">
                   Gender
                 </label>
                 <select
@@ -347,7 +347,7 @@ const Membership = () => {
                 </select>
               </div>
               <div>
-                <label htmlFor="dateOfBirth" className="block text-sm font-medium text-dark-blue mb-2">
+                <label htmlFor="dateOfBirth" className="block text-sm font-medium text-gray-900 mb-2">
                   Date of Birth
                 </label>
                 <input
@@ -359,7 +359,7 @@ const Membership = () => {
                 />
               </div>
               <div>
-                <label htmlFor="maritalStatus" className="block text-sm font-medium text-dark-blue mb-2">
+                <label htmlFor="maritalStatus" className="block text-sm font-medium text-gray-900 mb-2">
                   Marital Status
                 </label>
                 <select
@@ -379,7 +379,7 @@ const Membership = () => {
             </div>
 
             <div>
-              <label htmlFor="nationality" className="block text-sm font-medium text-dark-blue mb-2">
+              <label htmlFor="nationality" className="block text-sm font-medium text-gray-900 mb-2">
                 Nationality
               </label>
               <select
@@ -398,7 +398,7 @@ const Membership = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-dark-blue mb-2">
+              <label className="block text-sm font-medium text-gray-900 mb-2">
                 Profile Photo (Optional)
               </label>
               <p className="text-sm text-gray-600 mb-4">
@@ -447,15 +447,15 @@ const Membership = () => {
         return (
           <div className="space-y-6">
             <div className="text-center mb-8">
-              <h3 className="font-display text-2xl font-semibold text-dark-blue mb-4">
+              <h3 className="font-display text-lg lg:text-xl font-semibold text-gray-900 mb-4">
                 📍 Location Information
               </h3>
-              <p className="text-clear-gray">Help us understand where you're located</p>
+              <p className="text-xs lg:text-sm text-gray-700">Help us understand where you're located</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label htmlFor="country" className="block text-sm font-medium text-dark-blue mb-2">
+                <label htmlFor="country" className="block text-sm font-medium text-gray-900 mb-2">
                   Country *
                 </label>
                 <select
@@ -558,7 +558,7 @@ const Membership = () => {
                 </select>
               </div>
               <div>
-                <label htmlFor="district" className="block text-sm font-medium text-dark-blue mb-2">
+                <label htmlFor="district" className="block text-sm font-medium text-gray-900 mb-2">
                   District/Province *
                 </label>
                 <input
@@ -575,7 +575,7 @@ const Membership = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div>
-                <label htmlFor="sector" className="block text-sm font-medium text-dark-blue mb-2">
+                <label htmlFor="sector" className="block text-sm font-medium text-gray-900 mb-2">
                   Sector/City
                 </label>
                 <input
@@ -588,7 +588,7 @@ const Membership = () => {
                 />
               </div>
               <div>
-                <label htmlFor="cell" className="block text-sm font-medium text-dark-blue mb-2">
+                <label htmlFor="cell" className="block text-sm font-medium text-gray-900 mb-2">
                   Cell/Area
                 </label>
                 <input
@@ -601,7 +601,7 @@ const Membership = () => {
                 />
               </div>
               <div>
-                <label htmlFor="village" className="block text-sm font-medium text-dark-blue mb-2">
+                <label htmlFor="village" className="block text-sm font-medium text-gray-900 mb-2">
                   Village/Neighborhood
                 </label>
                 <input
@@ -616,7 +616,7 @@ const Membership = () => {
             </div>
 
             <div>
-              <label htmlFor="postalCode" className="block text-sm font-medium text-dark-blue mb-2">
+              <label htmlFor="postalCode" className="block text-sm font-medium text-gray-900 mb-2">
                 Postal Code (if applicable)
               </label>
               <input
@@ -635,15 +635,15 @@ const Membership = () => {
         return (
           <div className="space-y-6">
             <div className="text-center mb-8">
-              <h3 className="font-display text-2xl font-semibold text-dark-blue mb-4">
+              <h3 className="font-display text-lg lg:text-xl font-semibold text-gray-900 mb-4">
                 💼 Professional Background
               </h3>
-              <p className="text-clear-gray">Tell us about your work and education</p>
+              <p className="text-xs lg:text-sm text-gray-700">Tell us about your work and education</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label htmlFor="occupation" className="block text-sm font-medium text-dark-blue mb-2">
+                <label htmlFor="occupation" className="block text-sm font-medium text-gray-900 mb-2">
                   Occupation *
                 </label>
                 <input
@@ -657,7 +657,7 @@ const Membership = () => {
                 />
               </div>
               <div>
-                <label htmlFor="education" className="block text-sm font-medium text-dark-blue mb-2">
+                <label htmlFor="education" className="block text-sm font-medium text-gray-900 mb-2">
                   Education Level *
                 </label>
                 <select
@@ -681,7 +681,7 @@ const Membership = () => {
             </div>
 
             <div>
-              <label htmlFor="organization" className="block text-sm font-medium text-dark-blue mb-2">
+              <label htmlFor="organization" className="block text-sm font-medium text-gray-900 mb-2">
                 Organization/Company
               </label>
               <input
@@ -695,7 +695,7 @@ const Membership = () => {
             </div>
 
             <div>
-              <label htmlFor="workExperience" className="block text-sm font-medium text-dark-blue mb-2">
+              <label htmlFor="workExperience" className="block text-sm font-medium text-gray-900 mb-2">
                 Work Experience
               </label>
               <textarea
@@ -709,7 +709,7 @@ const Membership = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-dark-blue mb-3">
+              <label className="block text-sm font-medium text-gray-900 mb-3">
                 Languages (select all that apply)
               </label>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
@@ -736,7 +736,7 @@ const Membership = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div>
-                <label htmlFor="kinyarwandaLevel" className="block text-sm font-medium text-dark-blue mb-2">
+                <label htmlFor="kinyarwandaLevel" className="block text-sm font-medium text-gray-900 mb-2">
                   Kinyarwanda Level
                 </label>
                 <select
@@ -754,7 +754,7 @@ const Membership = () => {
                 </select>
               </div>
               <div>
-                <label htmlFor="englishLevel" className="block text-sm font-medium text-dark-blue mb-2">
+                <label htmlFor="englishLevel" className="block text-sm font-medium text-gray-900 mb-2">
                   English Level
                 </label>
                 <select
@@ -772,7 +772,7 @@ const Membership = () => {
                 </select>
               </div>
               <div>
-                <label htmlFor="frenchLevel" className="block text-sm font-medium text-dark-blue mb-2">
+                <label htmlFor="frenchLevel" className="block text-sm font-medium text-gray-900 mb-2">
                   French Level
                 </label>
                 <select
@@ -797,14 +797,14 @@ const Membership = () => {
         return (
           <div className="space-y-6">
             <div className="text-center mb-8">
-              <h3 className="font-display text-2xl font-semibold text-dark-blue mb-4">
+              <h3 className="font-display text-lg lg:text-xl font-semibold text-gray-900 mb-4">
                 💡 Interests & Motivation
               </h3>
-              <p className="text-clear-gray">What draws you to BENIRAGE?</p>
+              <p className="text-xs lg:text-sm text-gray-700">What draws you to BENIRAGE?</p>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-dark-blue mb-3">
+              <label className="block text-sm font-medium text-gray-900 mb-3">
                 Areas of Interest (select all that apply) *
               </label>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -836,7 +836,7 @@ const Membership = () => {
             </div>
 
             <div>
-              <label htmlFor="otherInterests" className="block text-sm font-medium text-dark-blue mb-2">
+              <label htmlFor="otherInterests" className="block text-sm font-medium text-gray-900 mb-2">
                 Other Interests (not listed above)
               </label>
               <input
@@ -850,7 +850,7 @@ const Membership = () => {
             </div>
 
             <div>
-              <label htmlFor="whyJoin" className="block text-sm font-medium text-dark-blue mb-2">
+              <label htmlFor="whyJoin" className="block text-sm font-medium text-gray-900 mb-2">
                 Why do you want to join BENIRAGE? *
               </label>
               <textarea
@@ -865,7 +865,7 @@ const Membership = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-dark-blue mb-3">
+              <label className="block text-sm font-medium text-gray-900 mb-3">
                 Skills & Talents (select all that apply)
               </label>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
@@ -897,7 +897,7 @@ const Membership = () => {
             </div>
 
             <div>
-              <label htmlFor="otherSkills" className="block text-sm font-medium text-dark-blue mb-2">
+              <label htmlFor="otherSkills" className="block text-sm font-medium text-gray-900 mb-2">
                 Other Skills & Talents
               </label>
               <input
@@ -916,14 +916,14 @@ const Membership = () => {
         return (
           <div className="space-y-6">
             <div className="text-center mb-8">
-              <h3 className="font-display text-2xl font-semibold text-dark-blue mb-4">
+              <h3 className="font-display text-lg lg:text-xl font-semibold text-gray-900 mb-4">
                 🤝 Commitment & Contribution
               </h3>
-              <p className="text-clear-gray">How would you like to contribute to our community?</p>
+              <p className="text-xs lg:text-sm text-gray-700">How would you like to contribute to our community?</p>
             </div>
 
             <div>
-              <label htmlFor="membershipCategory" className="block text-sm font-medium text-dark-blue mb-2">
+              <label htmlFor="membershipCategory" className="block text-sm font-medium text-gray-900 mb-2">
                 Membership Category *
               </label>
               <select
@@ -944,7 +944,7 @@ const Membership = () => {
             </div>
 
             <div>
-              <label htmlFor="timeCommitment" className="block text-sm font-medium text-dark-blue mb-2">
+              <label htmlFor="timeCommitment" className="block text-sm font-medium text-gray-900 mb-2">
                 Time Commitment *
               </label>
               <select
@@ -964,7 +964,7 @@ const Membership = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-dark-blue mb-3">
+              <label className="block text-sm font-medium text-gray-900 mb-3">
                 Financial Support (select all that apply)
               </label>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -996,19 +996,19 @@ const Membership = () => {
         return (
           <div className="space-y-6">
             <div className="text-center mb-8">
-              <h3 className="font-display text-2xl font-semibold text-dark-blue mb-4">
+              <h3 className="font-display text-lg lg:text-xl font-semibold text-gray-900 mb-4">
                 📞 References & Agreements
               </h3>
-              <p className="text-clear-gray">Final step - references and consent</p>
+              <p className="text-xs lg:text-sm text-gray-700">Final step - references and consent</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="space-y-4">
-                <h4 className="font-display text-lg font-semibold text-dark-blue">
+                <h4 className="font-display text-base lg:text-lg font-semibold text-gray-900">
                   Reference 1
                 </h4>
                 <div>
-                  <label htmlFor="reference1Name" className="block text-sm font-medium text-dark-blue mb-2">
+                  <label htmlFor="reference1Name" className="block text-sm font-medium text-gray-900 mb-2">
                     Full Name
                   </label>
                   <input
@@ -1021,7 +1021,7 @@ const Membership = () => {
                   />
                 </div>
                 <div>
-                  <label htmlFor="reference1Contact" className="block text-sm font-medium text-dark-blue mb-2">
+                  <label htmlFor="reference1Contact" className="block text-sm font-medium text-gray-900 mb-2">
                     Contact Information
                   </label>
                   <input
@@ -1034,7 +1034,7 @@ const Membership = () => {
                   />
                 </div>
                 <div>
-                  <label htmlFor="reference1Relationship" className="block text-sm font-medium text-dark-blue mb-2">
+                  <label htmlFor="reference1Relationship" className="block text-sm font-medium text-gray-900 mb-2">
                     Relationship
                   </label>
                   <input
@@ -1049,11 +1049,11 @@ const Membership = () => {
               </div>
 
               <div className="space-y-4">
-                <h4 className="font-display text-lg font-semibold text-dark-blue">
+                <h4 className="font-display text-base lg:text-lg font-semibold text-gray-900">
                   Reference 2 (Optional)
                 </h4>
                 <div>
-                  <label htmlFor="reference2Name" className="block text-sm font-medium text-dark-blue mb-2">
+                  <label htmlFor="reference2Name" className="block text-sm font-medium text-gray-900 mb-2">
                     Full Name
                   </label>
                   <input
@@ -1066,7 +1066,7 @@ const Membership = () => {
                   />
                 </div>
                 <div>
-                  <label htmlFor="reference2Contact" className="block text-sm font-medium text-dark-blue mb-2">
+                  <label htmlFor="reference2Contact" className="block text-sm font-medium text-gray-900 mb-2">
                     Contact Information
                   </label>
                   <input
@@ -1079,7 +1079,7 @@ const Membership = () => {
                   />
                 </div>
                 <div>
-                  <label htmlFor="reference2Relationship" className="block text-sm font-medium text-dark-blue mb-2">
+                  <label htmlFor="reference2Relationship" className="block text-sm font-medium text-gray-900 mb-2">
                     Relationship
                   </label>
                   <input
@@ -1095,7 +1095,7 @@ const Membership = () => {
             </div>
 
             <div className="space-y-4">
-              <h4 className="font-display text-lg font-semibold text-dark-blue">
+              <h4 className="font-display text-base lg:text-lg font-semibold text-gray-900">
                 Membership Agreements
               </h4>
 
@@ -1164,30 +1164,46 @@ const Membership = () => {
 
   return (
     <div>
-      {/* Hero */}
-      <Section className="py-20 bg-gradient-to-br from-blue-900 via-blue-800 to-yellow-600 text-white">
-        <div className="text-center">
-          <Users className="w-16 h-16 text-white mx-auto mb-6 animate-float" />
-          <h1 className="text-5xl md:text-6xl font-bold mb-6">
-            Join BENIRAGE
-          </h1>
-          <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
-            Become part of our transformative spiritual and cultural movement
-          </p>
+      {/* Hero Section - Enhanced with Home page style background */}
+      <section className="relative min-h-[60vh] lg:min-h-[70vh] flex items-center justify-center overflow-hidden">
+        {/* Dynamic Background - Dark Teal/Navy like Home page */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0A3D5C] via-[#0D4A6B] to-[#0A3D5C]">
+          <div className="absolute inset-0 bg-[url('/benirage.jpeg')] bg-cover bg-center opacity-10"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
         </div>
-      </Section>
+        
+        {/* Floating Animated Elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-20 left-20 w-32 h-32 bg-white/5 rounded-full blur-2xl animate-pulse"></div>
+          <div className="absolute top-40 right-32 w-24 h-24 bg-blue-400/10 rounded-full blur-xl animate-bounce"></div>
+          <div className="absolute bottom-40 left-32 w-40 h-40 bg-yellow-400/5 rounded-full blur-3xl animate-ping"></div>
+          <div className="absolute bottom-20 right-20 w-20 h-20 bg-yellow-400/10 rounded-full blur-lg animate-pulse"></div>
+        </div>
+
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-4xl mx-auto">
+            <Users className="w-12 lg:w-16 h-12 lg:h-16 text-yellow-400 mx-auto mb-6 animate-fade-in-up" />
+            <h1 className="text-lg lg:text-xl font-bold text-white mb-6 animate-fade-in-up animation-delay-100">
+              Join <span className="text-yellow-400">BENIRAGE</span>
+            </h1>
+            <p className="text-xs lg:text-sm text-gray-200 mb-8 max-w-3xl mx-auto leading-relaxed animate-fade-in-up animation-delay-200">
+              Become part of our transformative spiritual and cultural movement
+            </p>
+          </div>
+        </div>
+      </section>
 
       {/* Membership Benefits */}
       <Section className="py-20 bg-white">
         <div className="max-w-6xl mx-auto text-center mb-12">
-          <h2 className="text-4xl font-bold text-blue-900 mb-8">
+          <h2 className="text-lg lg:text-xl font-bold text-gray-900 mb-8">
             Membership Benefits
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <Card className="text-center hover:scale-105 transition-transform">
               <Heart className="w-12 h-12 text-red-500 mx-auto mb-4" />
-              <h3 className="text-xl font-bold text-blue-900 mb-3">
+              <h3 className="text-lg lg:text-xl font-bold text-gray-900 mb-3">
                 Spiritual Growth
               </h3>
               <p className="text-gray-600">
@@ -1197,7 +1213,7 @@ const Membership = () => {
 
             <Card className="text-center hover:scale-105 transition-transform">
               <Users className="w-12 h-12 text-blue-500 mx-auto mb-4" />
-              <h3 className="text-xl font-bold text-blue-900 mb-3">
+              <h3 className="text-lg lg:text-xl font-bold text-gray-900 mb-3">
                 Community Connection
               </h3>
               <p className="text-gray-600">
@@ -1207,7 +1223,7 @@ const Membership = () => {
 
             <Card className="text-center hover:scale-105 transition-transform">
               <Shield className="w-12 h-12 text-green-500 mx-auto mb-4" />
-              <h3 className="text-xl font-bold text-blue-900 mb-3">
+              <h3 className="text-lg lg:text-xl font-bold text-gray-900 mb-3">
                 Cultural Preservation
               </h3>
               <p className="text-gray-600">
@@ -1222,10 +1238,10 @@ const Membership = () => {
       <Section className="py-20 bg-gray-50">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-blue-900 mb-4">
+            <h2 className="text-lg lg:text-xl font-bold text-gray-900 mb-4">
               Membership Application
             </h2>
-            <p className="text-lg text-gray-700">
+            <p className="text-xs lg:text-sm text-gray-700">
               Join our community of spiritual seekers and cultural preservers
             </p>
           </div>

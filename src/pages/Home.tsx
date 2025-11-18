@@ -181,7 +181,7 @@ const Home = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 lg:mb-16">
             <h2 className="text-lg lg:text-xl font-bold text-gray-900 mb-4">
-              Our <span className="text-yellow-600">Pillars</span>
+              Our <span className="text-yellow-400">Pillars</span>
             </h2>
             <p className="text-base lg:text-lg text-gray-700 font-semibold mt-2">
               Empowering Unity, Growth, and Wellness through National Legacy

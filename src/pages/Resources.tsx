@@ -108,27 +108,43 @@ const Resources = () => {
 
   return (
     <div>
-      {/* Hero */}
-      <Section className="py-20 bg-gradient-to-br from-blue-900 via-blue-800 to-yellow-600 text-white">
-        <div className="text-center">
-          <div className="text-6xl mb-6">📚</div>
-          <h1 className="text-5xl md:text-6xl font-bold mb-6">
-            Resources
-          </h1>
-          <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
-            Tools for personal and community growth in spirit, wisdom, and culture
-          </p>
+      {/* Hero Section - Enhanced with Home page style background */}
+      <section className="relative min-h-[60vh] lg:min-h-[70vh] flex items-center justify-center overflow-hidden">
+        {/* Dynamic Background - Dark Teal/Navy like Home page */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0A3D5C] via-[#0D4A6B] to-[#0A3D5C]">
+          <div className="absolute inset-0 bg-[url('/benirage.jpeg')] bg-cover bg-center opacity-10"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
         </div>
-      </Section>
+        
+        {/* Floating Animated Elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-20 left-20 w-32 h-32 bg-white/5 rounded-full blur-2xl animate-pulse"></div>
+          <div className="absolute top-40 right-32 w-24 h-24 bg-blue-400/10 rounded-full blur-xl animate-bounce"></div>
+          <div className="absolute bottom-40 left-32 w-40 h-40 bg-yellow-400/5 rounded-full blur-3xl animate-ping"></div>
+          <div className="absolute bottom-20 right-20 w-20 h-20 bg-yellow-400/10 rounded-full blur-lg animate-pulse"></div>
+        </div>
+
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-4xl mx-auto">
+            <div className="text-5xl lg:text-6xl mb-6 animate-fade-in-up">📚</div>
+            <h1 className="text-lg lg:text-xl font-bold text-white mb-6 animate-fade-in-up animation-delay-100">
+              <span className="text-yellow-400">Resources</span>
+            </h1>
+            <p className="text-xs lg:text-sm text-gray-200 mb-8 max-w-3xl mx-auto leading-relaxed animate-fade-in-up animation-delay-200">
+              Tools for personal and community growth in spirit, wisdom, and culture
+            </p>
+          </div>
+        </div>
+      </section>
 
       {/* Resource Categories */}
       <Section className="py-20 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-blue-900 mb-6">
+            <h2 className="text-lg lg:text-xl font-bold text-gray-900 mb-6">
               Explore Our Resource Library
             </h2>
-            <p className="text-xl text-gray-700">
+            <p className="text-xs lg:text-sm text-gray-700">
               Find exactly what you need for your spiritual and cultural journey
             </p>
           </div>
@@ -151,7 +167,7 @@ const Resources = () => {
 
           {/* Featured Resources */}
           <div className="mb-16">
-            <h3 className="text-2xl font-bold text-blue-900 mb-8 text-center">Featured Resources</h3>
+            <h3 className="text-lg lg:text-xl font-bold text-gray-900 mb-8 text-center">Featured Resources</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {resources.filter(r => r.featured).map((resource, index) => (
                 <Card key={index} variant="premium" className="hover:scale-105 transition-transform">
@@ -169,7 +185,7 @@ const Resources = () => {
                   </div>
 
                   <div className="space-y-4">
-                    <h3 className="text-xl font-bold text-blue-900">
+                    <h3 className="text-lg lg:text-xl font-bold text-gray-900">
                       {resource.title}
                     </h3>
 
@@ -196,7 +212,7 @@ const Resources = () => {
 
           {/* All Resources */}
           <div>
-            <h3 className="text-2xl font-bold text-blue-900 mb-8 text-center">All Resources</h3>
+            <h3 className="text-lg lg:text-xl font-bold text-gray-900 mb-8 text-center">All Resources</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {filteredResources.map((resource, index) => (
                 <Card key={index} variant="premium" className="hover:scale-105 transition-transform">
@@ -210,7 +226,7 @@ const Resources = () => {
                     </div>
 
                     <div className="flex-1 space-y-3">
-                      <h3 className="text-xl font-bold text-blue-900">
+                      <h3 className="text-lg lg:text-xl font-bold text-gray-900">
                         {resource.title}
                       </h3>
 
@@ -241,10 +257,10 @@ const Resources = () => {
       {/* Newsletter Signup */}
       <Section className="py-20 bg-blue-900 text-blue-900">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-6">
+          <h2 className="text-lg lg:text-xl font-bold text-white mb-6">
             Stay Updated with New Resources
           </h2>
-          <p className="text-xl mb-8">
+          <p className="text-xs lg:text-sm text-gray-200 mb-8">
             Be the first to access new publications, videos, and learning materials
           </p>
 

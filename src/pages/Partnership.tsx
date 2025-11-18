@@ -317,14 +317,14 @@ const Partnership = () => {
         return (
           <div className="space-y-6">
             <div className="text-center mb-8">
-              <h3 className="font-display text-2xl font-semibold text-dark-blue mb-4">
+              <h3 className="font-display text-lg lg:text-xl font-semibold text-gray-900 mb-4">
                 🏢 Organization Information
               </h3>
-              <p className="text-clear-gray">Tell us about your organization</p>
+              <p className="text-xs lg:text-sm text-gray-700">Tell us about your organization</p>
             </div>
 
             <div>
-              <label htmlFor="organizationName" className="block text-sm font-medium text-dark-blue mb-2">
+              <label htmlFor="organizationName" className="block text-sm font-medium text-gray-900 mb-2">
                 Organization Name *
               </label>
               <input
@@ -340,7 +340,7 @@ const Partnership = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label htmlFor="organizationType" className="block text-sm font-medium text-dark-blue mb-2">
+                <label htmlFor="organizationType" className="block text-sm font-medium text-gray-900 mb-2">
                   Organization Type *
                 </label>
                 <select
@@ -365,7 +365,7 @@ const Partnership = () => {
                 </select>
               </div>
               <div>
-                <label htmlFor="organizationSize" className="block text-sm font-medium text-dark-blue mb-2">
+                <label htmlFor="organizationSize" className="block text-sm font-medium text-gray-900 mb-2">
                   Organization Size
                 </label>
                 <select
@@ -386,7 +386,7 @@ const Partnership = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div>
-                <label htmlFor="foundedYear" className="block text-sm font-medium text-dark-blue mb-2">
+                <label htmlFor="foundedYear" className="block text-sm font-medium text-gray-900 mb-2">
                   Founded Year
                 </label>
                 <input
@@ -401,7 +401,7 @@ const Partnership = () => {
                 />
               </div>
               <div>
-                <label htmlFor="registrationNumber" className="block text-sm font-medium text-dark-blue mb-2">
+                <label htmlFor="registrationNumber" className="block text-sm font-medium text-gray-900 mb-2">
                   Registration Number
                 </label>
                 <input
@@ -414,7 +414,7 @@ const Partnership = () => {
                 />
               </div>
               <div>
-                <label htmlFor="website" className="block text-sm font-medium text-dark-blue mb-2">
+                <label htmlFor="website" className="block text-sm font-medium text-gray-900 mb-2">
                   Website
                 </label>
                 <input
@@ -430,12 +430,12 @@ const Partnership = () => {
 
             {/* Primary Contact */}
             <div className="border-t border-gray-200 pt-6">
-              <h4 className="font-display text-lg font-semibold text-dark-blue mb-4">
+              <h4 className="font-display text-base lg:text-lg font-semibold text-gray-900 mb-4">
                 Primary Contact Person
               </h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label htmlFor="contactPerson" className="block text-sm font-medium text-dark-blue mb-2">
+                  <label htmlFor="contactPerson" className="block text-sm font-medium text-gray-900 mb-2">
                     Full Name *
                   </label>
                   <input
@@ -449,7 +449,7 @@ const Partnership = () => {
                   />
                 </div>
                 <div>
-                  <label htmlFor="title" className="block text-sm font-medium text-dark-blue mb-2">
+                  <label htmlFor="title" className="block text-sm font-medium text-gray-900 mb-2">
                     Title/Position
                   </label>
                   <input
@@ -465,7 +465,7 @@ const Partnership = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-dark-blue mb-2">
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-900 mb-2">
                     Email Address *
                   </label>
                   <input
@@ -479,7 +479,7 @@ const Partnership = () => {
                   />
                 </div>
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-dark-blue mb-2">
+                  <label htmlFor="phone" className="block text-sm font-medium text-gray-900 mb-2">
                     Phone Number *
                   </label>
                   <input
@@ -496,7 +496,7 @@ const Partnership = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
                 <div>
-                  <label htmlFor="alternateContact" className="block text-sm font-medium text-dark-blue mb-2">
+                  <label htmlFor="alternateContact" className="block text-sm font-medium text-gray-900 mb-2">
                     Alternate Contact (Optional)
                   </label>
                   <input
@@ -509,7 +509,7 @@ const Partnership = () => {
                   />
                 </div>
                 <div>
-                  <label htmlFor="alternateEmail" className="block text-sm font-medium text-dark-blue mb-2">
+                  <label htmlFor="alternateEmail" className="block text-sm font-medium text-gray-900 mb-2">
                     Alternate Email (Optional)
                   </label>
                   <input
@@ -524,7 +524,7 @@ const Partnership = () => {
               </div>
 
               <div>
-                <label htmlFor="location" className="block text-sm font-medium text-dark-blue mb-2">
+                <label htmlFor="location" className="block text-sm font-medium text-gray-900 mb-2">
                   Primary Location/Office
                 </label>
                 <input
@@ -544,14 +544,14 @@ const Partnership = () => {
         return (
           <div className="space-y-6">
             <div className="text-center mb-8">
-              <h3 className="font-display text-2xl font-semibold text-dark-blue mb-4">
+              <h3 className="font-display text-lg lg:text-xl font-semibold text-gray-900 mb-4">
                 🌍 Organization Profile
               </h3>
-              <p className="text-clear-gray">Help us understand your organization better</p>
+              <p className="text-xs lg:text-sm text-gray-700">Help us understand your organization better</p>
             </div>
 
             <div>
-              <label htmlFor="description" className="block text-sm font-medium text-dark-blue mb-2">
+              <label htmlFor="description" className="block text-sm font-medium text-gray-900 mb-2">
                 Organization Description *
               </label>
               <textarea
@@ -566,7 +566,7 @@ const Partnership = () => {
             </div>
 
             <div>
-              <label htmlFor="mission" className="block text-sm font-medium text-dark-blue mb-2">
+              <label htmlFor="mission" className="block text-sm font-medium text-gray-900 mb-2">
                 Mission Statement *
               </label>
               <textarea
@@ -581,7 +581,7 @@ const Partnership = () => {
             </div>
 
             <div>
-              <label htmlFor="currentPrograms" className="block text-sm font-medium text-dark-blue mb-2">
+              <label htmlFor="currentPrograms" className="block text-sm font-medium text-gray-900 mb-2">
                 Current Programs & Initiatives
               </label>
               <textarea
@@ -596,7 +596,7 @@ const Partnership = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label htmlFor="targetBeneficiaries" className="block text-sm font-medium text-dark-blue mb-2">
+                <label htmlFor="targetBeneficiaries" className="block text-sm font-medium text-gray-900 mb-2">
                   Target Beneficiaries
                 </label>
                 <input
@@ -609,7 +609,7 @@ const Partnership = () => {
                 />
               </div>
               <div>
-                <label htmlFor="annualBudget" className="block text-sm font-medium text-dark-blue mb-2">
+                <label htmlFor="annualBudget" className="block text-sm font-medium text-gray-900 mb-2">
                   Annual Budget Range
                 </label>
                 <select
@@ -631,7 +631,7 @@ const Partnership = () => {
             </div>
 
             <div>
-              <label htmlFor="headquarters" className="block text-sm font-medium text-dark-blue mb-2">
+              <label htmlFor="headquarters" className="block text-sm font-medium text-gray-900 mb-2">
                 Headquarters Location
               </label>
               <input
@@ -645,7 +645,7 @@ const Partnership = () => {
             </div>
 
             <div>
-              <label id="countries-label" className="block text-sm font-medium text-dark-blue mb-3">
+              <label id="countries-label" className="block text-sm font-medium text-gray-900 mb-3">
                 Countries of Operation (select all that apply)
               </label>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3" role="group" aria-labelledby="countries-label">
@@ -686,14 +686,14 @@ const Partnership = () => {
         return (
           <div className="space-y-6">
             <div className="text-center mb-8">
-              <h3 className="font-display text-2xl font-semibold text-dark-blue mb-4">
+              <h3 className="font-display text-lg lg:text-xl font-semibold text-gray-900 mb-4">
                 🤝 Partnership Details
               </h3>
-              <p className="text-clear-gray">What type of partnership are you seeking?</p>
+              <p className="text-xs lg:text-sm text-gray-700">What type of partnership are you seeking?</p>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-dark-blue mb-3">
+              <label className="block text-sm font-medium text-gray-900 mb-3">
                 Type of Partnership (select all that apply) *
               </label>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -736,7 +736,7 @@ const Partnership = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-dark-blue mb-3">
+              <label className="block text-sm font-medium text-gray-900 mb-3">
                 Resources You Can Contribute (select all that apply)
               </label>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -781,7 +781,7 @@ const Partnership = () => {
             </div>
 
             <div>
-              <label htmlFor="goals" className="block text-sm font-medium text-dark-blue mb-2">
+              <label htmlFor="goals" className="block text-sm font-medium text-gray-900 mb-2">
                 Partnership Goals & Objectives *
               </label>
               <textarea
@@ -801,14 +801,14 @@ const Partnership = () => {
         return (
           <div className="space-y-6">
             <div className="text-center mb-8">
-              <h3 className="font-display text-2xl font-semibold text-dark-blue mb-4">
+              <h3 className="font-display text-lg lg:text-xl font-semibold text-gray-900 mb-4">
                 📊 Implementation & Expectations
               </h3>
-              <p className="text-clear-gray">Let's plan the partnership details</p>
+              <p className="text-xs lg:text-sm text-gray-700">Let's plan the partnership details</p>
             </div>
 
             <div>
-              <label htmlFor="timeline" className="block text-sm font-medium text-dark-blue mb-2">
+              <label htmlFor="timeline" className="block text-sm font-medium text-gray-900 mb-2">
                 Proposed Timeline *
               </label>
               <select
@@ -829,7 +829,7 @@ const Partnership = () => {
             </div>
 
             <div>
-              <label htmlFor="expectedOutcomes" className="block text-sm font-medium text-dark-blue mb-2">
+              <label htmlFor="expectedOutcomes" className="block text-sm font-medium text-gray-900 mb-2">
                 Expected Outcomes & Impact *
               </label>
               <textarea
@@ -844,7 +844,7 @@ const Partnership = () => {
             </div>
 
             <div>
-              <label htmlFor="successMetrics" className="block text-sm font-medium text-dark-blue mb-2">
+              <label htmlFor="successMetrics" className="block text-sm font-medium text-gray-900 mb-2">
                 Success Metrics & KPIs
               </label>
               <textarea
@@ -858,7 +858,7 @@ const Partnership = () => {
             </div>
 
             <div>
-              <label htmlFor="previousPartnerships" className="block text-sm font-medium text-dark-blue mb-2">
+              <label htmlFor="previousPartnerships" className="block text-sm font-medium text-gray-900 mb-2">
                 Previous Partnership Experience
               </label>
               <textarea
@@ -872,7 +872,7 @@ const Partnership = () => {
             </div>
 
             <div>
-              <label htmlFor="organizationalCapacity" className="block text-sm font-medium text-dark-blue mb-2">
+              <label htmlFor="organizationalCapacity" className="block text-sm font-medium text-gray-900 mb-2">
                 Organizational Capacity
               </label>
               <textarea
@@ -887,7 +887,7 @@ const Partnership = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label htmlFor="financialContribution" className="block text-sm font-medium text-dark-blue mb-2">
+                <label htmlFor="financialContribution" className="block text-sm font-medium text-gray-900 mb-2">
                   Financial Contribution Capacity
                 </label>
                 <select
@@ -907,7 +907,7 @@ const Partnership = () => {
                 </select>
               </div>
               <div>
-                <label htmlFor="legalRequirements" className="block text-sm font-medium text-dark-blue mb-2">
+                <label htmlFor="legalRequirements" className="block text-sm font-medium text-gray-900 mb-2">
                   Legal/Compliance Requirements
                 </label>
                 <input
@@ -927,14 +927,14 @@ const Partnership = () => {
         return (
           <div className="space-y-6">
             <div className="text-center mb-8">
-              <h3 className="font-display text-2xl font-semibold text-dark-blue mb-4">
+              <h3 className="font-display text-lg lg:text-xl font-semibold text-gray-900 mb-4">
                 📋 Expectations & Agreements
               </h3>
-              <p className="text-clear-gray">Final details and consent</p>
+              <p className="text-xs lg:text-sm text-gray-700">Final details and consent</p>
             </div>
 
             <div>
-              <label htmlFor="expectations" className="block text-sm font-medium text-dark-blue mb-2">
+              <label htmlFor="expectations" className="block text-sm font-medium text-gray-900 mb-2">
                 Expectations from BENIRAGE
               </label>
               <textarea
@@ -948,7 +948,7 @@ const Partnership = () => {
             </div>
 
             <div>
-              <label htmlFor="commitments" className="block text-sm font-medium text-dark-blue mb-2">
+              <label htmlFor="commitments" className="block text-sm font-medium text-gray-900 mb-2">
                 Your Organization's Commitments
               </label>
               <textarea
@@ -962,7 +962,7 @@ const Partnership = () => {
             </div>
 
             <div className="space-y-4">
-              <h4 className="font-display text-lg font-semibold text-dark-blue">
+              <h4 className="font-display text-base lg:text-lg font-semibold text-gray-900">
                 Partnership Agreements
               </h4>
 
@@ -1018,23 +1018,39 @@ const Partnership = () => {
 
   return (
     <div>
-      {/* Hero */}
-      <Section className="py-20 bg-gradient-to-br from-blue-900 via-blue-800 to-yellow-600 text-white">
-        <div className="text-center">
-          <div className="text-6xl mb-6">🤝</div>
-          <h1 className="text-5xl md:text-6xl font-bold mb-6">
-            Partner With Us
-          </h1>
-          <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
-            Collaborate with schools, NGOs, religious centers, and cultural institutions
-          </p>
+      {/* Hero Section - Enhanced with Home page style background */}
+      <section className="relative min-h-[60vh] lg:min-h-[70vh] flex items-center justify-center overflow-hidden">
+        {/* Dynamic Background - Dark Teal/Navy like Home page */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0A3D5C] via-[#0D4A6B] to-[#0A3D5C]">
+          <div className="absolute inset-0 bg-[url('/benirage.jpeg')] bg-cover bg-center opacity-10"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
         </div>
-      </Section>
+        
+        {/* Floating Animated Elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-20 left-20 w-32 h-32 bg-white/5 rounded-full blur-2xl animate-pulse"></div>
+          <div className="absolute top-40 right-32 w-24 h-24 bg-blue-400/10 rounded-full blur-xl animate-bounce"></div>
+          <div className="absolute bottom-40 left-32 w-40 h-40 bg-yellow-400/5 rounded-full blur-3xl animate-ping"></div>
+          <div className="absolute bottom-20 right-20 w-20 h-20 bg-yellow-400/10 rounded-full blur-lg animate-pulse"></div>
+        </div>
+
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-4xl mx-auto">
+            <div className="text-5xl lg:text-6xl mb-6 animate-fade-in-up">🤝</div>
+            <h1 className="text-lg lg:text-xl font-bold text-white mb-6 animate-fade-in-up animation-delay-100">
+              Partner <span className="text-yellow-400">With Us</span>
+            </h1>
+            <p className="text-xs lg:text-sm text-gray-200 mb-8 max-w-3xl mx-auto leading-relaxed animate-fade-in-up animation-delay-200">
+              Collaborate with schools, NGOs, religious centers, and cultural institutions
+            </p>
+          </div>
+        </div>
+      </section>
 
       {/* Partnership Types */}
       <Section className="py-20 bg-white">
         <div className="max-w-6xl mx-auto text-center mb-12">
-          <h2 className="text-4xl font-bold text-blue-900 mb-8">
+          <h2 className="text-lg lg:text-xl font-bold text-gray-900 mb-8">
             Partnership Opportunities
           </h2>
 
@@ -1043,7 +1059,7 @@ const Partnership = () => {
               <div className="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Users className="w-8 h-8 text-white" />
               </div>
-              <h3 className="text-xl font-bold text-blue-900 mb-4">
+              <h3 className="text-lg lg:text-xl font-bold text-gray-900 mb-4">
                 Educational Partnerships
               </h3>
               <p className="text-gray-600 leading-relaxed">
@@ -1055,7 +1071,7 @@ const Partnership = () => {
               <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Handshake className="w-8 h-8 text-white" />
               </div>
-              <h3 className="text-xl font-bold text-blue-900 mb-4">
+              <h3 className="text-lg lg:text-xl font-bold text-gray-900 mb-4">
                 Community Partnerships
               </h3>
               <p className="text-gray-600 leading-relaxed">
@@ -1067,7 +1083,7 @@ const Partnership = () => {
               <div className="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Target className="w-8 h-8 text-white" />
               </div>
-              <h3 className="text-xl font-bold text-blue-900 mb-4">
+              <h3 className="text-lg lg:text-xl font-bold text-gray-900 mb-4">
                 Strategic Alliances
               </h3>
               <p className="text-gray-600 leading-relaxed">
@@ -1082,10 +1098,10 @@ const Partnership = () => {
       <Section className="py-20 bg-gray-50">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-blue-900 mb-4">
+            <h2 className="text-lg lg:text-xl font-bold text-gray-900 mb-4">
               Partnership Application
             </h2>
-            <p className="text-lg text-gray-700">
+            <p className="text-xs lg:text-sm text-gray-700">
               Let's explore how we can work together to achieve our shared goals
             </p>
           </div>
@@ -1152,10 +1168,10 @@ const Partnership = () => {
       {/* Call to Action */}
       <Section className="py-20 bg-blue-900 text-blue-900">
         <div className="text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-8">
+          <h2 className="text-lg lg:text-xl font-bold text-white mb-8">
             Transform Communities Together
           </h2>
-          <p className="text-xl text-blue-900/90 mb-12 max-w-3xl mx-auto">
+          <p className="text-xs lg:text-sm text-gray-200 mb-12 max-w-3xl mx-auto">
             Join our network of partners making a meaningful difference in spiritual and cultural development
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
